@@ -13,7 +13,7 @@ ENABLE_PRINTF_FLOAT	?= n
 # Build with FreeRTOS, y:yes, n:no
 USE_FREERTOS	?= n
 # Programmer, jlink or pyocd
-FLASH_PROGRM	?= jlink
+FLASH_PROGRM	?= pyocd
 
 
 ##### Toolchains #######
