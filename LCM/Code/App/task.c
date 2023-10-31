@@ -100,7 +100,6 @@ void Power_Display(uint8_t brightness)
  **************************************************/
 void WS2812_VESC(void)
 {
-	uint8_t i;
 	uint8_t pos, red;
 	uint8_t green = 0;
 	uint8_t blue = WS2812_Measure;
