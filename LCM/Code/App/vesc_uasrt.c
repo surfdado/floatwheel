@@ -205,7 +205,7 @@ uint8_t Protocol_Parse(uint8_t * message)
 			ind += 8;
 			data.avgInputCurrent 	= buffer_get_float32(pdata, 100.0, &ind); // negative input current implies braking
 			ind += 8; // Skip id/iq currents
-			data.dutyCycleNow 		= buffer_get_float16(pdata, 10.0, &ind);
+			data.dutyCycleNow 		= buffer_get_float16(pdata, 10.0, &ind);	// duty as value 0..100
 			data.rpm 				= buffer_get_int32(pdata, &ind);
 			data.inpVoltage 		= buffer_get_float16(pdata, 10.0, &ind);
 
@@ -230,7 +230,10 @@ uint8_t Protocol_Parse(uint8_t * message)
 				break;
 			}
 			data.floatPackageSupported = true;
-			data.state = pdata[ind++];
+			uint8_t state = pdata[ind++];
+			data.state = state & 0xF;
+			//data.switchstate = (state >> 4) & 0x7;
+			data.isHandtest = (state & 0x80) > 0;
 			data.fault = pdata[ind++];
 			data.dutyCycleNow = pdata[ind++];
 			data.rpm = buffer_get_float16(pdata, 1.0, &ind);

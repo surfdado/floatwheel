@@ -2,29 +2,14 @@
 #include "math.h"
 
 /**************************************************
- * @brie   :LED_Task()
- * @note   :LEDÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
- **************************************************/
-void LED_Task(void)
-{
-//	if(LED_Counter >= LED_Filp_Time)
-//	{
-//		LED_Counter = 0;
-//		LED1_FILP;
-//	}
-}
-
-/**************************************************
  * @brie   :KEY1_Task()
- * @note   :KEY1ÈÎÎñ
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :KEY1ä»»åŠ¡
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void KEY1_Task(void)
 {
-	if(KEY1_State == 0 || Power_Flag == 3)  //³äµçÆ÷¹©µç°´¼ü²»Æð×÷ÓÃ
+	if(KEY1_State == 0)// || Power_Flag == 3)  //å……ç”µå™¨ä¾›ç”µæŒ‰é”®ä¸èµ·ä½œç”¨
 	{
 		return;
 	}
@@ -51,7 +36,6 @@ void KEY1_Task(void)
 
 		case 3:         // Long press
 			Power_Flag = 3;  // VESC power off
-			WS2812_Display_Flag =0;
 		break;
 
 		case 4:         // Three presses
@@ -73,10 +57,10 @@ void KEY1_Task(void)
 }
 
 /**************************************************
- * @brie   :Power_Display()
+ * @brie   :WS2812_Power_Display()
  * @note   :display 1..10 leds depending on power level
  **************************************************/
-void Power_Display(uint8_t brightness)
+static void WS2812_Power_Display(uint8_t brightness)
 {
 	uint8_t numleds = 11 - Power_Display_Flag;
 	uint8_t r = 0;
@@ -90,7 +74,7 @@ void Power_Display(uint8_t brightness)
 		g = brightness;
 	if (numleds > 4)
 		b = brightness;
-	WS2812_Set_AllColours(0, numleds, r, g, b);
+	WS2812_Set_AllColours(1, numleds, r, g, b);
 	WS2812_Refresh();
 }
 
@@ -98,7 +82,7 @@ void Power_Display(uint8_t brightness)
  * @brie   : WS2812_VESC()
  * @note   : Display VESC status
  **************************************************/
-void WS2812_VESC(void)
+static void WS2812_VESC(void)
 {
 	uint8_t pos, red;
 	uint8_t green = 0;
@@ -125,24 +109,26 @@ void WS2812_VESC(void)
 			
 		case 4:// Riding
 			
-		  if ((data.state != RUNNING_WHEELSLIP) && (lcmConfig.statusbarMode == 0)) {
+		  if (data.state != RUNNING_WHEELSLIP) {
+				uint8_t brightness = lcmConfig.isSet ? lcmConfig.statusbarBrightness : WS2812_Measure;
+
 				if (data.dutyCycleNow > 90) {
-					WS2812_Set_AllColours(1, 10,WS2812_Measure,0,0);
+					WS2812_Set_AllColours(1, 10,brightness,0,0);
 				}
 				else if (data.dutyCycleNow > 85) {
-					WS2812_Set_AllColours(1, 9,WS2812_Measure,0,0);
+					WS2812_Set_AllColours(1, 9,brightness,0,0);
 				}
 				else if (data.dutyCycleNow > 80) {
-					WS2812_Set_AllColours(1, 8,WS2812_Measure,WS2812_Measure/2,0);
+					WS2812_Set_AllColours(1, 8,brightness,brightness/2,0);
 				}
 				else if (data.dutyCycleNow > 70) {
-					WS2812_Set_AllColours(1, 7,WS2812_Measure/3,WS2812_Measure/3,0);
+					WS2812_Set_AllColours(1, 7,brightness/3,brightness/3,0);
 				}
 				else if (data.dutyCycleNow > 60) {
-					WS2812_Set_AllColours(1, 6,0,WS2812_Measure/3,0);
+					WS2812_Set_AllColours(1, 6,0,brightness/3,0);
 				}
 				else if (data.dutyCycleNow > 50) {
-					WS2812_Set_AllColours(1, 5,0,WS2812_Measure/4,0);
+					WS2812_Set_AllColours(1, 5,0,brightness/4,0);
 				}
 				else {
 					WS2812_Set_AllColours(1, 10,0,0,0);
@@ -177,20 +163,20 @@ void WS2812_Boot(void)
 {
 	uint8_t i;
 	uint8_t num = floorf(Power_Time / 100) + 1;
-	uint8_t rgbMap[10][3] = {{255,0,0}, {255,127,0}, {255,255,0}, {127,255,0}, {0,255,0}, {0,255,127}, {0,255,255}, {0,127,255}, {0,0,255}, {127,0,255}};
+	// Rainbow: uint8_t rgbMap[10][3] = {{255,0,0}, {255,127,0}, {255,255,0}, {127,255,0}, {0,255,0}, {0,255,127}, {0,255,255}, {0,127,255}, {0,0,255}, {127,0,255}};
+	// Red, White, Blue:
+	uint8_t rgbMap[10][3] = {{255,0,0}, {255,0,0}, {255,0,0}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {0,0,255}, {0,0,255}, {0,0,255}};
 
 	while (num > 10) {
 		num -= 10;
 	}
 	for (i=0;i<num;i++) {
-		WS2812_Set_Colour(i,rgbMap[i][0],rgbMap[i][1],rgbMap[i][2]);
+		// red and green are swapped!
+		WS2812_Set_Colour(i,rgbMap[i][1] >> 1,rgbMap[i][0] >> 1,rgbMap[i][2] >> 1);
 	}
 
 	for (i = num; i < 10; i++) {
-		if (i == num)
-			WS2812_Set_Colour(i,rgbMap[i][0]/3,rgbMap[i][1]/3,rgbMap[i][2]/3);
-		else
-			WS2812_Set_Colour(i,0,0,0);
+		WS2812_Set_Colour(i,rgbMap[i][1] >> 4,rgbMap[i][0] >> 4,rgbMap[i][2] >> 4);
 	}
 
 	WS2812_Refresh();
@@ -233,10 +219,10 @@ static uint8_t WS2812_Calc_Bri(uint8_t cnt)
  * @brie   :WS2812_Charge()
  * @note   :Power LED display while charging
  **************************************************/
-void WS2812_Charge(void)
+static void WS2812_Charge(void)
 {
 	static uint8_t cnt = 0;
-	Power_Display(WS2812_Calc_Bri(cnt));
+	WS2812_Power_Display(WS2812_Calc_Bri(cnt));
 	cnt++;
 	if(cnt == 100)
 	{
@@ -246,11 +232,63 @@ void WS2812_Charge(void)
 	WS2812_Refresh();
 }	
 
+static void WS2812_Disabled(void)
+{
+	int brightness = WS2812_Measure;
+	if (brightness < 20)
+		brightness = 20;
+
+	// 2 red LEDs in the center
+	WS2812_Set_AllColours(5, 6, brightness, 0, 0);
+	WS2812_Refresh();
+}
+
+// Idle animation:
+static void WS2812_Idle(void)
+{
+	static int cnt = 0;
+	cnt++;
+	if(cnt == 8 * 512)
+	{
+		cnt = 0;
+	}
+	if ((cnt % 80) == 0) {
+		int r, g, b;
+		int div = cnt >> 3; // fast div by 8
+		int idx = div % 10;
+		r = div; if (r > 255) r = 0;
+		g = -128 + div; if (g < 0) g = 0; if (g > 255) g = 0;
+		b = 256 + div; if (b < 0) b = 0; if (b > 255) b = 0;
+		WS2812_Set_AllColours(idx, idx, r, g, b);
+		WS2812_Refresh();
+	}
+}	
+
+static void WS2812_Handtest(void)
+{
+	static int pulsate = 0;
+	int brightness = WS2812_Measure;
+	if (brightness < 20)
+		brightness = 20;
+	pulsate++;
+	if (pulsate > 50)
+		pulsate = 0;
+
+	// 4 LEDs in the center
+	WS2812_Set_AllColours(4, 7, brightness, pulsate, 0);
+	if(ADC1_Val > 2.0)
+		WS2812_Set_Colour(0, 0, 0, brightness);
+	if(ADC2_Val > 2.0)
+		WS2812_Set_Colour(9, 0, 0, brightness);
+
+	WS2812_Refresh();
+}
+
 /**************************************************
  * @brie   :WS2812_Task()
- * @note   :WS2812ÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :WS2812ä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void WS2812_Task(void)
 {
@@ -280,7 +318,7 @@ void WS2812_Task(void)
 	{
 		if (data.state == DISABLED) {
 			// 2 red LEDs in the center
-			WS2812_Set_AllColours(5, 6, 50, 0, 0);
+			WS2812_Disabled();
 		}
 		else {
 			WS2812_Boot();
@@ -305,15 +343,15 @@ void WS2812_Task(void)
 	}
 	else switch(Gear_Position)
 	{
-		case 1: //1µ²
+		case 1: //1æŒ¡
 			WS2812_Measure = WS2812_1_BRIGHTNESS;
 		break;
 		
-		case 2:	//2µ²
+		case 2:	//2æŒ¡
 			WS2812_Measure = WS2812_2_BRIGHTNESS;
 		break;
 		
-		case 3: //3µ²
+		case 3: //3æŒ¡
 			WS2812_Measure = WS2812_3_BRIGHTNESS;
 		break;
 		
@@ -323,16 +361,19 @@ void WS2812_Task(void)
 	}
 
 	if (data.state == DISABLED) {
-		int brightness = WS2812_Measure;
-		if (brightness < 20)
-			brightness = 20;
-		// 2 red LEDs in the center
-		WS2812_Set_AllColours(5, 6, brightness, 0, 0);
+		WS2812_Disabled();
+	}
+	else if (data.isHandtest) {
+		WS2812_Handtest();
 	}
 	else {
-		if(WS2812_Display_Flag == 1)  // I think this is when the board is idle
+		if(WS2812_Display_Flag == 1)  // I think this is when the board is idle, no footpads pressed
 		{
-			Power_Display(WS2812_Measure);	// Display power level
+			//if (lcmConfig.isSet && ((lcmConfig.statusbarMode & 0x2) != 0))
+			//	WS2812_Idle();	// Idle animation
+			//else
+				WS2812_Power_Display(WS2812_Measure);	// Display power level
+			WS2812_Refresh();
 		}
 		else
 		{
@@ -343,13 +384,11 @@ void WS2812_Task(void)
 
 /**************************************************
  * @brie   :Power_Task()
- * @note   :µçÔ´ÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :Control VESC power
  **************************************************/
 void Power_Task(void)
 {
-	static uint8_t power_flag_last = 0; //ÉÏÒ»´ÎµÄ×´Ì¬
+	static uint8_t power_flag_last = 0;
 	static uint8_t power_step = 0;
 	
 	if(power_flag_last == Power_Flag && Power_Flag != 1)
@@ -360,7 +399,7 @@ void Power_Task(void)
 	
 	switch(Power_Flag)
 	{
-		case 1://VESC¿ª»ú
+		case 1://VESC Power On
 			PWR_ON;
 			switch(power_step)
 			{
@@ -372,33 +411,30 @@ void Power_Task(void)
 				case 1:
 					if(Power_Time > VESC_BOOT_TIME)
 					{
-						Power_Flag = 2; //¿ª»úÍê³É
-						Gear_Position = 1; //¿ª»úºóÄ¬ÈÏÊÇ1µ²
-						Buzzer_Flag = 2;    //¿ª»úÄ¬ÈÏ·äÃùÆ÷Ïì
+						Power_Flag = 2; // Boot completed
+						Gear_Position = 1; // The default setting is 1st gear after power-on.
+						Buzzer_Flag = 2;    // The default buzzer sounds when powering on
 						power_step = 0;
 					}
 				break;
 			}
 			
 		break;	
-		
-		case 3://VESC¹Ø»ú£¬³äµçÆ÷¸ø°å×Ó¹©µç
-			PWR_OFF;
-			//LED1_Filp_Time(1000);	
-			//Charge_Flag = 1; //×¼±¸³äµç
+
+		case 3:// VESC is shut down (either auto-shutdown or button press)
+			PWR_OFF 
 		break;
-		
+
 		default:
-			
 		break;
 	}
 }
 
 /**************************************************
  * @brie   :Charge_Task()
- * @note   :³äµçÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :å……ç”µä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void Charge_Task(void)
 {
@@ -417,14 +453,14 @@ void Charge_Task(void)
 		break;
 		
 		case 1:
-			if(Charge_Time > 1000)  //ÑÓÊ±1S
+			if(Charge_Time > 1000)  //å»¶æ—¶1S
 			{
 				charge_step = 2;
 			}
 		break;
 		
 		case 2:
-			CHARGE_ON;  //´ò¿ª³äµçÆ÷
+			CHARGE_ON;  //æ‰“å¼€å……ç”µå™¨
 			Charge_Flag = 2;
 		    charge_step = 3;
 		break;
@@ -439,7 +475,7 @@ void Charge_Task(void)
 			{
 				V_I = 1;
 				Charge_Time = 0;
-				LED1_ON; //²É¼¯³äµçµçÑ¹
+				LED1_ON; //é‡‡é›†å……ç”µç”µåŽ‹
 				charge_step = 5;
 			}
 		break;
@@ -449,7 +485,7 @@ void Charge_Task(void)
 			{
 				V_I = 0;
 				Charge_Time = 0;
-				LED1_OFF; //²É¼¯³äµçÁ÷
+				LED1_OFF; //é‡‡é›†å……ç”µæµ
 				charge_step = 4;
 			}		
 		break;
@@ -521,25 +557,25 @@ void Headlights_Task(void)
 
 /**************************************************
  * @brie   :Buzzer_Task()
- * @note   :·äÃùÆ÷ÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :èœ‚é¸£å™¨ä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void Buzzer_Task(void)
 {
 	static uint8_t buzzer_step = 0;
-	static uint8_t gear_position_last = 0; //ÉÏÒ»´ÎµÄµµÎ»
+	static uint8_t gear_position_last = 0; //ä¸Šä¸€æ¬¡çš„æ¡£ä½
 	static uint8_t ring_frequency = 0;
 	static uint16_t sound_frequency = 0;
 	
-	if(Power_Flag != 2 || Buzzer_Flag == 1) //VESC¶Ïµç»ò·äÃùÆ÷¹Ø±Õ 
+	if(Power_Flag != 2 || Buzzer_Flag == 1) //VESCæ–­ç”µæˆ–èœ‚é¸£å™¨å…³é—­ 
 	{
 		BUZZER_OFF;
 		buzzer_step = 0;
 		return;
 	}
 	
-	if(Buzzer_Frequency == 0 && gear_position_last == Gear_Position) //·äÃùÆ÷ÏìµÄÆµÂÊÎª0»òÉÏÒ»´ÎµÄµµÎ»µÈÓÚÕâ´ÎµÄµµÎ»
+	if(Buzzer_Frequency == 0 && gear_position_last == Gear_Position) //èœ‚é¸£å™¨å“çš„é¢‘çŽ‡ä¸º0æˆ–ä¸Šä¸€æ¬¡çš„æ¡£ä½ç­‰äºŽè¿™æ¬¡çš„æ¡£ä½
 	{
 		BUZZER_OFF;
 		buzzer_step = 0;
@@ -610,19 +646,18 @@ void Buzzer_Task(void)
 
 /**************************************************
  * @brie   :Usart_Task()
- * @note   :´®¿ÚÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :ä¸²å£ä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void Usart_Task(void)
 {
 	static uint8_t usart_step = 0;
-	
 	uint8_t result;
 
-  if(Charge_Flag)
+	if(Charge_Flag)
 		return;
-	
+
 	if(Power_Flag != 2)
 	{
 		// legacy/motor data
@@ -637,7 +672,11 @@ void Usart_Task(void)
 		data.fault = 0;
 
 		lcmConfig.isSet = false;
+		lcmConfig.headlightBrightness = 0;
+		lcmConfig.statusbarBrightness = 30;
 		lcmConfig.statusbarMode = 0;
+		lcmConfig.dutyBeep = 90;
+		lcmConfig.boardOff = 0;
 
 		usart_step = 0;
 		
@@ -661,16 +700,16 @@ void Usart_Task(void)
 				VESC_RX_Flag = 0;
 				result = Protocol_Parse(VESC_RX_Buff);
 				
-				if(result == 0) //½âÎö³É¹¦
+				if(result == 0) //è§£æžæˆåŠŸ
 				{
 						//LED1_Filp_Time(500);				
 						Usart_Flag = 1;
-//						Battery_Voltage = data.inpVoltage; //µç³ØµçÑ¹
-//						VESC_Rpm = data.rpm;            //×ªËÙ
-//						AvgInputCurrent = data.avgInputCurrent;  //Ä¸ÏßµçÁ÷
-//						DutyCycleNow = data.dutyCycleNow;   //Õ¼¿Õ±È
+//						Battery_Voltage = data.inpVoltage; //ç”µæ± ç”µåŽ‹
+//						VESC_Rpm = data.rpm;            //è½¬é€Ÿ
+//						AvgInputCurrent = data.avgInputCurrent;  //æ¯çº¿ç”µæµ
+//						DutyCycleNow = data.dutyCycleNow;   //å ç©ºæ¯”
 				}
-				else	//½âÎöÊ§°Ü
+				else	//è§£æžå¤±è´¥
 				{
 						//LED1_Filp_Time(100);
 						Usart_Flag = 2;
@@ -713,9 +752,9 @@ void Usart_Task(void)
 //float k = 0.15;
 /**************************************************
  * @brie   :ADC_Task()
- * @note   :ADCÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :ADCä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void ADC_Task(void)
 {
@@ -762,7 +801,7 @@ void ADC_Task(void)
 //						V_I = 0;
 //						Charge_Time = 0;
 //						Sampling_Completion = 0;
-//						LED1_OFF; //²É¼¯³äµçÁ÷
+//						LED1_OFF; //é‡‡é›†å……ç”µæµ
 //						Charge_Voltage = (float)(adc_charge_sum_ave*0.0257080078125);
 //					
 //					}
@@ -775,7 +814,7 @@ void ADC_Task(void)
 //							
 //							if(i == 10)
 //							{
-//								LED1_ON; //²É¼¯³äµçÑ¹
+//								LED1_ON; //é‡‡é›†å……ç”µåŽ‹
 //								Charge_Time = 0;
 //								Sampling_Completion = 1;
 //								V_I = 1;
@@ -885,21 +924,28 @@ void CheckPowerLevel(float battery_voltage)
 
 /**************************************************
  * @brie   :Conditional_Judgment()
- * @note   :Ìõ¼þÅÐ¶Ï
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :æ¡ä»¶åˆ¤æ–­
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void Conditional_Judgment(void)
 {
 	switch(Power_Flag)
 	{
 		case 1: // Power on (startup)
-			 if(Charge_Voltage > CHARGING_VOLTAGE)
-			 {
+			if(Charge_Voltage > CHARGING_VOLTAGE)
+			{
+				// Stay in power mode "1"
 				//Power_Flag = 3;
 				if (Charge_Flag != 2)
 					Charge_Flag = 1;
-			 }
+			}
+			else if (Charge_Flag > 1) {
+				// Charger removed during/after charging?
+				Power_Flag = 3;
+				Charge_Flag = 0;
+			}
+				 
 		break;
 		
 		case 2: // VESC Boot completed
@@ -944,13 +990,13 @@ void Conditional_Judgment(void)
 					if (data.state == DISABLED) {
 						if ((ADC1_Val > 2) || (ADC2_Val > 2)) {
 							// Don't touch my board when it's disabled :)
-							Buzzer_Frequency = ((((uint8_t)(0.5*100))*4)-220);
+							Buzzer_Frequency = 100;
 						}
 					}
 					else {
 						Buzzer_Frequency = 0;
 
-						if(ADC1_Val < 2.9 && ADC2_Val <2.9)
+						if(ADC1_Val < 2.0 && ADC2_Val <2.0)
 						{
 							if(data.avgInputCurrent < 1.0)
 							{
@@ -997,10 +1043,10 @@ void Conditional_Judgment(void)
 					Charger_Detection_1ms = 0;
 				}
 				/*
-					½ÅÌ¤°å²ÈÏÂ»ò×ªËÙ´óÓÚ1000¶¨Ê±ÇåÁã
-					¼´²»²È½ÅÌ¤°å×ªËÙµÍÓÚ1000¿ªÊ¼¼ÆÊ±£¬³¬¹ý¹Ø»úÊ±¼ä¹Ø»ú
+					è„šè¸æ¿è¸©ä¸‹æˆ–è½¬é€Ÿå¤§äºŽ1000å®šæ—¶æ¸…é›¶
+					å³ä¸è¸©è„šè¸æ¿è½¬é€Ÿä½ŽäºŽ1000å¼€å§‹è®¡æ—¶ï¼Œè¶…è¿‡å…³æœºæ—¶é—´å…³æœº
 				*/
-				if(ADC1_Val > 2.9 || ADC2_Val > 2.9 || data.rpm > 1000)
+				if(ADC1_Val > 2.0 || ADC2_Val > 2.0 || data.rpm > 1000)
 				{
 					Shutdown_Time_S = 0;
 					Shutdown_Time_M = 0;
@@ -1016,10 +1062,17 @@ void Conditional_Judgment(void)
 						Power_Flag = 3;
 					}
 				}
+
+				if(((Shutdown_Time_M > 0) || (Shutdown_Time_S >= 10000)) && (lcmConfig.boardOff > 0))
+				{
+					// After 10 seconds of idle we allow the board to be shut down via app
+					Power_Flag = 3;
+				}
 			}
 		break;
 		
 		case 3:  // VESC is shut down and the charger supplies power to the board.
+			lcmConfig.isSet = false;
 			if(V_I == 0 && Charge_Time > 150)
 			{
 				if(Charge_Current < CHARGE_CURRENT && Charge_Current > 0)
@@ -1030,7 +1083,7 @@ void Conditional_Judgment(void)
 					{
 //						Charge_Flag = 3;
 						Shutdown_Cnt = 0;
-						CHARGE_OFF;  //¹Ø±Õ³äµçÆ÷
+						CHARGE_OFF;  //å…³é—­å……ç”µå™¨
 					}
 				}
 				else
@@ -1045,6 +1098,15 @@ void Conditional_Judgment(void)
 					CheckPowerLevel((Charge_Voltage+1)/BATTERY_STRING);
 				}
 			}
+			else if(Charge_Voltage > CHARGING_VOLTAGE)
+			 {
+				//Power_Flag = 3;
+				if (Charge_Flag != 2)
+					Charge_Flag = 1;
+			 }
+			 else {
+				 Charge_Flag = 0;
+			 }
 				
 		break;
 		
