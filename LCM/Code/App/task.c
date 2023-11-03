@@ -3,13 +3,13 @@
 
 /**************************************************
  * @brie   :KEY1_Task()
- * @note   :KEY1ÈÎÎñ
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :KEY1ä»»åŠ¡
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void KEY1_Task(void)
 {
-	if(KEY1_State == 0)// || Power_Flag == 3)  //³äµçÆ÷¹©µç°´¼ü²»Æð×÷ÓÃ
+	if(KEY1_State == 0)// || Power_Flag == 3)  //å……ç”µå™¨ä¾›ç”µæŒ‰é”®ä¸èµ·ä½œç”¨
 	{
 		return;
 	}
@@ -84,7 +84,6 @@ static void WS2812_Power_Display(uint8_t brightness)
  **************************************************/
 static void WS2812_VESC(void)
 {
-	uint8_t i;
 	uint8_t pos, red;
 	uint8_t green = 0;
 	uint8_t blue = WS2812_Measure;
@@ -163,7 +162,7 @@ static void WS2812_VESC(void)
 void WS2812_Boot(void)
 {
 	uint8_t i;
-	uint8_t num = floor(Power_Time / 100) + 1;
+	uint8_t num = floorf(Power_Time / 100) + 1;
 	// Rainbow: uint8_t rgbMap[10][3] = {{255,0,0}, {255,127,0}, {255,255,0}, {127,255,0}, {0,255,0}, {0,255,127}, {0,255,255}, {0,127,255}, {0,0,255}, {127,0,255}};
 	// Red, White, Blue:
 	uint8_t rgbMap[10][3] = {{255,0,0}, {255,0,0}, {255,0,0}, {255,255,255}, {255,255,255}, {255,255,255}, {255,255,255}, {0,0,255}, {0,0,255}, {0,0,255}};
@@ -287,9 +286,9 @@ static void WS2812_Handtest(void)
 
 /**************************************************
  * @brie   :WS2812_Task()
- * @note   :WS2812ÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :WS2812ä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void WS2812_Task(void)
 {
@@ -344,15 +343,15 @@ void WS2812_Task(void)
 	}
 	else switch(Gear_Position)
 	{
-		case 1: //1µ²
+		case 1: //1æŒ¡
 			WS2812_Measure = WS2812_1_BRIGHTNESS;
 		break;
 		
-		case 2:	//2µ²
+		case 2:	//2æŒ¡
 			WS2812_Measure = WS2812_2_BRIGHTNESS;
 		break;
 		
-		case 3: //3µ²
+		case 3: //3æŒ¡
 			WS2812_Measure = WS2812_3_BRIGHTNESS;
 		break;
 		
@@ -433,9 +432,9 @@ void Power_Task(void)
 
 /**************************************************
  * @brie   :Charge_Task()
- * @note   :³äµçÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :å……ç”µä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void Charge_Task(void)
 {
@@ -454,14 +453,14 @@ void Charge_Task(void)
 		break;
 		
 		case 1:
-			if(Charge_Time > 1000)  //ÑÓÊ±1S
+			if(Charge_Time > 1000)  //å»¶æ—¶1S
 			{
 				charge_step = 2;
 			}
 		break;
 		
 		case 2:
-			CHARGE_ON;  //´ò¿ª³äµçÆ÷
+			CHARGE_ON;  //æ‰“å¼€å……ç”µå™¨
 			Charge_Flag = 2;
 		    charge_step = 3;
 		break;
@@ -476,7 +475,7 @@ void Charge_Task(void)
 			{
 				V_I = 1;
 				Charge_Time = 0;
-				LED1_ON; //²É¼¯³äµçµçÑ¹
+				LED1_ON; //é‡‡é›†å……ç”µç”µåŽ‹
 				charge_step = 5;
 			}
 		break;
@@ -486,7 +485,7 @@ void Charge_Task(void)
 			{
 				V_I = 0;
 				Charge_Time = 0;
-				LED1_OFF; //²É¼¯³äµçÁ÷
+				LED1_OFF; //é‡‡é›†å……ç”µæµ
 				charge_step = 4;
 			}		
 		break;
@@ -558,25 +557,25 @@ void Headlights_Task(void)
 
 /**************************************************
  * @brie   :Buzzer_Task()
- * @note   :·äÃùÆ÷ÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :èœ‚é¸£å™¨ä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void Buzzer_Task(void)
 {
 	static uint8_t buzzer_step = 0;
-	static uint8_t gear_position_last = 0; //ÉÏÒ»´ÎµÄµµÎ»
+	static uint8_t gear_position_last = 0; //ä¸Šä¸€æ¬¡çš„æ¡£ä½
 	static uint8_t ring_frequency = 0;
 	static uint16_t sound_frequency = 0;
 	
-	if(Power_Flag != 2 || Buzzer_Flag == 1) //VESC¶Ïµç»ò·äÃùÆ÷¹Ø±Õ 
+	if(Power_Flag != 2 || Buzzer_Flag == 1) //VESCæ–­ç”µæˆ–èœ‚é¸£å™¨å…³é—­ 
 	{
 		BUZZER_OFF;
 		buzzer_step = 0;
 		return;
 	}
 	
-	if(Buzzer_Frequency == 0 && gear_position_last == Gear_Position) //·äÃùÆ÷ÏìµÄÆµÂÊÎª0»òÉÏÒ»´ÎµÄµµÎ»µÈÓÚÕâ´ÎµÄµµÎ»
+	if(Buzzer_Frequency == 0 && gear_position_last == Gear_Position) //èœ‚é¸£å™¨å“çš„é¢‘çŽ‡ä¸º0æˆ–ä¸Šä¸€æ¬¡çš„æ¡£ä½ç­‰äºŽè¿™æ¬¡çš„æ¡£ä½
 	{
 		BUZZER_OFF;
 		buzzer_step = 0;
@@ -647,9 +646,9 @@ void Buzzer_Task(void)
 
 /**************************************************
  * @brie   :Usart_Task()
- * @note   :´®¿ÚÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :ä¸²å£ä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void Usart_Task(void)
 {
@@ -701,16 +700,16 @@ void Usart_Task(void)
 				VESC_RX_Flag = 0;
 				result = Protocol_Parse(VESC_RX_Buff);
 				
-				if(result == 0) //½âÎö³É¹¦
+				if(result == 0) //è§£æžæˆåŠŸ
 				{
 						//LED1_Filp_Time(500);				
 						Usart_Flag = 1;
-//						Battery_Voltage = data.inpVoltage; //µç³ØµçÑ¹
-//						VESC_Rpm = data.rpm;            //×ªËÙ
-//						AvgInputCurrent = data.avgInputCurrent;  //Ä¸ÏßµçÁ÷
-//						DutyCycleNow = data.dutyCycleNow;   //Õ¼¿Õ±È
+//						Battery_Voltage = data.inpVoltage; //ç”µæ± ç”µåŽ‹
+//						VESC_Rpm = data.rpm;            //è½¬é€Ÿ
+//						AvgInputCurrent = data.avgInputCurrent;  //æ¯çº¿ç”µæµ
+//						DutyCycleNow = data.dutyCycleNow;   //å ç©ºæ¯”
 				}
-				else	//½âÎöÊ§°Ü
+				else	//è§£æžå¤±è´¥
 				{
 						//LED1_Filp_Time(100);
 						Usart_Flag = 2;
@@ -753,9 +752,9 @@ void Usart_Task(void)
 //float k = 0.15;
 /**************************************************
  * @brie   :ADC_Task()
- * @note   :ADCÈÎÎñ 
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :ADCä»»åŠ¡ 
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void ADC_Task(void)
 {
@@ -802,7 +801,7 @@ void ADC_Task(void)
 //						V_I = 0;
 //						Charge_Time = 0;
 //						Sampling_Completion = 0;
-//						LED1_OFF; //²É¼¯³äµçÁ÷
+//						LED1_OFF; //é‡‡é›†å……ç”µæµ
 //						Charge_Voltage = (float)(adc_charge_sum_ave*0.0257080078125);
 //					
 //					}
@@ -815,7 +814,7 @@ void ADC_Task(void)
 //							
 //							if(i == 10)
 //							{
-//								LED1_ON; //²É¼¯³äµçÑ¹
+//								LED1_ON; //é‡‡é›†å……ç”µåŽ‹
 //								Charge_Time = 0;
 //								Sampling_Completion = 1;
 //								V_I = 1;
@@ -925,9 +924,9 @@ void CheckPowerLevel(float battery_voltage)
 
 /**************************************************
  * @brie   :Conditional_Judgment()
- * @note   :Ìõ¼þÅÐ¶Ï
- * @param  :ÎÞ
- * @retval :ÎÞ
+ * @note   :æ¡ä»¶åˆ¤æ–­
+ * @param  :æ— 
+ * @retval :æ— 
  **************************************************/
 void Conditional_Judgment(void)
 {
@@ -1044,8 +1043,8 @@ void Conditional_Judgment(void)
 					Charger_Detection_1ms = 0;
 				}
 				/*
-					½ÅÌ¤°å²ÈÏÂ»ò×ªËÙ´óÓÚ1000¶¨Ê±ÇåÁã
-					¼´²»²È½ÅÌ¤°å×ªËÙµÍÓÚ1000¿ªÊ¼¼ÆÊ±£¬³¬¹ý¹Ø»úÊ±¼ä¹Ø»ú
+					è„šè¸æ¿è¸©ä¸‹æˆ–è½¬é€Ÿå¤§äºŽ1000å®šæ—¶æ¸…é›¶
+					å³ä¸è¸©è„šè¸æ¿è½¬é€Ÿä½ŽäºŽ1000å¼€å§‹è®¡æ—¶ï¼Œè¶…è¿‡å…³æœºæ—¶é—´å…³æœº
 				*/
 				if(ADC1_Val > 2.0 || ADC2_Val > 2.0 || data.rpm > 1000)
 				{
@@ -1084,7 +1083,7 @@ void Conditional_Judgment(void)
 					{
 //						Charge_Flag = 3;
 						Shutdown_Cnt = 0;
-						CHARGE_OFF;  //¹Ø±Õ³äµçÆ÷
+						CHARGE_OFF;  //å…³é—­å……ç”µå™¨
 					}
 				}
 				else
