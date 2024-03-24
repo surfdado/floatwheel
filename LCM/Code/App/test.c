@@ -109,6 +109,7 @@ void Test_LED(void)
 					case 1:
 						led_pwm += 1;
 						pwm_st = 2;
+						/* FALLTHRU */
 					case 2:
 						led_pwm -= 500;
 						if(led_pwm == 0)
