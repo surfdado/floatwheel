@@ -128,7 +128,6 @@ static void WS2812_Power_Display(uint8_t brightness)
  **************************************************/
 static void WS2812_VESC(void)
 {
-	uint8_t i;
 	uint8_t pos, red;
 	uint8_t green = 0;
 	uint8_t blue = WS2812_Measure;
@@ -367,8 +366,6 @@ static void WS2812_Handtest(void)
  **************************************************/
 void WS2812_Task(void)
 {
-	uint8_t i;
-
 	if(WS2812_Counter < 20) // 20ms refresh period
 	{
 		return;
@@ -700,7 +697,6 @@ static void Set_Headlights_Brightness(int brightness)
 void Headlights_Task(void)
 {
 	static uint8_t gear_position_last = 0;
-	static bool isForward = false;
 
 	if (Flashlight_Time < 10) {
 		return;
