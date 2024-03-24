@@ -39,34 +39,25 @@ void IO_WS2812_Init(void)
 	}
 	i=250 120us
 */
+
 void WS2812_0_Code(void)
 {
-	GPIOD->BSRR = GPIO_Pin_4;
-	GPIOD->BSRR = GPIO_Pin_4;
-	GPIOD->BSRR = GPIO_Pin_4; //250ns
-	
+	//250ns
+	for(int i = 0; i != 3; ++i) {
+		GPIOD->BSRR = GPIO_Pin_4;
+		__ASM volatile("" ::: "memory");
+	}
+
 	GPIOD->BRR = GPIO_Pin_4;
-//	GPIOD->BRR = GPIO_Pin_4;
-//	GPIOD->BRR = GPIO_Pin_4;
-//	GPIOD->BRR = GPIO_Pin_4;
-//	GPIOD->BRR = GPIO_Pin_4;
-//	GPIOD->BRR = GPIO_Pin_4;
-//	GPIOD->BRR = GPIO_Pin_4;
-//	GPIOD->BRR = GPIO_Pin_4; //750ns
 }
 
 void WS2812_1_Code(void)
 {
-	GPIOD->BSRR = GPIO_Pin_4;
-	GPIOD->BSRR = GPIO_Pin_4;
-	GPIOD->BSRR = GPIO_Pin_4;
-	GPIOD->BSRR = GPIO_Pin_4;
-	GPIOD->BSRR = GPIO_Pin_4;
-	GPIOD->BSRR = GPIO_Pin_4;
-	GPIOD->BSRR = GPIO_Pin_4;
-	GPIOD->BSRR = GPIO_Pin_4; //750ns
-	
+	//750ns
+	for(int i = 0; i != 8; ++i) {
+		GPIOD->BSRR = GPIO_Pin_4;
+		__ASM volatile("" ::: "memory");
+	}
+
 	GPIOD->BRR = GPIO_Pin_4;
-//	GPIOD->BRR = GPIO_Pin_4;
-//	GPIOD->BRR = GPIO_Pin_4;  //250ns 
 }
