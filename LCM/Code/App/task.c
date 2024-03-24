@@ -219,7 +219,7 @@ static void WS2812_VESC(void)
 void WS2812_Boot(void)
 {
 	uint8_t i;
-	uint8_t num = floor(Power_Time / 500) + 1;
+	uint8_t num = (Power_Time / 500) + 1;
 	uint8_t bootAnims[][10][3] = {
 		// Default (blue...green)
 		{{10,0,30}, {9,3,27}, {8,6,24}, {7,9,21}, {6,12,18}, {5,15,15}, {4,18,12}, {3,21,9}, {2,24,6}, {1,27,3}},
@@ -252,7 +252,7 @@ void WS2812_Boot(void)
 void WS2812_Shutdown(void)
 {
 	uint8_t brightness = 100;
-	int num = 10 - floor(Power_Time / 100);
+	int num = 10 - (Power_Time / 100);
 	if (num < 1) {
 		num = 1;
 	}
