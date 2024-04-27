@@ -17,7 +17,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "hk32f030m.h"
-#include <stdio.h>
 #define UNUSED(X) (void)X      /* To avoid gcc/g++ warnings */
 
 

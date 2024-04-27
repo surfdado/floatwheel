@@ -1,7 +1,6 @@
 #ifndef __VESC_USART_H
 #define __VESC_USART_H
 
-#include <string.h>
 #include "hk32f030m.h"
 #include "crc.h"
 #include "usart.h"
