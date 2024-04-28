@@ -17,7 +17,7 @@ typedef enum
 #define	  CHARGING_VOLTAGE	  		40
 #define   BATTERY_STRING      		20
 #define   SHUTDOWN_TIME		  		20
-#define   VESC_RPM            		250
+#define   VESC_RPM            		1000
 #define   VESC_BOOT_TIME      		5000
 #define   VESC_SHUTDOWN_TIME      	1000
 #define   DUTY_CYCLE          		0.9

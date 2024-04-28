@@ -10,7 +10,8 @@
 typedef struct {
 	bool floatPackageSupported;
 	float avgInputCurrent;
-	int dutyCycleNow;
+	int dutyCycleNow;	// duty when running
+	int pitch;			// pitch when idle
 	float inpVoltage;
 	long rpm;
 	char state;
