@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - '*'
+    tags:
+      - 'v*'  # This assumes that your version tags are prefixed with 'v'
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # or another OS of your choice
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -27,5 +29,24 @@ jobs:
           ls -la
           make
 
-#      - name: Run tests
-#          run: make test  # Assuming you have a 'test' target in your Makefile
+      # Additional steps to create a release and upload files
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload app.hex
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./LCM/Build/app.hex
+          asset_name: app.hex
+          asset_content_type: application/octet-stream
