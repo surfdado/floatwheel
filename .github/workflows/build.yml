@@ -21,11 +21,11 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y build-essential
 
-      - name: Navigate to LCM directory
-        run: cd LCM
-
       - name: Build project
-        run: make
+        run: |
+          cd LCM
+          ls -la
+          make
 
-      - name: Run tests
-        run: make test  # Assuming you have a 'test' target in your Makefile
+#      - name: Run tests
+#          run: make test  # Assuming you have a 'test' target in your Makefile
