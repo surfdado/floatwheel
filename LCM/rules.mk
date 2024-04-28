@@ -55,7 +55,6 @@ TGT_ASFLAGS += $(ARCH_FLAGS) $(DEBUG_FLAGS) $(OPT) -Wa,--warn
 TGT_LDFLAGS += $(ARCH_FLAGS) -nostdlib -flto \
 				-Wl,-Map=$(BDIR)/$(PROJECT).map \
 				-Wl,--gc-sections \
-				-Wl,--no-warn-rwx-segments \
 				-Wl,--print-memory-usage \
 				-Wl,--cref
 # Exclude standard initialization actions, when __libc_init_array exists, this should be omit, \
