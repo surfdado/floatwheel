@@ -8,8 +8,27 @@ on:
       - 'v*'  # This assumes that your version tags are prefixed with 'v'
 
 jobs:
-  build:
+  create_release:
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+  build_release:
+    needs: create_release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
     strategy:
       matrix:
         cell_type: [P42A, DG40]
@@ -30,19 +49,6 @@ jobs:
         run: |
           cd LCM
           make CELL_TYPE=${{ matrix.cell_type }}
-
-      # Additional steps to create a release and upload files
-      - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/') && matrix.cell_type == 'P42A'
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
 
       - name: Upload app.hex
         if: startsWith(github.ref, 'refs/tags/')
