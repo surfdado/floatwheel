@@ -1,0 +1,31 @@
+name: Build LCM
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # or another OS of your choice
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up GCC
+        uses: actions/setup-python@v2
+        with:
+          gcc-version: '11'  # Specify the GCC version you need
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+
+      - name: Navigate to LCM directory
+        run: cd LCM
+
+      - name: Build project
+        run: make
+
+      - name: Run tests
+        run: make test  # Assuming you have a 'test' target in your Makefile
