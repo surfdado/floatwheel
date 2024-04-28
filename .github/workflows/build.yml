@@ -85,5 +85,5 @@ jobs:
       - name: Publish Artifacts
         uses: actions/download-artifact@v4
         with:
-          name: app-${{ matrix.cell_type }}
+          name: ./LCM/Build/app.hex
           path: lcm-${{ matrix.cell_type }}.hex
