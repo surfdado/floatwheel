@@ -151,7 +151,9 @@ void WS2812_Left(void)
 
 void delay(uint16_t i)
 {
-	while(i--);
+	while(i--) {
+		__ASM volatile("nop");
+	}
 }
 
 void WS2812_Refresh(void)
