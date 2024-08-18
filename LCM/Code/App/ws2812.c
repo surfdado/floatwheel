@@ -121,7 +121,9 @@ void WS2812_Set_Colour(uint8_t num,uint8_t red,uint8_t green,uint8_t blue)
 
 void delay(uint16_t i)
 {
-	while(i--);
+	while(i--) {
+		__ASM volatile("nop");
+	}
 }
 
 void WS2812_Refresh(void)

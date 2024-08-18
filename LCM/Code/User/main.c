@@ -37,9 +37,10 @@
 
 //RCC_ClocksTypeDef RCC_Clock;
 
-/*
-										
-*/
+#ifdef __GNUC__
+// stub init (main is called explicitly during startup)
+void _init(void) {}
+#endif
 
 /**************************************************
  * @brie   :main()
