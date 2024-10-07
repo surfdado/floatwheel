@@ -8,7 +8,7 @@
 #include "vesc_uasrt.h"
 
 #define	  CHARGING_VOLTAGE	  		40   		//充电电压检测 大于此值认为充电器插入
-#define   BATTERY_STRING      		20    		//电池串数
+#define   BATTERY_STRING      		15    		//电池串数
 #define   SHUTDOWN_TIME		  		30   		//关机时间 单位分钟
 #define   VESC_RPM            		250  		//转速
 #define   VESC_BOOT_TIME      		6000 		//VESC开机时间 单位ms
@@ -19,6 +19,7 @@
 #define   WS2812_1_BRIGHTNESS 		204			//WS2812 1挡亮度 （0-255）
 #define   WS2812_2_BRIGHTNESS 		128			//WS2812 2挡亮度 （0-255）
 #define   WS2812_3_BRIGHTNESS 		30			//WS2812 3挡亮度 （0-255）
+#define   WS2812_4_BRIGHTNESS 		0			//WS2812 3挡亮度 （0-255）
 #define   CHARGE_CURRENT			0.3         //充电电流 单位A
 #define   CHARGE_CURRENT_L			0.1         //充电电流 单位A
 #define   CHARGE_CURRENT_H			0.24        //充电电流 单位A
