@@ -1,6 +1,10 @@
 #ifndef __WS2812_H
 #define __WS2812_H
 
+#include "config.h"
+
+#ifdef HAS_WS2812
+
 #include "hk32f030m.h"
 #include "spi.h"
 #include "io_ws2812.h"
@@ -18,6 +22,8 @@ void WS2812_Set_AllColours(uint8_t start,uint8_t end,uint8_t red,uint8_t green,u
 void WS2812_Set_Colour(uint8_t num,uint8_t red,uint8_t green,uint8_t blue);
 void WS2812_Task(void);
 void WS2812_Refresh(void);
+
+#endif // HAS_WS2812
 
 #endif
 

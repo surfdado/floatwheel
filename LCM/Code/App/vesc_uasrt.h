@@ -26,7 +26,7 @@ typedef struct {
 	uint8_t headlightIdleBrightness;
 	uint8_t statusbarBrightness;
 	//StatusBarIdleMode statusBarIdleMode;
-	//uint8_t dutyBeep;
+	uint8_t dutyBeep;
 	//float chargeCutoffVoltage;
 	//uint8_t autoShutdownTime;
 	bool boardOff;

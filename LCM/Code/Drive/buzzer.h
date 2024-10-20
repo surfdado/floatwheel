@@ -1,6 +1,10 @@
 #ifndef __BUZZER_H
 #define __BUZZER_H
 
+#include "config.h"
+
+#ifdef USE_BUZZER
+
 #include "hk32f030m.h"
 
 #define  BUZZER_ON     	GPIOA->BSRR = GPIO_Pin_3;
@@ -9,6 +13,8 @@
 void Buzzer_Init(void);
 void Buzzer_Ring(uint16_t ring_time);
 void Buzzer_Scan(void);
+
+#endif // USE_BUZZER
 
 #endif
 

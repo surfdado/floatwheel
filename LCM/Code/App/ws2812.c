@@ -1,5 +1,7 @@
 #include "ws2812.h"
 
+#ifdef HAS_WS2812
+
 uint16_t WS2812_Counter = 0;
 uint8_t WS2812_Buff[WS2812_N][24];
 
@@ -152,3 +154,5 @@ void WS2812_Refresh(void)
 	__set_PRIMASK(0);//�����ж�
 	//GPIOD->BSRR = GPIO_Pin_4;
 }
+
+#endif // HAS_WS2812

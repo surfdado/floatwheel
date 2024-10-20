@@ -11,6 +11,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "hk32f030m_it.h"
 #include "hk32f030m.h"
+#include "config.h"
 #include "led.h"
 #include "key.h"
 #include "ws2812.h"
@@ -135,20 +136,28 @@ void TIM6_IRQHandler(void)
 	{
 		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
 		
+#ifdef HAS_WS2812
 		WS2812_Counter++;
-		//Buzzer_Time++;
+#endif
+#ifdef USE_BUZZER
+		Buzzer_Time++;
+#endif
+#ifdef HAS_CHARGING
 		Charge_Time++;
+		Charger_Detection_1ms++;
+#endif
 		Flashlight_Time++;
 		Power_Time++;
 		Usart_Time++;
 		ADC_Time++;
 		Shutdown_Time_S++;
 		Flashlight_Detection_Time++;
-		Charger_Detection_1ms++;
 		Idle_Time++;
 		
 		KEY1_Scan();
-		//Buzzer_Scan();
+#ifdef USE_BUZZER
+		Buzzer_Scan();
+#endif
   }
 }
 

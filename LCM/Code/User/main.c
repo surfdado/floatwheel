@@ -21,6 +21,7 @@
   2023-01-16 WS2812驱动由硬件SPI模拟改为IO口加延时模拟
   ----------------------------------------------------------------------------*/
 #include "hk32f030m.h"
+#include "config.h"
 #include "led.h"
 #include "time.h"
 #include "spi.h"
@@ -55,7 +56,9 @@ int main(void)
 	Buzzer_Init();
 #endif
 	ADC1_Init();
+#ifdef HAS_WS2812
 	WS2812_Init();
+#endif
 	Power_Init();
 	KEY_Init();
 	USART1_Init(115200);
@@ -68,15 +71,15 @@ int main(void)
 	while(1)
 	{
 		KEY1_Task();
-		
+#ifdef HAS_WS2812
 		if(WS2812_Counter >= 20) // 20ms refresh period
 		{
 			WS2812_Task();
 			WS2812_Counter = 0;
 		}
-
+#endif
 		Power_Task();
-#ifndef GTV
+#ifdef HAS_CHARGING
 		Charge_Task();
 #endif
 		Headlights_Task();

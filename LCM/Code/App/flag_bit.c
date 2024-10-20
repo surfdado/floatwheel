@@ -7,6 +7,9 @@
 	Power_Flag = 3; VESC powered off, the board is powered by the charger.
 */
 uint8_t Power_Flag = 0;
+
+#ifdef HAS_CHARGING
+
 /*
 	Charge_Flag = 0; Just powered on.
 	Charge_Flag = 1; Ready for charging.
@@ -14,6 +17,11 @@ uint8_t Power_Flag = 0;
 	Charge_Flag = 3; Battery fully charged.
 */
 uint8_t Charge_Flag = 0;
+
+#endif // HAS_CHARGING
+
+#ifdef HAS_WS2812
+
 /*
         Lightbar_Mode_Flag = 0; Just powered on.
         Lightbar_Mode_Flag = 1; Display battery level.
@@ -43,26 +51,43 @@ uint8_t WS2812_Flag = 0;
 	Power_Display_Flag = 10; 2.80V~3.35V 1个红灯
 */
 uint8_t Power_Display_Flag = 0;
+
+#endif // HAS_WS2812
+
+#ifdef USE_BUZZER
+
 /*
 	Buzzer_Flag = 0; 刚上电
 	Buzzer_Flag = 1；蜂鸣器不响
 	Buzzer_Flag = 2；蜂鸣器响
 */
-//uint8_t Buzzer_Flag = 0;
+uint8_t Buzzer_Flag = 0;
+
+#endif // USE_BUZZER
 
 /*
 	Usart_Flag = Vesc_Data_Ready
 */
 uint8_t Vesc_Data_Ready = 0;
 
+#ifdef USE_BUZZER
+
 /*
 	蜂鸣器响的时间
 */
-//uint16_t Buzzer_Time = 0;
+uint16_t Buzzer_Time = 0;
+
+#endif // USE_BUZZER
+
+#ifdef HAS_CHARGING
+
 /*
 	充电计时
 */
 uint16_t Charge_Time = 0;
+
+#endif // HAS_CHARGING
+
 /*
 	照明灯
 */
@@ -96,10 +121,29 @@ float ADC1_Val = 0;
 	ADC2
 */
 float ADC2_Val = 0;
+
+#ifdef HAS_CHARGING
+
 /*
 	Charging Port Voltage
 */
 float Charge_Voltage = 0;
+/*
+	Charging current and voltage original values
+*/
+float Charge_Current = 0;
+/*
+	V_I = 0: Sampling charging current.
+	V_I = 1: Sampling charging voltage.
+*/
+uint8_t V_I = 1;
+/*
+	Charger detection time.
+*/
+uint16_t Charger_Detection_1ms = 0;
+
+#endif // HAS_CHARGING
+
 /*
 	Light_Profile = 0 Just powered on.
 	Light_Profile = 1 Headlight bightness low, Lightpad brightness high, beep once
@@ -111,31 +155,24 @@ uint8_t Gear_Position = 0;
 	WS2812量度
 */
 uint8_t WS2812_Measure = 0;
+
+#ifdef USE_BUZZER
+
 /*
 	 Buzzer frequency in BPM, beats per minute, ranging from 60 to 180, corresponding to a duty cycle of 70 to 100)
 */
-//uint8_t Buzzer_Frequency = 0;
+uint8_t Buzzer_Frequency = 0;
+
+#endif // USE_BUZZER
+
 /*
 	 When the button is double-clicked without pressing it, the headlight stays on for 3 seconds.
 */
 uint16_t Flashlight_Detection_Time = 0;
 /*
-	Charging current and voltage original values
-*/
-float Charge_Current = 0;
-/*
-	V_I = 0: Sampling charging current.
-	V_I = 1: Sampling charging voltage.
-*/
-uint8_t V_I = 1;
-/*
 	Counter used while detecting end of charging
 */
 uint16_t Shutdown_Cnt = 0;
-/*
-	Charger detection time.
-*/
-uint16_t Charger_Detection_1ms = 0;
 
 /*
 	The current brightness of the headlights, to slowly ramp up to target brightness

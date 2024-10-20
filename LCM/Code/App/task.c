@@ -17,11 +17,11 @@ static void lcmConfigReset(void)
 	lcmConfig.headlightIdleBrightness = 0;
 	lcmConfig.statusbarBrightness = 5;
 	lcmConfig.boardOff = 0;
+	lcmConfig.dutyBeep = 90;
 	/*
 	lcmConfig.statusBarIdleMode = DEFAULT_IDLE_MODE;
 	lcmConfig.chargeCutoffVoltage = 0;
 	lcmConfig.bootAnimation = BOOT_DEFAULT;
-	lcmConfig.dutyBeep = 90;
 	lcmConfig.autoShutdownTime = SHUTDOWN_TIME;
 	
 	EEPROM_ReadByte(BOOT_ANIMATION, &lcmConfig.bootAnimation);
@@ -47,14 +47,16 @@ static void lcmConfigReset(void)
 
 // brightnesses for Gear 1, 2, 3:
 int headlight_brightnesses[] = { 0, 150, 255 };
+#ifdef HAS_WS2812
 int status_brightnesses[] = { WS2812_1_BRIGHTNESS, WS2812_2_BRIGHTNESS, WS2812_3_BRIGHTNESS };
+#endif
 
 /**************************************************
  * @brie   :KEY1_Task()
  **************************************************/
 void KEY1_Task(void)
 {
-	if(KEY1_State == 0)// || Power_Flag == 3)  //充电器供电按键不起作用
+	if(KEY1_State == 0)// || Power_Flag == 3)  //��������簴����������
 	{
 		return;
 	}
@@ -92,14 +94,16 @@ void KEY1_Task(void)
 			if(Power_Flag == 2) // Boot completed
 			{
 				Idle_Time = 0;
-				/*if(Buzzer_Flag == 2)
+#ifdef USE_BUZZER
+				if(Buzzer_Flag == 2)
 				{
 					Buzzer_Flag = 1;
 				}
 				else
 				{
 					Buzzer_Flag = 2;
-				}*/
+				}
+#endif
 			}
 		break;
 	}
@@ -108,6 +112,8 @@ void KEY1_Task(void)
 
 	// Reset back to showing battery percentage for a couple seconds
 }
+
+#ifdef HAS_WS2812
 
 /**************************************************
  * @brie   :WS2812_Power_Display()
@@ -406,14 +412,14 @@ static void WS2812_Handtest(void)
 
 /**************************************************
  * @brie   :WS2812_Task()
- * @note   :WS2812任务 
- * @param  :无
- * @retval :无
+ * @note   :WS2812���� 
+ * @param  :��
+ * @retval :��
  **************************************************/
 void WS2812_Task(void)
 {
 	uint8_t i;
-	
+#ifdef HAS_CHARGING
 	if(Charge_Flag == 3) // Battery fully charged
 	{
 		WS2812_Set_AllColours(1,10,50,150,50);	// white with a strong green tint
@@ -425,12 +431,16 @@ void WS2812_Task(void)
 		WS2812_Charge();
 		return;
 	}
+#endif
 
 	if (WS2812_Display_Flag == 3) {
 		WS2812_Shutdown();
 		return;
 	}
 
+#ifndef HAS_CHARGING
+    const uint8_t Charge_Flag = 0;
+#endif
 	if(Power_Flag == 0 || (Power_Flag == 3 && Charge_Flag == 0))
 	{
 		// Board is off
@@ -481,15 +491,17 @@ void WS2812_Task(void)
 	}
 }
 
+#endif // HAS_WS2812
+
 /**************************************************
  * @brie   :Power_Task()
- * @note   :电源任务 
- * @param  :无
- * @retval :无
+ * @note   :��Դ���� 
+ * @param  :��
+ * @retval :��
  **************************************************/
 void Power_Task(void)
 {
-	static uint8_t power_flag_last = 0; //上一次的状态
+	static uint8_t power_flag_last = 0; //��һ�ε�״̬
 	static uint8_t power_step = 0;
 
 	if (Power_Flag == 4) {
@@ -521,9 +533,13 @@ void Power_Task(void)
 					{
 						Power_Flag = 2; // Boot completed
 						Gear_Position = 1; // The default setting is 1st gear after power-on.
-						//Buzzer_Flag = 2;    // The default buzzer sounds when powering on
+#ifdef BEEP_ON_POWER
+						Buzzer_Flag = 2;    // The default buzzer sounds when powering on
+#endif
 						power_step = 0;
+#ifdef HAS_WS2812
 						WS2812_Display_Flag = 1;
+#endif
 					}
 				break;
 			}
@@ -531,16 +547,23 @@ void Power_Task(void)
 		break;	
 
 		case 3:// VESC is shut down (either auto-shutdown or button press)
+#ifdef HAS_WS2812
 			WS2812_Display_Flag = 0;
+#endif
 			PWR_OFF 
 		break;
 
+#ifdef HAS_WS2812
 		case 4:// New Power state for shutdown sequence
 			WS2812_Display_Flag = 3;
+		    break;
+#endif
 		default:
 		break;
 	}
 }
+
+#ifdef HAS_WS2812
 
 void CheckPowerLevel(float battery_voltage)
 {
@@ -567,6 +590,10 @@ void CheckPowerLevel(float battery_voltage)
 		}
 	}
 }
+
+#endif // HAS_WS2812
+
+#ifdef HAS_CHARGING
 
 /**************************************************
  * @brie   :Charge_Task()
@@ -691,6 +718,8 @@ void Charge_Task(void)
 	}
 }
 
+#endif // HAS_CHARGING
+
 /**************************************************
  * @brief  :Set_Headlights_Brightness()
  * @note   :
@@ -802,10 +831,11 @@ void Headlights_Task(void)
 	}
 }
 
+#ifdef USE_BUZZER
+
 /**************************************************
  * @brie   :Buzzer_Task()
  **************************************************/
-#ifdef USE_BUZZER
 void Buzzer_Task(void)
 {
 	static uint8_t buzzer_step = 0;
@@ -813,9 +843,6 @@ void Buzzer_Task(void)
 	static uint8_t ring_frequency = 0;
 	static uint16_t sound_frequency = 0;
 
-	BUZZER_OFF;
-	return;
-	
 	if(Power_Flag != 2 || Buzzer_Flag == 1)
 	{
 		BUZZER_OFF;
@@ -892,7 +919,7 @@ void Buzzer_Task(void)
 	}
 }
 
-#endif
+#endif // USE_BUZZER
 
 /**************************************************
  * @brie   :Usart_Task()
@@ -1025,6 +1052,7 @@ void ADC_Task(void)
 				ADC1_Val = (float)(adc1_val_sum_ave*0.0012890625);
 				ADC2_Val = (float)(adc2_val_sum_ave*0.0012890625);
 				
+#ifdef HAS_CHARGING
 				if(V_I == 0)
 				{
 					if(Charge_Time>100)
@@ -1039,6 +1067,7 @@ void ADC_Task(void)
 						Charge_Voltage = (float)(adc_charge_sum_ave*0.0257080078125);
 					}
 				}
+#endif
 			}
 			
 		break;
@@ -1055,21 +1084,28 @@ void ADC_Task(void)
  **************************************************/
 void VESC_State_Task(void)
 {
-	if ((Charge_Flag > 0) || (Power_Flag != 2) || !Vesc_Data_Ready)
+#ifdef HAS_CHARGING
+	if (Charge_Flag > 0)
+        return;
+#endif
+    
+    if ((Power_Flag != 2) || !Vesc_Data_Ready)
 		return;
 
 	Vesc_Data_Ready = false;
 
+#if defined(HAS_WS2812)
 	// Not charging? Get voltage from VESC
 	if (data.inpVoltage > 0) {
 		CheckPowerLevel((data.inpVoltage+1)/BATTERY_STRING);
 	}
+#endif
 
 	if(data.dutyCycleNow < 0)
 	{
 		data.dutyCycleNow = -data.dutyCycleNow;
 	}
-#ifdef USE_BUZZER
+#ifdef BEEP_ON_DUTY_CYCLE
 	// Duty Cycle beep
 	if ((lcmConfig.dutyBeep > 0) && (data.dutyCycleNow >= lcmConfig.dutyBeep))
 	{
@@ -1089,11 +1125,13 @@ void VESC_State_Task(void)
 	{
 		data.rpm = -data.rpm;
 	}
-	
+#ifdef HAS_WS2812
 	if(data.state == RUNNING_FLYWHEEL) {
 		WS2812_Display_Flag = 2;
 		WS2812_Flag = 5;
-		//Buzzer_Frequency = 0;
+#ifdef USE_BUZZER
+		Buzzer_Frequency = 0;
+#endif
 	}
 	else if(data.rpm<VESC_RPM)
 	{
@@ -1126,7 +1164,7 @@ void VESC_State_Task(void)
 		WS2812_Display_Flag = 2;
 		WS2812_Flag = 4;	// Normal Riding!
 	}
-	
+#endif // HAS_WS2812
 	// No movement and no ADCs? Shutdown after timeout (10-30min)
 	if(ADC1_Val > 2.0 || ADC2_Val > 2.0 || data.rpm > 1000)
 	{
