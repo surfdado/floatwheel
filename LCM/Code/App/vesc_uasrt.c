@@ -315,8 +315,8 @@ uint8_t Protocol_Parse(uint8_t * message)
 		return 1; //crc is wrong
 	}
 	
-	id = message[counter++];
-	pdata = &message[counter];  
+	pdata = &message[counter];
+	id = pdata[ind++];
 	
 	switch(id)
 	{
