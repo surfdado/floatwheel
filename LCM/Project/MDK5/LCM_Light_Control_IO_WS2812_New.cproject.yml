@@ -10,7 +10,6 @@ project:
         - ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/inc
         - ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/CMSIS/CM0/Core
         - ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/CMSIS/HK32F030M/Include
-      debug: "on"
       define:
         - HK32F030M
         - HK32F030MF4P6
