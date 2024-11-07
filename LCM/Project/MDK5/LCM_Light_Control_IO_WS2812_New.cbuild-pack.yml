@@ -1,0 +1,5 @@
+cbuild-pack:
+  resolved-packs:
+    - resolved-pack: HKMicroChip::HK32F030xMxx_DFP@1.0.17
+      selected-by-pack:
+        - HKMicroChip::HK32F030xMxx_DFP
