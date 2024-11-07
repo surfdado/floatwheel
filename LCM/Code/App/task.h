@@ -14,7 +14,7 @@ typedef enum
 } CELL_TYPE;
 
 //#define PINTV
-#define XRV
+//#define XRV
 //#define GTV
 //#define ADV
 
