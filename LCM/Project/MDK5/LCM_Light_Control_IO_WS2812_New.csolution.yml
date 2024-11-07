@@ -24,7 +24,7 @@ solution:
       optimize: debug
       debug: on
     - type: Release
-      optimize: balanced
+      optimize: size
       debug: off
   projects:
     - project: LCM_Light_Control_IO_WS2812_New.cproject.yml
