@@ -1,4 +1,6 @@
 project:
+  output:
+    type: hex
   packs:
     - pack: HKMicroChip::HK32F030xMxx_DFP
   setups:
