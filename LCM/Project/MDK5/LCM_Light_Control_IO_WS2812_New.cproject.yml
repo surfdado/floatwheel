@@ -1,5 +1,6 @@
 project:
   output:
+    base-name: v$VERSION$_$TargetType$
     type: hex
   packs:
     - pack: HKMicroChip::HK32F030xMxx_DFP

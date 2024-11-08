@@ -2,22 +2,29 @@ solution:
   created-by: uv2csolution@1.5.0
   created-for: CMSIS-Toolbox@2.4.0
   compiler: AC6@6.22.0
+  variables:
+    - VERSION: 2_1_4
+
   target-types:
     - type: ADV
       define:
         - ADV
+        - FIRMWARE_VERSION: '"ADV_$VERSION$"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: GTV
       define:
         - GTV
+        - FIRMWARE_VERSION: '"GTV_$VERSION$"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: PINTV
       define:
         - PINTV
+        - FIRMWARE_ID: '"PINTV_$VERSION$"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: XRV
       define:
         - XRV
+        - FIRMWARE_VERSION: '"XRV_$VERSION$"'
       device: HK_MicroChip::HK32F030MF4P6
   build-types:
     - type: Debug

@@ -6,18 +6,18 @@
 uint8_t VESC_RX_Buff[80];
 uint8_t VESC_RX_Flag = 0;
 
-#ifdef GTV
-#define FIRMWARE_ID "GTV_2_1_4"
-#endif
-#ifdef XRV
-#define FIRMWARE_ID "XRV_2_1_4"
-#endif
-#ifdef PINTV
-#define FIRMWARE_ID "PintV_2_1_4"
-#endif
-#ifdef ADV
-#define FIRMWARE_ID "ADV_2_1_4"
-#endif
+// #ifdef GTV
+// #define FIRMWARE_ID "GTV_2_1_4"
+// #endif
+// #ifdef XRV
+// #define FIRMWARE_ID "XRV_2_1_4"
+// #endif
+// #ifdef PINTV
+// #define FIRMWARE_ID "PintV_2_1_4"
+// #endif
+// #ifdef ADV
+// #define FIRMWARE_ID "ADV_2_1_4"
+// #endif
 
 // Access ADC values here to determine riding state
 extern float ADC1_Val, ADC2_Val;
