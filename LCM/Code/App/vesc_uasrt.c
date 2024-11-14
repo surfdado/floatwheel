@@ -7,16 +7,16 @@ uint8_t VESC_RX_Buff[80];
 uint8_t VESC_RX_Flag = 0;
 
 // #ifdef GTV
-// #define FIRMWARE_ID "GTV_2_1_4"
+// #define FIRMWARE_ID "GTV_2_1_5"
 // #endif
 // #ifdef XRV
-// #define FIRMWARE_ID "XRV_2_1_4"
+// #define FIRMWARE_ID "XRV_2_1_5"
 // #endif
 // #ifdef PINTV
-// #define FIRMWARE_ID "PintV_2_1_4"
+// #define FIRMWARE_ID "PintV_2_1_5"
 // #endif
 // #ifdef ADV
-// #define FIRMWARE_ID "ADV_2_1_4"
+// #define FIRMWARE_ID "ADV_2_1_5"
 // #endif
 
 // Access ADC values here to determine riding state
@@ -336,7 +336,6 @@ uint8_t Protocol_Parse(uint8_t * message)
 				// Use this fault as a placeholder (we only care that the board is stopped anyways)
 				data.state = FAULT_STARTUP;
 			}
-			data.isOldPackage = true;
 		
 		break;
 		

@@ -201,12 +201,18 @@ static void WS2812_VESC(void)
 		break;
 
 		case 5:
-			// Flywheel Mode: just a rando pattern fpr now
-			red = Power_Time % 255;
-			green = (Power_Time + 100) % 255;
-		  	blue = (Power_Time - 100) % 255;
-		  	pos = (Power_Time/100) % 10;
+			// Flywheel Mode: just a rando pattern for now
+			red = Power_Time % 110;
+			green = (Power_Time + 100) % 110;
+			blue = (Power_Time - 100) % 110;
+			pos = (Power_Time/95) % 10;
 			WS2812_Set_Colour(pos,red,green,blue);
+		
+			// power_time gets capped in hk_it.c at 30k to prevent integer overflow
+			// set it down to 10k to let it increment again
+			if (Power_Time > 20000)
+				Power_Time = 10000;
+
 		break;			
 		default:
 		break;
@@ -375,10 +381,7 @@ static void WS2812_Idle()
 			}
 		}
 		else {
-			if (data.isOldPackage)
-				WS2812_Set_AllColours(1, 10, 255, 20, 255);
-			else
-				WS2818_Knight_Rider(WS2812_Measure);
+			WS2818_Knight_Rider(WS2812_Measure);
 		}
 		return;
 	}
@@ -547,7 +550,8 @@ void Power_Task(void)
 void CheckPowerLevel(float battery_voltage)
 {
 	float battVoltages[10] = {4.054, 4.01, 3.908, 3.827, 3.74, 3.651, 3.571, 3.485, 3.38, 3.0}; //P42A
-	//float battVoltages[10] = {4.07, 4.025, 3.91, 3.834, 3.746, 3.607, 3.49, 3.351, 3.168, 2.81}}; //DG40
+	//float battVoltages[10] = {4.07, 4.025, 3.91, 3.834, 3.746, 3.607, 3.49, 3.351, 3.168, 2.81}; //DG40
+	//float battVoltages[10] = { 4.1, 4.00, 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3, 3.1 }; // Sony VTC6
 	//float battcellcurve[10] = {4.054, 4.01, 3.908, 3.827, 3.74, 3.651, 3.571, 3.485, 3.38, 3.0};   //P42A
 								   //{4.07, 4.025, 3.91, 3.834, 3.746, 3.607, 3.49, 3.351, 3.168, 2.81}}; //DG40
 	//static uint8_t cell_type_last = 1; //CELL_TYPE P42A equates out to 0
@@ -916,7 +920,6 @@ void Usart_Task(void)
 
 		// float package data
 		data.floatPackageSupported = false;
-		data.isOldPackage = false;
 		data.state = 255;
 		data.fault = 0;
 		data.isForward = true;
