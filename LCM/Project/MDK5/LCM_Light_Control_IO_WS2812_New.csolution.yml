@@ -3,7 +3,7 @@ solution:
   created-for: CMSIS-Toolbox@2.4.0
   compiler: AC6@6.22.0
   variables:
-    - VERSION: 2_1_4
+    - VERSION: 2_1_5
 
   target-types:
     - type: ADV
