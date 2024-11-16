@@ -10,8 +10,9 @@
 typedef enum
 {
 	P42A,
-	DG40
-} CELL_TYPE;
+	DG40,
+    VTC6
+} CELL_TYPES;
 
 //#define PINTV
 #define XRV
@@ -20,16 +21,17 @@ typedef enum
 
 #define USE_BUZZER
 
-#define   CELL_TYPE                 P42A        // Cell configuration to use for voltage display (P42A, DG40)
-
 #if defined(GTV)
 #define   BATTERY_STRING      		18
+#define   DEFAULT_CELL_TYPE         P42A
 #elif defined(PINTV) || defined(XRV)
 #define   BATTERY_STRING      		15
+#define   DEFAULT_CELL_TYPE         VTC6
 #elif defined(ADV)
 #define   BATTERY_STRING      		20
 #define	  FULL_VOLTAGE	  			82
 #define	  CHARGING_VOLTAGE	  		40
+#define   DEFAULT_CELL_TYPE         P42A
 #endif
 
 #define   SHUTDOWN_TIME		  		10
