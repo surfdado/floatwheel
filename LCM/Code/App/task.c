@@ -82,7 +82,8 @@ void KEY1_Task(void)
 		break;
 
 		case 3:         // Long press
-			if (Power_Flag < 3) {
+			if(Power_Flag == 2) // Boot completed
+			{
 				Power_Flag = 4;  // VESC power off
 				Power_Time = 0;
 			}
