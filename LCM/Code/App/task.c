@@ -542,6 +542,8 @@ void Power_Task(void)
 
 		case 4:// New Power state for shutdown sequence
 			WS2812_Display_Flag = 3;
+		break;
+		
 		default:
 		break;
 	}
@@ -823,14 +825,23 @@ void Buzzer_Task(void)
 	static uint8_t ring_frequency = 0;
 	static uint16_t sound_frequency = 0;
 
-	if(Power_Flag != 2 || Buzzer_Flag == 1)
+	if(Power_Flag < 2 || Buzzer_Flag == 1)
 	{
 		BUZZER_OFF;
 		buzzer_step = 0;
 		return;
 	}
-	
-	if(Buzzer_Frequency == 0 && gear_position_last == Gear_Position)
+	else if (Power_Flag == 4)
+	{
+		// Beep when powering off
+		if (buzzer_step == 0)
+		{
+			Buzzer_Ring(50);
+			buzzer_step = 2;
+		}
+		return;
+	}
+	else if(Buzzer_Frequency == 0 && gear_position_last == Gear_Position)
 	{
 		BUZZER_OFF;
 		buzzer_step = 0;
@@ -874,7 +885,7 @@ void Buzzer_Task(void)
 			break;
 			
 			case 1:
-				Buzzer_Ring(200);
+				Buzzer_Ring(50);
 				buzzer_step = 2;
 			break;
 			

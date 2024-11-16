@@ -11,8 +11,8 @@ typedef enum
 {
 	P42A,
 	DG40,
-    VTC6
-} CELL_TYPES;
+	VTC6
+} CELL_TYPE;
 
 //#define PINTV
 #define XRV
@@ -22,34 +22,34 @@ typedef enum
 #define USE_BUZZER
 
 #if defined(GTV)
-#define   BATTERY_STRING      		18
-#define   DEFAULT_CELL_TYPE         P42A
+#define   BATTERY_STRING			18
+#define   DEFAULT_CELL_TYPE			P42A
 #elif defined(PINTV) || defined(XRV)
-#define   BATTERY_STRING      		15
-#define   DEFAULT_CELL_TYPE         VTC6
+#define   BATTERY_STRING			15
+#define   DEFAULT_CELL_TYPE			VTC6
 #elif defined(ADV)
-#define   BATTERY_STRING      		20
-#define	  FULL_VOLTAGE	  			82
-#define	  CHARGING_VOLTAGE	  		40
-#define   DEFAULT_CELL_TYPE         P42A
+#define   BATTERY_STRING			20
+#define	  FULL_VOLTAGE				82
+#define	  CHARGING_VOLTAGE			40
+#define   DEFAULT_CELL_TYPE			P42A
 #endif
 
-#define   SHUTDOWN_TIME		  		10
-#define   VESC_RPM            		1000
-#define   VESC_BOOT_TIME      		4000
-#define   VESC_SHUTDOWN_TIME      	1000
-#define   DUTY_CYCLE          		0.9
-#define   VOLTAGE_RECEIPT     		0.02
+#define   SHUTDOWN_TIME				10
+#define   VESC_RPM					1000
+#define   VESC_BOOT_TIME			4000
+#define   VESC_SHUTDOWN_TIME		1000
+#define   DUTY_CYCLE				0.9
+#define   VOLTAGE_RECEIPT			0.02
 #define	  CHARGE_COMMAND_TIME		1000 		// frequency of notifying the float package of current charge state
 /*******************************************************************************/
-#define   VESC_RPM_WIDTH      		-200
-#define   WS2812_1_BRIGHTNESS 		20
-#define   WS2812_2_BRIGHTNESS 		10
-#define   WS2812_3_BRIGHTNESS 		5
+#define   VESC_RPM_WIDTH			-200
+#define   WS2812_1_BRIGHTNESS		20
+#define   WS2812_2_BRIGHTNESS		10
+#define   WS2812_3_BRIGHTNESS		5
 #define   CHARGE_CURRENT			0.12
-#define   DETECTION_SWITCH_TIME     500
+#define   DETECTION_SWITCH_TIME		500
 #define   CHARGER_DETECTION_DELAY	1000
-#define   NUM_LEDS 					10
+#define   NUM_LEDS					10
 #define   DEFAULT_IDLE_MODE			0
 
 void LED_Task(void);
@@ -65,6 +65,3 @@ void VESC_State_Task(void);
 void Flashlight_Detection(void);
 
 #endif
-
-
-
