@@ -2,7 +2,7 @@
 
 #### Linux Prerequisites
 
-1. Install `libncurses5` via your package manager of choice
+1. Install `curl` and `libncurses5` via your package manager of choice
 
 ## Setting up the project
 
