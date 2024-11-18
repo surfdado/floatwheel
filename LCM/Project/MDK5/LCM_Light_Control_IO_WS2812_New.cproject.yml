@@ -1,0 +1,104 @@
+project:
+  output:
+    base-name: v$VERSION$_$TargetType$
+    type: hex
+  packs:
+    - pack: HKMicroChip::HK32F030xMxx_DFP
+  setups:
+    - setup: Options for LCMLightControlIOWS2812New
+      add-path:
+        - ../../Code/App
+        - ../../Code/Drive
+        - ../../Code/User
+        - ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/inc
+        - ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/CMSIS/CM0/Core
+        - ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/CMSIS/HK32F030M/Include
+      define:
+        - HK32F030M
+        - HK32F030MF4P6
+      misc:
+        - C:
+            - -std=c99
+          C-CPP:
+            - -fno-rtti
+            - -funsigned-char
+            - -fshort-enums
+            - -fshort-wchar
+            - -ffunction-sections
+            - -Wno-packed
+            - -Wno-missing-variable-declarations
+            - -Wno-missing-prototypes
+            - -Wno-missing-noreturn
+            - -Wno-sign-conversion
+            - -Wno-nonportable-include-path
+            - -Wno-reserved-id-macro
+            - -Wno-unused-macros
+            - -Wno-documentation-unknown-command
+            - -Wno-documentation
+            - -Wno-license-management
+            - -Wno-parentheses-equality
+          CPP:
+            - -xc++
+            - -std=c++03
+          ASM:
+            - -masm=auto
+          Link:
+            - --map
+            - --load_addr_map_info
+            - --xref
+            - --callgraph
+            - --symbols
+            - --info sizes
+            - --info totals
+            - --info unused
+            - --info veneers
+            - --strict
+            - --summary_stderr
+            - --info summarysizes
+  linker:
+    - script: LCM_Light_Control_IO_WS2812_New_LCMLightControlIOWS2812New.sct
+  groups:
+    - group: Startup
+      files:
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/CMSIS/HK32F030M/Source/ARM/KEIL_Startup_hk32f030m.s
+    - group: User
+      files:
+        - file: ../../Code/User/main.c
+        - file: ../../Code/User/hk32f030m_it.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/CMSIS/HK32F030M/Source/system_hk32f030m.c
+    - group: App
+      files:
+        - file: ../../Code/App/ws2812.c
+        - file: ../../Code/App/crc.c
+        - file: ../../Code/App/vesc_uasrt.c
+        - file: ../../Code/App/test.c
+        - file: ../../Code/App/task.c
+        - file: ../../Code/App/flag_bit.c
+    - group: Drive
+      files:
+        - file: ../../Code/Drive/led.c
+        - file: ../../Code/Drive/time.c
+        - file: ../../Code/Drive/spi.c
+        - file: ../../Code/Drive/power.c
+        - file: ../../Code/Drive/led_pwm.c
+        - file: ../../Code/Drive/key.c
+        - file: ../../Code/Drive/buzzer.c
+        - file: ../../Code/Drive/usart.c
+        - file: ../../Code/Drive/adc.c
+        - file: ../../Code/Drive/io_ws2812.c
+        - file: ../../Code/Drive/eeprom.c
+    - group: Library
+      files:
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_adc.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_gpio.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_iwdg.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_misc.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_rcc.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_spi.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_syscfg.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_tim.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_usart.c
+        - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_flash.c
+    - group: Readme
+      files:
+        - file: ../../Readme/Readme.txt
