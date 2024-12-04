@@ -233,9 +233,9 @@ void WS2812_Boot(void)
 	uint8_t bootAnims[10][3] = {
 		// Default (blue...green)
 		//{{10,0,30}, {9,3,27}, {8,6,24}, {7,9,21}, {6,12,18}, {5,15,15}, {4,18,12}, {3,21,9}, {2,24,6}, {1,27,3}},
-		{25,0,30}, {22,2,27}, {18,4,24}, {15,6,21}, {12,8,18}, {8,10,15}, {6,12,12}, {4,14,9}, {2,16,6}, {0,18,6},
+		// {25,0,30}, {22,2,27}, {18,4,24}, {15,6,21}, {12,8,18}, {8,10,15}, {6,12,12}, {4,14,9}, {2,16,6}, {0,18,6},
 		// Rainbow
-		//{{30,0,0}, {30,15,0}, {30,30,0}, {15,30,0}, {0,30,0}, {0,30,15}, {0,30,30}, {0,15,30}, {0,0,30}, {15,0,30}},
+		{30,0,0}, {30,15,0}, {30,30,0}, {15,30,0}, {0,30,0}, {0,30,15}, {0,30,30}, {0,15,30}, {0,0,30}, {15,0,30}
 		// Red White Blue
 		//{{30,0,0}, {30,30,30}, {0,0,30}, {30,0,0}, {30,30,30}, {0,0,30}, {30,0,0}, {30,30,30}, {0,0,30}, {30,0,0}}
 };
@@ -369,6 +369,36 @@ static void WS2818_Knight_Rider(uint8_t brightness) {
 	frame++;
 }
 
+static void WS2812_Rainbow(uint8_t brightness) {
+    #define ANIMATION_TICK_TIME 6
+    #define SEGMENT_LENGTH 2
+    static uint8_t frame = 0;
+    
+    const uint8_t rainbow[10][3] = {
+        {30,0,0}, {30,15,0}, {30,30,0}, {15,30,0}, {0,30,0}, {0,30,15}, {0,30,30}, {0,15,30}, {0,0,30}, {15,0,30}
+    };
+
+    if (frame >= ANIMATION_TICK_TIME) {
+        frame = 0;
+        static uint8_t offset = 0;
+
+        for (uint8_t i = 0; i < NUM_LEDS; i++) {
+            uint8_t reversed_i = NUM_LEDS - 1 - i;
+            uint8_t segment = ((reversed_i + offset) / SEGMENT_LENGTH) % 10;
+            
+            WS2812_Set_Colour(i,
+                (rainbow[segment][0] * brightness) / 255,
+                (rainbow[segment][1] * brightness) / 255,
+                (rainbow[segment][2] * brightness) / 255);
+        }
+        
+        offset = (offset + 1) % (10 * SEGMENT_LENGTH);
+        WS2812_Refresh();
+    }
+
+    frame++;
+}
+
 // Idle animation:
 static void WS2812_Idle()
 {
@@ -382,7 +412,7 @@ static void WS2812_Idle()
 			}
 		}
 		else {
-			WS2818_Knight_Rider(WS2812_Measure);
+			WS2812_Rainbow(WS2812_Measure);
 		}
 		return;
 	}
