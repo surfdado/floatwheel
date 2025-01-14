@@ -372,22 +372,19 @@ static void WS2818_Knight_Rider(uint8_t brightness) {
 // Idle animation:
 static void WS2812_Idle()
 {
-	if (Idle_Time > 5000) {
-		if (Power_Display_Flag > 9) {
-			// Voltage below 10%? Flash bright red!
-			WS2812_Set_AllColours(1, 10, 255, 20, 20);
-			WS2812_Refresh();
-			if (Idle_Time > 3040) {
-				Idle_Time = 0;
-			}
+	if (Power_Display_Flag > 9 && Idle_Time > 3000) {
+		// Voltage below 10%? Flash bright red!
+		WS2812_Set_AllColours(1, 10, 255, 20, 20);
+		WS2812_Refresh();
+		if (Idle_Time > 3040) {
+			Idle_Time = 0;
 		}
-		else {
-			WS2818_Knight_Rider(WS2812_Measure);
-		}
-		return;
+	} else if (Idle_Time > 5000) {
+		WS2818_Knight_Rider(WS2812_Measure);
+	} else {
+		// Battery mode
+		WS2812_Power_Display(WS2812_Measure);
 	}
-	// Battery mode
-	WS2812_Power_Display(WS2812_Measure);
 }
 
 static void WS2812_Handtest(void)
