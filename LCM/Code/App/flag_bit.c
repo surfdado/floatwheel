@@ -30,17 +30,7 @@ uint8_t WS2812_Display_Flag = 0;
 */
 uint8_t WS2812_Flag = 0;
 /*
-	Power_Display_Flag = 0; ¸ÕÉÏµç
-	Power_Display_Flag = 1£» 4.08V~4.2V 	10¸ö°×µÆ
-	Power_Display_Flag = 2£» 4.05V~4.08V 9¸ö°×µÆ
-	Power_Display_Flag = 3£» 3.96V~4.05V 8¸ö°×µÆ
-	Power_Display_Flag = 4£» 3.87V~3.96V 7¸ö°×µÆ
-	Power_Display_Flag = 5£» 3.78V~3.87V 7¸ö°×µÆ
-	Power_Display_Flag = 6£» 3.70V~3.78V 5¸ö°×µÆ
-	Power_Display_Flag = 7£» 3.62V~3.70V 4¸ö°×µÆ
-	Power_Display_Flag = 8£» 3.50V~3.62V 3¸ö°×µÆ
-	Power_Display_Flag = 9£» 3.35V~3.50V 2¸öºìµÆ
-	Power_Display_Flag = 10; 2.80V~3.35V 1¸öºìµÆ
+	0 to 100% battery level
 */
 uint8_t Power_Display_Flag = 0;
 /*
