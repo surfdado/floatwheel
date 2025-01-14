@@ -116,7 +116,8 @@ void KEY1_Task(void)
  **************************************************/
 static void WS2812_Power_Display(uint8_t brightness)
 {
-	uint8_t numleds = 11 - Power_Display_Flag;
+	uint8_t numleds = Power_Display_Flag / 10;
+	uint8_t remainder = Power_Display_Flag % 10;
 	uint8_t r = 0;
 	uint8_t g = 0;
 	uint8_t b = 0;
@@ -124,17 +125,18 @@ static void WS2812_Power_Display(uint8_t brightness)
 	// 40% and below: yellow
 	// > 40% white
 	r = brightness;
-	if (numleds > 2)
+	if (Power_Display_Flag > 20)
 		g = brightness;
-	if (numleds > 4)
+	if (Power_Display_Flag > 40)
 		b = brightness;
 	
-	if (Power_Display_Flag > 0) {
-		WS2812_Set_AllColours(1, numleds, r, g, b);
-	} else {
-		// Two purple LEDs in the center, only needed for dev/debug (happens right after boot)
-		//WS2812_Set_AllColours(5, 6, brightness, 0, brightness);
+	WS2812_Set_AllColours(1, numleds, r, g, b);
+
+	if (remainder > 0) {
+		float scale = remainder / 10.0f;
+		WS2812_Set_Colour(numleds, r * scale, g * scale, b * scale);
 	}
+
 	WS2812_Refresh();
 }
 
@@ -174,7 +176,7 @@ static void WS2812_VESC(void)
 			
 		case 4:// Riding
 			
-			if (Power_Display_Flag > 7) {
+			if (Power_Display_Flag < 30) {
 				// Voltage below 30%?
 				// Display 1/2 red dots at full brightness above anything else
 				WS2812_Power_Display(WS2812_Measure);
@@ -191,7 +193,7 @@ static void WS2812_VESC(void)
 			else if (data.dutyCycleNow > 70) {
 				WS2812_Set_AllColours(1, NUM_LEDS-3,WS2812_Measure/3,WS2812_Measure/3,0);
 			}
-			else if (Power_Display_Flag > 6) {
+			else if (Power_Display_Flag < 40) {
 				// Voltage below 40%?
 				// Display 1/2/3 red dots at full brightness
 				WS2812_Power_Display(WS2812_Measure);
@@ -375,7 +377,7 @@ static void WS2818_Knight_Rider(uint8_t brightness) {
 static void WS2812_Idle()
 {
 	if (Idle_Time > KR_DELAY_MS) {
-		if (Power_Display_Flag > 9) {
+		if (Power_Display_Flag < 10) {
 			// Voltage below 10%? Flash bright red for 40ms!
 			WS2812_Set_AllColours(1, 10, 255, 20, 20);
 			WS2812_Refresh();
@@ -385,7 +387,7 @@ static void WS2812_Idle()
 			return;
 		}
 
-		if (Power_Display_Flag < 8) {
+		if (Power_Display_Flag > 30) {
 			// Show KR only above 30% battery
 			WS2818_Knight_Rider(WS2812_Measure);
 			return;
@@ -558,33 +560,22 @@ void Power_Task(void)
 void CheckPowerLevel(float battery_voltage)
 {
 	#ifdef P42A
-	float battVoltages[10] = {4.054, 4.01, 3.908, 3.827, 3.74, 3.651, 3.571, 3.485, 3.38, 3.0}; //P42A
+	float battVoltages[11] = {4.054, 4.01, 3.908, 3.827, 3.74, 3.651, 3.571, 3.485, 3.38, 3.0, 2.7}; //P42A
 	#endif
 
 	#ifdef DG40
-	float battVoltages[10] = {4.07, 4.025, 3.91, 3.834, 3.746, 3.607, 3.49, 3.351, 3.168, 2.81}; //DG40
+	float battVoltages[11] = {4.07, 4.025, 3.91, 3.834, 3.746, 3.607, 3.49, 3.351, 3.168, 2.81, 2.7}; //DG40
 	#endif
 
 	#ifdef VTC6
-	float battVoltages[10] = { 4.1, 4.00, 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3, 3.1 }; // Sony VTC6
+	float battVoltages[11] = { 4.1, 4.00, 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3, 3.1, 3.0}; // Sony VTC6
 	#endif
 
-	//static uint8_t cell_type_last = 1; //CELL_TYPE P42A equates out to 0
-
-	/*if (CELL_TYPE != cell_type_last) // If !P42a run once at boot or on change
-	{
-		cell_type_last = CELL_TYPE;
-		for (int i=0;i<10;i++)
-		{
-			battVoltages[i] = battcellcurves[cell_type_last][i];
-		}
-	}*/
-
-	// Default: Between zero and min voltage
-	Power_Display_Flag = 10;
-	for (int i=0;i<10;i++) {
-		if (battery_voltage > battVoltages[i]) {
-			Power_Display_Flag = i + 1;
+	// Default: Zero percent
+	Power_Display_Flag = 0;
+	for (int i = 1; i <= 10; i++) {
+		if (battery_voltage >= battVoltages[i]) {
+			Power_Display_Flag = 10.0f * ((10 - i) + (battery_voltage - battVoltages[i]) / (battVoltages[i - 1] - battVoltages[i]));
 			break;
 		}
 	}
