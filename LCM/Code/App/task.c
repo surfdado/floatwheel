@@ -50,7 +50,7 @@ void KEY1_Task(void)
 		break;
 		
 		case 3:		//长按
-			Power_Flag = 3;  //VESC关机
+//			Power_Flag = 3;  //VESC关机
 			Flashlight_Flag = 0;
 			WS2812_Display_Flag =0;
 		break;
@@ -1325,8 +1325,11 @@ void Usart_Task(void)
 	switch(usart_step)
 	{
 		case 0:
-			Get_Vesc_Pack_Data(COMM_GET_VALUES);
-			usart_step = 1;
+			if((WS2812_Counter>0) && (WS2812_Counter<10))
+			{
+				Get_Vesc_Pack_Data(COMM_GET_VALUES);
+				usart_step = 1;
+			}			
 		break;
 		
 		case 1:
@@ -1641,7 +1644,7 @@ void Conditional_Judgment(void)
 					Shutdown_Time_M++;
 					if(Shutdown_Time_M >= SHUTDOWN_TIME)
 					{
-						Power_Flag = 3;
+						//Power_Flag = 3;
 					}
 				}
 			}
