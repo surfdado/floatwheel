@@ -36,12 +36,12 @@ void Test_Charge(void)
 				charge_voltage = (float)(adc_val*0.0257080078125);
 				if(charge_voltage > 1.5) //充电器确实插入
 				{
-					CHARGE_ON;   //打开充电口
+					//CHARGE_ON;   //打开充电口
 					test_charge = 2;
 				}
 				else
 				{
-					CHARGE_OFF;  //关闭充电口
+					//CHARGE_OFF;  //关闭充电口
 					test_charge = 0;
 				}
 			}
@@ -52,7 +52,7 @@ void Test_Charge(void)
 			charge_voltage = (float)(adc_val*0.0257080078125);
 			if(charge_voltage < 1.0)  //充电器拔出
 			{
-				CHARGE_OFF;  //关闭充电口
+				//CHARGE_OFF;  //关闭充电口
 				test_charge = 0;
 			}
 		break;

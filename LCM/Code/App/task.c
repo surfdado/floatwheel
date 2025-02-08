@@ -840,7 +840,7 @@ void Charge_Task(void)
 		break;
 		
 		case 2:
-			CHARGE_ON;  //打开充电器
+			//CHARGE_ON;  //打开充电器
 			Charge_Flag = 2;
 		    charge_step = 3;
 		break;
@@ -855,7 +855,7 @@ void Charge_Task(void)
 			{
 				V_I = 1;
 				Charge_Time = 0;
-				LED1_ON; //采集充电电压
+				//LED1_ON; //采集充电电压
 				charge_step = 5;
 			}
 		break;
@@ -865,7 +865,7 @@ void Charge_Task(void)
 			{
 				V_I = 0;
 				Charge_Time = 0;
-				LED1_OFF; //采集充电流
+				//LED1_OFF; //采集充电流
 				charge_step = 4;
 			}		
 		break;
@@ -1389,75 +1389,8 @@ void ADC_Task(void)
 				ADC1_Val = (float)(adc1_val_sum_ave*0.0012890625);
 				ADC2_Val = (float)(adc2_val_sum_ave*0.0012890625);
 				
-//				if(Charge_Flag == 3)
-//				{
-//					if(V_I == 1)
-//					{
-//						V_I = 0;
-//						Charge_Time = 0;
-//						Sampling_Completion = 0;
-//						LED1_OFF; //采集充电流
-//						Charge_Voltage = (float)(adc_charge_sum_ave*0.0257080078125);
-//					
-//					}
-//					else
-//					{
-//						if(Charge_Time>100)
-//						{
-//							adc_charge_sum[i] = adc_charge_sum_ave;
-//							i++;
-//							
-//							if(i == 10)
-//							{
-//								LED1_ON; //采集充电压
-//								Charge_Time = 0;
-//								Sampling_Completion = 1;
-//								V_I = 1;
-//								i = 0;
-//							}
-//						}
-//					}
-//				}
-//				else
-//				{
-//					Charge_Voltage = (float)(adc_charge_sum_ave*0.0257080078125);
-//				}
-				
-				if(V_I == 0)
-				{
-					if(Charge_Time>100)
-					{
-						Charge_Current = (float)(-0.008056640625*adc_charge_sum_ave+16.5);
-						//Charge_Current = Charge_Current*k + old_charge_current*(1-k);
-						//old_charge_current = Charge_Current;
-					}
-				}
-				else
-				{
-					if(Charge_Time>100)
-					{
-						Charge_Voltage = (float)(adc_charge_sum_ave*0.0257080078125);
-					}
-				}
+				Charge_Voltage = (float)(adc_charge_sum_ave*0.0008056640625);
 			}
-			
-//			if(i == 8)
-//			{
-//				adc_charge_sum_ave >>= 3;
-//				// y=kx+b 0=k*2048+b  10=k*(0.65/3.3*4096)+b
-//				if(V_I == 0)
-//				{
-//					Charge_Current = (float)(-0.00806*adc_charge_sum_ave+16.5);
-//				}
-//				else
-//				{
-//					Charge_Voltage = (float)(adc_charge_sum_ave*0.0257080078125);
-//				}
-//				
-//				adc_charge_sum_ave = 0;
-//				i=0;
-//			}
-			
 		break;
 			
 	  default:
@@ -1480,10 +1413,14 @@ void Conditional_Judgment(void)
 	switch(Power_Flag)
 	{
 		case 1: //开机
-			 if(Charge_Voltage > CHARGING_VOLTAGE)
+			 if(Charge_Voltage < CHARGING_VOLTAGE)
 			 {
-				Power_Flag = 3;
-				Charge_Flag = 1;
+//				Power_Flag = 1;
+				Charge_Flag = 2;
+			 }
+			 else
+			 {
+				Charge_Flag = 0;
 			 }
 		break;
 		
@@ -1522,7 +1459,14 @@ void Conditional_Judgment(void)
 				}
 				else
 				{
-					Flashlight_Flag = 4;
+					if((Charge_Voltage < CHARGING_VOLTAGE))
+					{
+						Flashlight_Flag = 0;
+					}
+					else
+					{
+						Flashlight_Flag = 4;
+					}
 				}
 				
 				if(data.rpm<0)
@@ -1622,21 +1566,24 @@ void Conditional_Judgment(void)
 					}
 				}
 				
-				if((Charge_Voltage > CHARGING_VOLTAGE) && (data.avgInputCurrent<0.8))
+				if((Charge_Voltage < CHARGING_VOLTAGE) && (data.avgInputCurrent<0.8))
 				{
 					if(Charger_Detection_1ms > CHARGER_DETECTION_DELAY)
 					{
-						Power_Flag = 3;
-						Charge_Flag = 1;
+//						Power_Flag = 2;
+						Charge_Flag = 2;
 						Flashlight_Flag = 0;
 						WS2812_Display_Flag =0;
 					}
 					
 				}
-				else
+				else if(Charge_Voltage > CHARGING_VOLTAGE)
 				{
+					Charge_Flag = 0;
 					Charger_Detection_1ms = 0;
 				}
+				
+				
 				/*
 					脚踏板踩下或转速大于1000定时清零
 					即不踩脚踏板转速低于1000开始计时，超过关机时间关机
@@ -1671,7 +1618,7 @@ void Conditional_Judgment(void)
 					{
 //						Charge_Flag = 3;
 						Shutdown_Cnt = 0;
-						CHARGE_OFF;  //关闭充电器
+//						CHARGE_OFF;  //关闭充电器
 					}
 				}
 				else
@@ -1738,11 +1685,15 @@ void Conditional_Judgment(void)
 		break;
 		
 		default:
-			if(Charge_Voltage > CHARGING_VOLTAGE)
+			if(Charge_Voltage < CHARGING_VOLTAGE)
 			 {
-				Power_Flag = 3;
-				Charge_Flag = 1;
+//				Power_Flag = 2;
+				Charge_Flag = 2;
 			 }
+			 else
+			{
+				Charge_Flag = 0;
+			}
 		break;
 			
 	}

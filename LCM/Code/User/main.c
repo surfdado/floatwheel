@@ -76,7 +76,7 @@ int main(void)
 		KEY1_Task();
 		WS2812_Task();
 		Power_Task();
-		Charge_Task();
+//		Charge_Task();
 		Flashlight_Task();
 		Flashlight_Detection();
 		Buzzer_Task();
