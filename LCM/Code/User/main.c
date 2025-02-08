@@ -57,6 +57,7 @@
 int main(void)
 {	
 	//RCC_GetClocksFreq(&RCC_Clock);
+	Charge_Voltage = 3.3;
 	
 	LED_Init();
 	Buzzer_Init();
