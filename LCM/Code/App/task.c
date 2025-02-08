@@ -1519,43 +1519,43 @@ void Conditional_Judgment(void)
 				
 				//Battery_Voltage = 82;//测试需要注释
 				
-				battery_voltage = (data.inpVoltage+1)/BATTERY_STRING;//+1为修正值
+				battery_voltage = (data.inpVoltage)/BATTERY_STRING;//+1为修正值
 				
 				if((battery_voltage > (battery_voltage_last+VOLTAGE_RECEIPT)) || (battery_voltage < (battery_voltage_last - VOLTAGE_RECEIPT)))
 				{
-					if(battery_voltage>4.07)
+					if(battery_voltage>4.075)
 					{
 						Power_Display_Flag = 1;
 					}
-					else if(battery_voltage>4.025)
+					else if(battery_voltage>4.04)
 					{
 						Power_Display_Flag = 2;
 					}
-					else if(battery_voltage>3.91)
+					else if(battery_voltage>3.9)
 					{
 						Power_Display_Flag = 3;
 					}
-					else if(battery_voltage>3.834)
+					else if(battery_voltage>3.82)
 					{
 						Power_Display_Flag = 4;
 					}
-					else if(battery_voltage>3.746)
+					else if(battery_voltage>3.735)
 					{
 						Power_Display_Flag = 5;
 					}
-					else if(battery_voltage>3.607)
+					else if(battery_voltage>3.64)
 					{
 						Power_Display_Flag = 6;
 					}
-					else if(battery_voltage>3.49)
+					else if(battery_voltage>3.52)
 					{
 						Power_Display_Flag = 7;
 					}
-					else if(battery_voltage>3.351)
+					else if(battery_voltage>3.375)
 					{
 						Power_Display_Flag = 8;
 					}
-					else if(battery_voltage>3.168)
+					else if(battery_voltage>3.16)
 					{
 						Power_Display_Flag = 9;
 					}
