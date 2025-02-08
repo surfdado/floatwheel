@@ -37,6 +37,7 @@ extern float Charge_Current;
 extern uint8_t V_I;
 extern uint8_t Shutdown_Cnt;
 extern uint16_t Charger_Detection_1ms;
+extern uint16_t Power_On_Delay_1ms;
 #endif
 
 

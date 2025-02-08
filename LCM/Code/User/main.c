@@ -57,19 +57,22 @@
 int main(void)
 {	
 	//RCC_GetClocksFreq(&RCC_Clock);
+	
 	LED_Init();
 	Buzzer_Init();
 	ADC1_Init();
+	Time6_Init();
 	WS2812_Init();
+	Power_On_Delay_1ms = 0;
+	while(Power_On_Delay_1ms < 500);
+
 	Power_Init();
 	KEY_Init();
 	USART1_Init(115200);
 	LED_PWM_Init();
-	Time6_Init();
-	if(KEY1 ==  0)
-	{
-		KEY1_State = 1;
-	}
+
+	KEY1_State = 1;
+	
 	while(1)
 	{
 //		LED_Task();

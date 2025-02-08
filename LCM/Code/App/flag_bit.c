@@ -176,4 +176,8 @@ uint8_t Shutdown_Cnt = 0;
 	充电器检测时间
 */
 uint16_t Charger_Detection_1ms = 0;
+/*
+	开机延时
+*/
+uint16_t Power_On_Delay_1ms = 0;
 
