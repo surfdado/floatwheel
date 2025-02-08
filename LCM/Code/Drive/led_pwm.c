@@ -42,7 +42,8 @@ void LED_PWM_Init(void)
 	TIM_OC2Init(TIM1, &TIM_OCInitStructure);
 	
 	TIM_Cmd(TIM1, ENABLE);
-  TIM_CtrlPWMOutputs(TIM1, ENABLE);
+	TIM_CtrlPWMOutputs(TIM1, ENABLE);
+	
 }
 
 

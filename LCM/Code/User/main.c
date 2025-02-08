@@ -74,9 +74,11 @@ int main(void)
 
 	KEY1_State = 1;
 	
+	Power_Time = 0;
+	
 	while(1)
 	{
-//		LED_Task();
+		LED_Task();
 		KEY1_Task();
 		WS2812_Task();
 		Power_Task();

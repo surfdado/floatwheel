@@ -23,6 +23,13 @@ void WS2812_Init(void)
 		ws2812_buff_add++;
 		i++;
 	}
+	
+	for(i=0;i<10;i++)
+	{
+		WS2812_Set_Colour(i,0,0,0);
+	}
+	WS2812_Refresh();//刷新显示
+	
 }
 
 /**************************************************
@@ -149,8 +156,8 @@ void WS2812_Refresh(void)
 	
 	__set_PRIMASK(1);//关总中断
 	
-	GPIOD->BRR = GPIO_Pin_4;
-	delay(250);
+//	GPIOD->BRR = GPIO_Pin_4;
+//	delay(250);
 	
 	for(i=0; i<(WS2812_N*24); i++)
 	{
@@ -164,6 +171,9 @@ void WS2812_Refresh(void)
 		}
 		ws2812_buff_add++;
 	}
+	
+	GPIOD->BRR = GPIO_Pin_4;
+	delay(250);
 	
 	__set_PRIMASK(0);//开总中断
 	//GPIOD->BSRR = GPIO_Pin_4;

@@ -8,11 +8,11 @@
  **************************************************/
 void LED_Task(void)
 {
-//	if(LED_Counter >= LED_Filp_Time)
-//	{
-//		LED_Counter = 0;
-//		LED1_FILP;
-//	}
+	if(LED_Counter >= 500)
+	{
+		LED_Counter = 0;
+		LED1_FILP;
+	}
 }
 
 /**************************************************
@@ -281,7 +281,7 @@ void WS2812(void)
 void WS2812_Boot(void)
 {
 	uint8_t i;
-	uint8_t num;
+	uint8_t num = 0;
 	
 	if(Power_Time <= 250)
 	{
@@ -391,7 +391,7 @@ void WS2812_Boot(void)
 			WS2812_Set_Colour(i,0,0,0);
 		}
 	}
-	else 
+	else if(Power_Time <= 2500)
 	{
 		num = 10;
 		for(i=0;i<num;i++)
@@ -1039,15 +1039,35 @@ void Flashlight_Bright(uint8_t red_white,uint8_t bright)
 void Flashlight_Task(void)
 {
 	static uint8_t flashlight_flag_last = 0;
+	static uint8_t lock = 0;
 	
-	if(Power_Flag == 3 || Power_Flag == 0) //VESC断电照明灯关闭
+	if(Power_Flag == 3 || Power_Flag == 0 || Flashlight_Flag == 0) //VESC断电照明灯关闭，插入充电器关闭大灯
 	{
-		LED_B_OFF;
-		LED_F_OFF;
-		TIM_SetCompare2(TIM1,0);
+//		LED_B_OFF;
+//		LED_F_OFF;
+		TIM_SetCompare2(TIM1,9999);
+		lock = 1;
 		return;
 	}
+	else if(lock == 1)
+	{
+		lock = 0;
+		if(Gear_Position == 4)
+		{
+			flashlight_flag_last = 4;
+			Brightness_Flag = 2;     
+			Flashlight_Flag = 4;
+		}
+		else
+		{
+			flashlight_flag_last = 0;
+			Brightness_Flag = 0;
+			Flashlight_Flag = 1;
+		}
+		
+	}
 	
+
 	if(flashlight_flag_last == Flashlight_Flag && Brightness_Flag == 2) //亮度已经调整好
 	{
 		return;
@@ -1056,6 +1076,12 @@ void Flashlight_Task(void)
 	{
 		flashlight_flag_last = Flashlight_Flag;
 		Brightness_Flag = 1;
+	}
+	
+	if(Gear_Position == 4)
+	{
+		TIM_SetCompare2(TIM1,9999);//关闭大灯
+		return;
 	}
 	
 	switch(Flashlight_Flag)
@@ -1087,7 +1113,20 @@ void Flashlight_Task(void)
 void Flashlight_Detection(void)
 {
 	static uint8_t gear_position_last = 0;
-		
+	static uint8_t lock = 0;
+	
+	if(Flashlight_Flag == 0)
+	{
+		lock = 1;
+		return;
+	}
+	else if(lock == 1)
+	{
+		lock = 0;
+		gear_position_last = 0;
+		Flashlight_Detection_Time = 0;
+	}
+	
 	if(gear_position_last == Gear_Position && Flashlight_Detection_Time >= 3100)
 	{
 		Flashlight_Detection_Time = 3100;
@@ -1097,6 +1136,7 @@ void Flashlight_Detection(void)
 	{
 		if(gear_position_last != Gear_Position)
 		{
+
 			if(ADC1_Val < 2.5 && ADC2_Val < 2.5)
 			{
 				switch(Gear_Position)
