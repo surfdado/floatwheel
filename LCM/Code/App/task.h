@@ -19,6 +19,7 @@
 #define   WS2812_1_BRIGHTNESS 		204			//WS2812 1挡亮度 （0-255）
 #define   WS2812_2_BRIGHTNESS 		128			//WS2812 2挡亮度 （0-255）
 #define   WS2812_3_BRIGHTNESS 		30			//WS2812 3挡亮度 （0-255）
+#define   WS2812_4_BRIGHTNESS 		0			//WS2812 3挡亮度 （0-255）
 #define   CHARGE_CURRENT			0.3         //充电电流 单位A
 #define   CHARGE_CURRENT_L			0.1         //充电电流 单位A
 #define   CHARGE_CURRENT_H			0.24        //充电电流 单位A

@@ -41,7 +41,7 @@ void KEY1_Task(void)
 			if(Power_Flag == 2) //开机完成
 			{
 				Gear_Position++;
-				if(Gear_Position == 4)
+				if(Gear_Position == 5)
 				{
 					Gear_Position = 1;
 				}
@@ -283,7 +283,7 @@ void WS2812_Boot(void)
 	uint8_t i;
 	uint8_t num;
 	
-	if(Power_Time <= 500)
+	if(Power_Time <= 250)
 	{
 		num = 1;
 		for(i=0;i<num;i++)
@@ -295,7 +295,7 @@ void WS2812_Boot(void)
 			WS2812_Set_Colour(i,0,0,0);
 		}
 	}
-	else if(Power_Time <= 1000)
+	else if(Power_Time <= 500)
 	{
 		num = 2;
 		for(i=0;i<num;i++)
@@ -307,7 +307,7 @@ void WS2812_Boot(void)
 			WS2812_Set_Colour(i,0,0,0);
 		}	
 	}
-	else if(Power_Time <= 1500)
+	else if(Power_Time <= 750)
 	{
 		num = 3;
 		for(i=0;i<num;i++)
@@ -319,7 +319,7 @@ void WS2812_Boot(void)
 			WS2812_Set_Colour(i,0,0,0);
 		}
 	}
-	else if(Power_Time <= 2000)
+	else if(Power_Time <= 1000)
 	{
 		num = 4;
 		for(i=0;i<num;i++)
@@ -331,7 +331,7 @@ void WS2812_Boot(void)
 			WS2812_Set_Colour(i,0,0,0);
 		}
 	}
-	else if(Power_Time <= 2500)
+	else if(Power_Time <= 1250)
 	{
 		num = 5;
 		for(i=0;i<num;i++)
@@ -343,7 +343,7 @@ void WS2812_Boot(void)
 			WS2812_Set_Colour(i,0,0,0);
 		}
 	}
-	else if(Power_Time <= 3000)
+	else if(Power_Time <= 1500)
 	{
 		num = 6;
 		for(i=0;i<num;i++)
@@ -355,7 +355,7 @@ void WS2812_Boot(void)
 			WS2812_Set_Colour(i,0,0,0);
 		}
 	}
-	else if(Power_Time <= 3500)
+	else if(Power_Time <= 1750)
 	{
 		num = 7;
 		for(i=0;i<num;i++)
@@ -367,7 +367,7 @@ void WS2812_Boot(void)
 			WS2812_Set_Colour(i,0,0,0);
 		}
 	}
-	else if(Power_Time <= 4000)
+	else if(Power_Time <= 2000)
 	{
 		num = 8;
 		for(i=0;i<num;i++)
@@ -379,7 +379,7 @@ void WS2812_Boot(void)
 			WS2812_Set_Colour(i,0,0,0);
 		}
 	}
-	else if(Power_Time <= 4500)
+	else if(Power_Time <= 2250)
 	{
 		num = 9;
 		for(i=0;i<num;i++)
@@ -718,6 +718,10 @@ void WS2812_Task(void)
 			WS2812_Measure = WS2812_3_BRIGHTNESS;
 		break;
 		
+		case 4: //4挡
+			WS2812_Measure = WS2812_4_BRIGHTNESS;
+		break;
+		
 		default:
 			
 		break;
@@ -974,6 +978,10 @@ void Flashlight_Bright(uint8_t red_white,uint8_t bright)
 						brightness = 9999-brightness+1;
 					break;
 					
+					case 4:
+						brightness = 9999;//关闭大灯
+					break;
+						
 					default:
 						
 					break;
@@ -995,6 +1003,10 @@ void Flashlight_Bright(uint8_t red_white,uint8_t bright)
 					
 					case 3:
 						TIM_SetCompare2(TIM1,0);
+					break;
+					
+					case 4:
+						brightness = 9999;//关闭大灯
 					break;
 					
 					default:
@@ -1101,6 +1113,10 @@ void Flashlight_Detection(void)
 						TIM_SetCompare2(TIM1,0);
 					break;
 					
+					case 4:
+						TIM_SetCompare2(TIM1,9999);//关闭大灯
+					break;
+					
 					default:
 						
 					break;	
@@ -1123,6 +1139,10 @@ void Flashlight_Detection(void)
 						TIM_SetCompare2(TIM1,0);
 					break;
 					
+					case 4:
+						TIM_SetCompare2(TIM1,9999);//关闭大灯
+					break;
+					
 					default:
 						
 					break;	
@@ -1135,7 +1155,17 @@ void Flashlight_Detection(void)
 		{
 			if(Flashlight_Detection_Time >= 3000)
 			{
-				TIM_SetCompare2(TIM1,9000);
+				switch(Gear_Position)
+				{
+					case 4:
+						TIM_SetCompare2(TIM1,9999);//关闭大灯
+					break;
+					
+					default:
+						TIM_SetCompare2(TIM1,9000);
+					break;
+				}
+				
 				Flashlight_Detection_Time = 3100;
 			}
 		}

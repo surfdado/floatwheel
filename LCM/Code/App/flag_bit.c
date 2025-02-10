@@ -144,6 +144,7 @@ float Charge_Voltage = 0;
 	Gear_Position = 1 大灯最暗 WS2812最亮 蜂鸣器响一声
 	Gear_Position = 2 大灯中档 WS2812中档 蜂鸣器响两声
 	Gear_Position = 3 大灯最亮 WS2812最暗 蜂鸣器响三声
+	Gear_Position = 4 大灯关闭 WS2812关闭 蜂鸣器响四声
 */
 uint8_t Gear_Position = 0;
 /*
