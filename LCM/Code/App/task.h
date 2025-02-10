@@ -8,7 +8,7 @@
 #include "vesc_uasrt.h"
 
 #define	  CHARGING_VOLTAGE	  		40   		//充电电压检测 大于此值认为充电器插入
-#define   BATTERY_STRING      		20    		//电池串数
+#define   BATTERY_STRING      		15    		//电池串数
 #define   SHUTDOWN_TIME		  		30   		//关机时间 单位分钟
 #define   VESC_RPM            		250  		//转速
 #define   VESC_BOOT_TIME      		6000 		//VESC开机时间 单位ms
