@@ -41,6 +41,7 @@
 #include "test.h"
 #include "task.h"
 #include "io_ws2812.h"
+#include "iwdg.h"
 
 //RCC_ClocksTypeDef RCC_Clock;
 
@@ -48,6 +49,9 @@
 										
 */
 
+uint16_t PWM_Val;
+
+#define IWDG_DEBUG	1
 /**************************************************
  * @brie   :main()
  * @note   :Ö÷º¯Êý
@@ -72,6 +76,9 @@ int main(void)
 	USART1_Init(115200);
 	LED_PWM_Init();
 
+#if IWDG_DEBUG
+	IWDG_Init();
+#endif	
 	KEY1_State = 1;
 	
 	Power_Time = 0;
@@ -89,6 +96,7 @@ int main(void)
 		Usart_Task();
 		ADC_Task();
 		Conditional_Judgment();
+		IWDG_ReloadCounter();  
 	}
 }
 
