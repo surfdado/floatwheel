@@ -1,5 +1,5 @@
 #include "power.h"
-
+#include "task.h"
 
 /**************************************************
  * @brie   :Power_Init()

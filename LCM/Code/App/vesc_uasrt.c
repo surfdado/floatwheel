@@ -19,6 +19,9 @@ uint8_t VESC_RX_Flag = 0;
 #ifdef ADV
 #define FIRMWARE_ID "ADV_2_1_8"
 #endif
+#ifdef ADV2
+#define FIRMWARE_ID "ADV2_2_1_8"
+#endif
 #endif
 
 // Access ADC values here to determine riding state

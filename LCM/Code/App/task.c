@@ -557,6 +557,10 @@ void Power_Task(void)
 
 void CheckPowerLevel(float battery_voltage)
 {
+	#ifdef S50S
+	float battVoltages[10] = {4.075, 4.04, 3.9, 3.82, 3.735, 3.64, 3.52, 3.375, 3.16, 3.0}; //P42A
+	#endif
+
 	#ifdef P42A
 	float battVoltages[10] = {4.054, 4.01, 3.908, 3.827, 3.74, 3.651, 3.571, 3.485, 3.38, 3.0}; //P42A
 	#endif
@@ -592,7 +596,7 @@ void CheckPowerLevel(float battery_voltage)
 
 /**************************************************
  * @brie   :Charge_Task()
- * @note   :Check for charge start/end conditions
+ * @note   :Check for charge start/end conditions, only for ADV1
  **************************************************/
 #ifdef ADV
 void Charge_Task(void)

@@ -6,6 +6,12 @@ solution:
     - VERSION: 2_1_6
 
   target-types:
+    - type: ADV2-50S
+      define:
+        - ADV2
+        - S50S
+        - FIRMWARE_ID: '"ADV2_$VERSION$"'
+      device: HK_MicroChip::HK32F030MF4P6
     - type: ADV-P42A
       define:
         - ADV

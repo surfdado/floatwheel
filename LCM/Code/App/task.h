@@ -11,6 +11,7 @@
 //#define XRV
 //#define GTV
 //#define ADV
+#define ADV2
 
 #define USE_BUZZER
 
@@ -18,7 +19,11 @@
 #if defined(PINTV) || defined(XRV)
 #define   VTC6
 #else
+#ifdef ADV2
+#define   S50S
+#else
 #define   P42A
+#endif
 #endif
 #endif
 
