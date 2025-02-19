@@ -50,6 +50,21 @@ int headlight_brightnesses[] = { 0, 150, 255 };
 int status_brightnesses[] = { WS2812_1_BRIGHTNESS, WS2812_2_BRIGHTNESS, WS2812_3_BRIGHTNESS };
 
 /**************************************************
+ * @brie   :LED_Task()
+ * @note   :LEDÈÎÎñ 
+ * @param  :ÎÞ
+ * @retval :ÎÞ
+ **************************************************/
+void LED_Task(void)
+{
+	if(LED_Counter >= 500)
+	{
+		LED_Counter = 0;
+		LED1_FILP;
+	}
+}
+
+/**************************************************
  * @brie   :KEY1_Task()
  **************************************************/
 void KEY1_Task(void)

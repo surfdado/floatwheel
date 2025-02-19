@@ -67,6 +67,9 @@ int main(void)
 	}
 	while(1)
 	{
+#ifdef ADV2
+		LED_Task();
+#endif
 		KEY1_Task();
 		
 		if(WS2812_Counter >= 20) // 20ms refresh period
