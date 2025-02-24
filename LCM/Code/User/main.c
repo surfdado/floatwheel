@@ -35,8 +35,6 @@
 #include "task.h"
 #include "io_ws2812.h"
 
-//RCC_ClocksTypeDef RCC_Clock;
-
 /*
 										
 */
@@ -58,14 +56,17 @@ int main(void)
 	Time6_Init();
 	WS2812_Init();
 
-	Power_Timer = 0;
-	while (Power_Timer < 500) { }
+#ifdef ADV2
+	while (Power_Time < 500) {
+	}
+#endif
 
 	Power_Init();
 	KEY_Init();
 	USART1_Init(115200);
 	LED_PWM_Init();
 	KEY1_State = 1;
+	Power_Time = 0;
 
 	while(1)
 	{

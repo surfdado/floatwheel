@@ -573,7 +573,7 @@ void Power_Task(void)
 void CheckPowerLevel(float battery_voltage)
 {
 	#ifdef S50S
-	float battVoltages[10] = {4.075, 4.04, 3.9, 3.82, 3.735, 3.64, 3.52, 3.375, 3.16, 3.0}; //P42A
+	float battVoltages[10] = {4.075, 4.04, 3.9, 3.82, 3.735, 3.64, 3.52, 3.375, 3.16, 3.0}; //50S
 	#endif
 
 	#ifdef P42A

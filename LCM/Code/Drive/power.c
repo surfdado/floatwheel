@@ -32,6 +32,8 @@ void Power_Init(void)
 	//PWR_OFF;
 	CHARGE_OFF;
 #endif
+
+	Power_Time = 0;
 }
 
 

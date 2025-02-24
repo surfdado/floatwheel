@@ -18,12 +18,10 @@
 #ifdef uVISION
 #if defined(PINTV) || defined(XRV)
 #define   VTC6
-#else
-#ifdef ADV2
+#elif defined(ADV2)
 #define   S50S
 #else
 #define   P42A
-#endif
 #endif
 #endif
 
@@ -35,7 +33,6 @@
 #define   BATTERY_STRING      		20
 #define	  FULL_VOLTAGE	  			82
 #define	  CHARGING_VOLTAGE	  		40
-#endif
 #elif defined(ADV2)
 #define   BATTERY_STRING      		20
 #define	  CHARGING_VOLTAGE	  		3.0

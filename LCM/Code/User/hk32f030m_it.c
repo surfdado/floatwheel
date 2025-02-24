@@ -136,6 +136,7 @@ void TIM6_IRQHandler(void)
 	{
 		TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
 		
+		LED_Counter++;
 		WS2812_Counter++;
 #ifdef USE_BUZZER
 		Buzzer_Time++;
