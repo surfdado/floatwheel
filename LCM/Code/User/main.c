@@ -57,14 +57,19 @@ int main(void)
 	ADC1_Init();
 	Time6_Init();
 	WS2812_Init();
+
+#ifdef ADV2
+	while (Power_Time < 500) {
+	}
+#endif
+
 	Power_Init();
 	KEY_Init();
 	USART1_Init(115200);
 	LED_PWM_Init();
-	if(KEY1 ==  0)
-	{
-		KEY1_State = 1;
-	}
+	KEY1_State = 1;
+	Power_Time = 0;
+
 	while(1)
 	{
 #ifdef ADV2
