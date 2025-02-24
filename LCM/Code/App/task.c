@@ -1077,7 +1077,10 @@ void ADC_Task(void)
 				
 				ADC1_Val = (float)(adc1_val_sum_ave*0.0012890625);
 				ADC2_Val = (float)(adc2_val_sum_ave*0.0012890625);
-				
+
+#ifdef ADV2
+				Charge_Voltage = (float)(adc_charge_sum_ave*0.0008056640625);
+#else
 				if(V_I == 0)
 				{
 					if(Charge_Time>100)
@@ -1092,8 +1095,8 @@ void ADC_Task(void)
 						Charge_Voltage = (float)(adc_charge_sum_ave*0.0257080078125);
 					}
 				}
+#endif
 			}
-			
 		break;
 			
 	  default:
@@ -1206,3 +1209,24 @@ void VESC_State_Task(void)
 	}
 	lcmConfig.boardOff = false;
 }
+
+#ifdef ADV2
+/**************************************************
+ * @brie   :Charge_Detect_Task()
+ * @note   :Detect charging state signalled by BMS
+ **************************************************/
+void Charge_Detect_Task(void)
+{
+    // NOTE from surfdado:
+    // Somehow Charge_Voltage will be below 3.0V when charging starts
+    // I guess ADC3 is just a signal from the BMS?
+    if(Charge_Voltage < CHARGING_VOLTAGE)
+    {
+        Charge_Flag = 2;
+    }
+    else
+    {
+        Charge_Flag = 0;
+    }
+}
+#endif

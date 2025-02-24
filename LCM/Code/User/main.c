@@ -55,19 +55,23 @@ int main(void)
 	Buzzer_Init();
 #endif
 	ADC1_Init();
+	Time6_Init();
 	WS2812_Init();
+
+	Power_Timer = 0;
+	while (Power_Timer < 500) { }
+
 	Power_Init();
 	KEY_Init();
 	USART1_Init(115200);
 	LED_PWM_Init();
-	Time6_Init();
-	if(KEY1 ==  0)
-	{
-		KEY1_State = 1;
-	}
+	KEY1_State = 1;
+
 	while(1)
 	{
+#ifdef ADV2
 		LED_Task();
+#endif
 		KEY1_Task();
 		
 		if(WS2812_Counter >= 20) // 20ms refresh period
@@ -80,6 +84,9 @@ int main(void)
 
 #ifdef ADV
 		Charge_Task();
+#endif
+#ifdef ADV2
+		Charge_Detect_Task();
 #endif
 		Headlights_Task();
 #ifdef USE_BUZZER		
