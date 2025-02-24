@@ -32,6 +32,7 @@ void KEY1_Task(void);
 void WS2812_Task(void);
 void Power_Task(void);
 void Charge_Task(void);
+void Charge_Detect_Task(void);
 void Headlights_Task(void);
 void Buzzer_Task(void);
 void Usart_Task(void);

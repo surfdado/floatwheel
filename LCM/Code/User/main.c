@@ -55,12 +55,12 @@ int main(void)
 	Buzzer_Init();
 #endif
 	ADC1_Init();
+	Time6_Init();
 	WS2812_Init();
 	Power_Init();
 	KEY_Init();
 	USART1_Init(115200);
 	LED_PWM_Init();
-	Time6_Init();
 	if(KEY1 ==  0)
 	{
 		KEY1_State = 1;
@@ -82,6 +82,9 @@ int main(void)
 
 #ifdef ADV
 		Charge_Task();
+#endif
+#ifdef ADV2
+		Charge_Detect_Task();
 #endif
 		Headlights_Task();
 #ifdef USE_BUZZER		
