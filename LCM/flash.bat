@@ -13,7 +13,7 @@ if not exist "%firmware_file%" (
     echo.
     echo Make sure you have copied your preferred lcm hex file into this folder and have named it "lcm.hex"
     pause
-    exit 1
+    exit /B 1
 )
 
 REM Check Python is installed
@@ -29,7 +29,7 @@ if errorlevel 1 (
     echo On page 2, check the checkbox "add to environment"
     echo no other changes required
     pause
-    exit 1
+    exit /B 1
 )
 
 REM Check pyocd is installed
@@ -41,7 +41,7 @@ if errorlevel 1 (
     echo python -m pip install --upgrade pyocd==0.34.3
     echo If you have installed pyocd but still see this error, please add it to your PATH
     pause
-    exit 1
+    exit /B 1
 )
 
 REM Check HKMicroChip.HK32F030xMxx_DFP.1.0.17.pack exists
@@ -50,7 +50,7 @@ if not exist "HKMicroChip.HK32F030xMxx_DFP.1.0.17.pack" (
     echo.
     echo Make sure you have extracted all the files into a folder
     pause
-    exit 1
+    exit /B 1
 )
 
 REM Check pyocd.yaml exists
@@ -59,7 +59,7 @@ if not exist "pyocd.yaml" (
     echo.
     echo Make sure you have extracted all the files into a folder
     pause
-    exit 1
+    exit /B 1
 )
 
 echo Before continuing, make sure you have installed the ST-Link drivers from:
