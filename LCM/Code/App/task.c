@@ -99,8 +99,10 @@ void KEY1_Task(void)
 		case 3:         // Long press
 			if(Power_Flag == 2) // Boot completed
 			{
+#ifndef ADV2
 				Power_Flag = 4;  // VESC power off
 				Power_Time = 0;
+#endif
 			}
 		break;
 
@@ -1184,6 +1186,7 @@ void VESC_State_Task(void)
 		Shutdown_Time_M = 0;
 	}
 	
+#ifndef ADV2
 	if(Shutdown_Time_S>60000)
 	{
 		Shutdown_Time_S = 0;
@@ -1202,6 +1205,7 @@ void VESC_State_Task(void)
 		Power_Flag = 4;
 		Power_Time = 0;
 	}
+#endif
 	lcmConfig.boardOff = false;
 }
 
