@@ -34,6 +34,7 @@
 #include "test.h"
 #include "task.h"
 #include "io_ws2812.h"
+#include "iwdg.h"
 
 //RCC_ClocksTypeDef RCC_Clock;
 
@@ -67,6 +68,10 @@ int main(void)
 	KEY_Init();
 	USART1_Init(115200);
 	LED_PWM_Init();
+#ifdef ADV2
+	IWDG_Init();
+#endif
+
 	KEY1_State = 1;
 	Power_Time = 0;
 
@@ -98,6 +103,9 @@ int main(void)
 		Usart_Task();
 		ADC_Task();
 		VESC_State_Task();
+#ifdef ADV2
+		IWDG_ReloadCounter();
+#endif
 	}
 	return 0;
 }
