@@ -505,6 +505,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Code\Drive\eeprom.c</FilePath>
             </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Code\Drive\iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1072,6 +1077,11 @@
               <FileName>eeprom.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Code\Drive\eeprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Code\Drive\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1641,6 +1651,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Code\Drive\eeprom.c</FilePath>
             </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Code\Drive\iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2209,6 +2224,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Code\Drive\eeprom.c</FilePath>
             </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Code\Drive\iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2776,6 +2796,11 @@
               <FileName>eeprom.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Code\Drive\eeprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Code\Drive\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>
