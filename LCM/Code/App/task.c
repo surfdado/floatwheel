@@ -129,8 +129,12 @@ static void WS2812_Power_Display(uint8_t brightness)
 		g = brightness;
 	if (Power_Display_Flag > 40)
 		b = brightness;
-	
-	WS2812_Set_AllColours(1, numleds, r, g, b);
+
+	if (numleds > 0) {
+		WS2812_Set_AllColours(1, numleds, r, g, b);
+	} else {
+		WS2812_Set_AllColours(1, 10, 0, 0, 0);
+	}
 
 	if (remainder > 0) {
 		float scale = remainder / 10.0f;
