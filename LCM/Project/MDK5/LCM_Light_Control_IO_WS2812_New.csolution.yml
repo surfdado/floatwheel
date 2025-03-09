@@ -3,7 +3,7 @@ solution:
   created-for: CMSIS-Toolbox@2.4.0
   compiler: AC6@6.22.0
   variables:
-    - VERSION: 2_1_6
+    - VERSION: 2_1_8
 
   target-types:
     - type: ADV-P42A
