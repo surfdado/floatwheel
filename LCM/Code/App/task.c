@@ -560,23 +560,27 @@ void Power_Task(void)
 void CheckPowerLevel(float battery_voltage)
 {
 	#ifdef P42A
-	float battVoltages[11] = {4.054, 4.01, 3.908, 3.827, 3.74, 3.651, 3.571, 3.485, 3.38, 3.0, 2.7}; //P42A
+	float battVoltages[11] = {4.2, 4.065, 3.938, 3.854, 3.776, 3.695, 3.618, 3.543, 3.46, 3.342, 3.0}; //P42A
 	#endif
 
 	#ifdef DG40
-	float battVoltages[11] = {4.07, 4.025, 3.91, 3.834, 3.746, 3.607, 3.49, 3.351, 3.168, 2.81, 2.7}; //DG40
+	float battVoltages[11] = {4.2, 4.047, 3.944, 3.867, 3.799, 3.717, 3.6, 3.498, 3.381, 3.237, 3.0}; //DG40
 	#endif
 
 	#ifdef VTC6
-	float battVoltages[11] = { 4.1, 4.00, 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3, 3.1, 3.0}; // Sony VTC6
+	float battVoltages[11] = {4.2, 4.064, 4.015, 3.895, 3.821, 3.745, 3.655, 3.559, 3.459, 3.292, 3.0}; // Sony VTC6
 	#endif
 
-	// Default: Zero percent
-	Power_Display_Flag = 0;
-	for (int i = 1; i <= 10; i++) {
-		if (battery_voltage >= battVoltages[i]) {
-			Power_Display_Flag = 10.0f * ((10 - i) + (battery_voltage - battVoltages[i]) / (battVoltages[i - 1] - battVoltages[i]));
-			break;
+	if (battery_voltage >= battVoltages[0]) {
+		Power_Display_Flag = 100;
+	} else if (battery_voltage <= battVoltages[10]) {
+		Power_Display_Flag = 0;
+	} else {
+		for (int i = 1; i <= 10; i++) {
+			if (battery_voltage >= battVoltages[i]) {
+				Power_Display_Flag = 10.0f * ((10 - i) + (battery_voltage - battVoltages[i]) / (battVoltages[i - 1] - battVoltages[i]));
+				break;
+			}
 		}
 	}
 }
@@ -620,7 +624,7 @@ void Charge_Task(void)
 		{
 			if((Charge_Flag == 2) && (Charge_Time > 150))
 			{
-				CheckPowerLevel((Charge_Voltage+1)/BATTERY_STRING);
+				CheckPowerLevel(Charge_Voltage/BATTERY_STRING);
 			}
 			if((Charge_Flag == 3) && (Shutdown_Cnt > 10))
 			{
@@ -1087,7 +1091,7 @@ void VESC_State_Task(void)
 
 	// Not charging? Get voltage from VESC
 	if (data.inpVoltage > 0) {
-		CheckPowerLevel((data.inpVoltage+1)/BATTERY_STRING);
+		CheckPowerLevel(data.inpVoltage/BATTERY_STRING);
 	}
 
 	if(data.dutyCycleNow < 0)
