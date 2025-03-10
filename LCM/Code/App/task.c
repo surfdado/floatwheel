@@ -1013,7 +1013,7 @@ void Usart_Task(void)
 			}
 			else if(Usart_Time >= USART_TIMEOUT_MS)
 			{
-				usart_step = 0;
+				usart_step = 2;
 
 				// The data was not received in time, so allow the WS2812 to refresh
 				WS2812_Inhibit = 0;
