@@ -15,28 +15,33 @@ uint8_t Power_Flag = 0;
 */
 uint8_t Charge_Flag = 0;
 /*
-        Lightbar_Mode_Flag = 0; Just powered on.
-        Lightbar_Mode_Flag = 1; Display battery level.
-        Lightbar_Mode_Flag = 2; Do not display battery level.
+	Lightbar_Mode_Flag = 0; Just powered on.
+	Lightbar_Mode_Flag = 1; Display battery level.
+	Lightbar_Mode_Flag = 2; Do not display battery level.
 */
 uint8_t WS2812_Display_Flag = 0;
 /*
-        Footpad_Activation_Flag = 0; Just powered on.
-        Footpad_Activation_Flag = 1; Left 5 LEDs blue, Right 5 LEDs off (adc1 > 2.5V, adc2 < 2.5V).
-        Footpad_Activation_Flag = 2; Left 5 LEDs off, Right 5 LEDs blue (adc1 < 2.5V, adc2 > 2.5V).
-        Footpad_Activation_Flag = 3; All 10 LEDs blue (adc1 > 2.5V, adc2 > 2.5V).
-        Footpad_Activation_Flag = 4; All 10 LEDs off.
-        Footpad_Activation_Flag = 5; Flywheel mode, pattern
+	Footpad_Activation_Flag = 0; Just powered on.
+	Footpad_Activation_Flag = 1; Left 5 LEDs blue, Right 5 LEDs off (adc1 > 2.5V, adc2 < 2.5V).
+	Footpad_Activation_Flag = 2; Left 5 LEDs off, Right 5 LEDs blue (adc1 < 2.5V, adc2 > 2.5V).
+	Footpad_Activation_Flag = 3; All 10 LEDs blue (adc1 > 2.5V, adc2 > 2.5V).
+	Footpad_Activation_Flag = 4; All 10 LEDs off.
+	Footpad_Activation_Flag = 5; Flywheel mode, pattern
 */
 uint8_t WS2812_Flag = 0;
+/*
+	WS2812_Inhibit = 0; Allow refresh of WS2812
+	WS2812_Inhibit = 1; Inhibit refresh of WS2812
+*/
+uint8_t WS2812_Inhibit = 0;
 /*
 	0 to 100% battery level
 */
 uint8_t Power_Display_Flag = 0;
 /*
-	Buzzer_Flag = 0; 刚上电
-	Buzzer_Flag = 1；蜂鸣器不响
-	Buzzer_Flag = 2；蜂鸣器响
+	Buzzer_Flag = 0; Just powered up
+	Buzzer_Flag = 1锛汿he buzzer doesn't sound
+	Buzzer_Flag = 2锛汢uzzer rings
 */
 uint8_t Buzzer_Flag = 0;
 
@@ -46,24 +51,24 @@ uint8_t Buzzer_Flag = 0;
 uint8_t Vesc_Data_Ready = 0;
 
 /*
-	蜂鸣器响的时间
+	Time of buzzer ringing
 */
 uint16_t Buzzer_Time = 0;
 
 /*
-	充电计时
+	Charging timing
 */
 uint16_t Charge_Time = 0;
 /*
-	照明灯
+	Lighting
 */
 uint16_t Flashlight_Time = 0;
 /*
-	开机时间
+	Start time
 */
 uint16_t Power_Time = 0;
 /*
-	串口通信
+	Serial port communication
 */
 uint16_t Usart_Time = 0;
 /*
@@ -99,7 +104,7 @@ float Charge_Voltage = 0;
 */
 uint8_t Gear_Position = 0;
 /*
-	WS2812量度
+	WS2812 Measurement
 */
 uint8_t WS2812_Measure = 0;
 /*

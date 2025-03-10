@@ -6,6 +6,7 @@
 extern uint8_t Power_Flag;
 extern uint8_t Charge_Flag;
 extern uint8_t WS2812_Display_Flag;
+extern uint8_t WS2812_Inhibit;
 extern uint8_t WS2812_Flag;
 extern uint8_t Power_Display_Flag;
 extern uint8_t Buzzer_Flag;
