@@ -137,11 +137,11 @@ static void WS2812_Power_Display(uint8_t brightness)
 	}
 
 	if (remainder > 0) {
-		float scale = remainder / 10.0f;
-		WS2812_Set_Colour(numleds, r * scale, g * scale, b * scale);
+		r = ((uint16_t)r * remainder) / 10;
+		g = g ? r : 0;
+		b = b ? r : 0;
+		WS2812_Set_Colour(numleds, r, g, b);
 	}
-
-	WS2812_Refresh();
 }
 
 /**************************************************
@@ -543,25 +543,27 @@ void Power_Task(void)
 void CheckPowerLevel(float battery_voltage)
 {
 	#ifdef P42A
-	float battVoltages[11] = {4.2, 4.065, 3.938, 3.854, 3.776, 3.695, 3.618, 3.543, 3.46, 3.342, 3.0}; //P42A
+	uint16_t battVoltages_mv[11] = {4200, 4065, 3938, 3854, 3776, 3695, 3618, 3543, 3460, 3342, 3000}; //P42A
 	#endif
 
 	#ifdef DG40
-	float battVoltages[11] = {4.2, 4.047, 3.944, 3.867, 3.799, 3.717, 3.6, 3.498, 3.381, 3.237, 3.0}; //DG40
+	uint16_t battVoltages_mv[11] = {4200, 4047, 3944, 3867, 3799, 3717, 3600, 3498, 3381, 3237, 3000}; //DG40
 	#endif
 
 	#ifdef VTC6
-	float battVoltages[11] = {4.2, 4.064, 4.015, 3.895, 3.821, 3.745, 3.655, 3.559, 3.459, 3.292, 3.0}; // Sony VTC6
+	uint16_t battVoltages_mv[11] = {4200, 4064, 4015, 3895, 3821, 3745, 3655, 3559, 3459, 3292, 3000}; // Sony VTC6
 	#endif
+	
+    uint16_t battery_voltage_mv = battery_voltage * 1000;
 
-	if (battery_voltage >= battVoltages[0]) {
+	if (battery_voltage_mv >= battVoltages_mv[0]) {
 		Power_Display_Flag = 100;
-	} else if (battery_voltage <= battVoltages[10]) {
+	} else if (battery_voltage_mv <= battVoltages_mv[10]) {
 		Power_Display_Flag = 0;
 	} else {
 		for (int i = 1; i <= 10; i++) {
-			if (battery_voltage >= battVoltages[i]) {
-				Power_Display_Flag = 10.0f * ((10 - i) + (battery_voltage - battVoltages[i]) / (battVoltages[i - 1] - battVoltages[i]));
+			if (battery_voltage_mv >= battVoltages_mv[i]) {
+				Power_Display_Flag = ((100 - i*10) + (10 * (battery_voltage_mv - battVoltages_mv[i])) / (battVoltages_mv[i - 1] - battVoltages_mv[i]));
 				break;
 			}
 		}
