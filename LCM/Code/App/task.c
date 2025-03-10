@@ -224,7 +224,6 @@ static void WS2812_VESC(void)
 		default:
 		break;
 	}
-	WS2812_Refresh();
 }
 
 
@@ -261,8 +260,6 @@ void WS2812_Boot(void)
 	for (i = num; i < 10; i++) {
 		WS2812_Set_Colour(i,0,0,0);
 	}
-
-	WS2812_Refresh();
 }
 
 void WS2812_Shutdown(void)
@@ -273,7 +270,6 @@ void WS2812_Shutdown(void)
 		num = 1;
 	}
 	WS2812_Set_AllColours(num, num, brightness / (11 - num), 0, 0);
-	WS2812_Refresh();
 }
 
 uint8_t status_brightness = 1;
@@ -319,8 +315,6 @@ static void WS2812_Charge(void)
 	{
 		cnt = 0;
 	}
-	
-	WS2812_Refresh();
 }	
 
 static void WS2812_Disabled(void)
@@ -331,7 +325,6 @@ static void WS2812_Disabled(void)
 
 	// 2 red LEDs in the center
 	WS2812_Set_AllColours(5, 6, brightness, 0, 0);
-	WS2812_Refresh();
 }
 
 static void WS2818_Knight_Rider(uint8_t brightness) {
@@ -369,7 +362,6 @@ static void WS2818_Knight_Rider(uint8_t brightness) {
 		if (position == NUM_LEDS - 1  || position == 0) {
 			direction *= -1;
 		}
-		WS2812_Refresh();
 	}
 
 	frame++;
@@ -384,7 +376,6 @@ static void WS2812_Idle()
 		if (Power_Display_Flag < 10) {
 			// Voltage below 10%? Flash bright red for 40ms!
 			WS2812_Set_AllColours(1, 10, 255, 20, 20);
-			WS2812_Refresh();
 			if (Idle_Time > KR_DELAY_MS + 40) {
 				Idle_Time = 0;
 			}
@@ -417,8 +408,6 @@ static void WS2812_Handtest(void)
 		WS2812_Set_Colour(0, 0, 0, brightness);
 	if(ADC2_Val > 2.0)
 		WS2812_Set_Colour(9, 0, 0, brightness);
-
-	WS2812_Refresh();
 }
 
 /**************************************************
@@ -431,70 +420,60 @@ void WS2812_Task(void)
 {
 	uint8_t i;
 	
-	if(Charge_Flag == 3) // Battery fully charged
-	{
+	if(Charge_Flag == 3) { // Battery fully charged
 		WS2812_Set_AllColours(1,10,50,150,50);	// white with a strong green tint
-		WS2812_Refresh();
-		return;
 	}
-	if(Charge_Flag == 2) // Charge display pattern (pulsating led)
-	{
+	else if(Charge_Flag == 2) { // Charge display pattern (pulsating led)
 		WS2812_Charge();
-		return;
 	}
-
-	if (WS2812_Display_Flag == 3) {
+	else if (WS2812_Display_Flag == 3) {
 		WS2812_Shutdown();
-		return;
-	}
-
-	if(Power_Flag == 0 || (Power_Flag == 3 && Charge_Flag == 0))
-	{
+	} 
+	else if(Power_Flag == 0 || (Power_Flag == 3 && Charge_Flag == 0))	{
 		// Board is off
 		WS2812_Set_AllColours(1,10,0,0,0);
-		WS2812_Refresh();
 		WS2812_Display_Flag = 0;
 		WS2812_Flag = 0;
 		Power_Display_Flag = 0;
-		return;
 	}
-
-	if(Power_Flag == 1)
-	{
+	else if(Power_Flag == 1) {
 		Idle_Time = 0;
 		WS2812_Boot();
-		return;
 	}
-	
-	if (Power_Flag > 2) {
-		WS2812_Refresh();
+	else if (Power_Flag > 2) {
 		Idle_Time = 0;
-		return;
 	}
-	
-	// Power Flag must be 2, aka board is ready or running
-	if (lcmConfig.isSet) {
-		WS2812_Measure = lcmConfig.statusbarBrightness;
-	}
-	else if (Gear_Position >= 1 && Gear_Position <= 3)
-	{
-		WS2812_Measure = status_brightnesses[Gear_Position - 1];
+	else {	
+		// Power Flag must be 2, aka board is ready or running
+		if (lcmConfig.isSet) {
+			WS2812_Measure = lcmConfig.statusbarBrightness;
+		}
+		else if (Gear_Position >= 1 && Gear_Position <= 3)
+		{
+			WS2812_Measure = status_brightnesses[Gear_Position - 1];
+		}
+
+		if (data.state == DISABLED) {
+			WS2812_Disabled();
+		}
+		else if (data.isHandtest) {
+			WS2812_Handtest();
+		}
+		else {
+			if (WS2812_Display_Flag == 1) {
+				// Idle state - no footpads pressed
+				WS2812_Idle();	// Idle animation
+			} else {
+				Idle_Time = 0;
+				WS2812_VESC();
+			}
+		}
 	}
 
-	if (data.state == DISABLED) {
-		WS2812_Disabled();
-	}
-	else if (data.isHandtest) {
-		WS2812_Handtest();
-	}
-	else {
-		if (WS2812_Display_Flag == 1) {
-			// Idle state - no footpads pressed
-			WS2812_Idle();	// Idle animation
-		} else {
-			Idle_Time = 0;
-			WS2812_VESC();
-		}
+	if (!WS2812_Inhibit)
+	{
+		// This method disables interrupts, so we only call it when no USART activity is occurring
+		WS2812_Refresh();
 	}
 }
 
@@ -927,6 +906,16 @@ void Buzzer_Task(void)
 /**************************************************
  * @brie   :Usart_Task()
  **************************************************/
+
+// Request VESC status every 100 ms
+#define USART_INTERVAL_MS 100
+
+// Expect a response from the VESC within 10 ms
+// It is important for this to be as small as possble in order to give the WS2812 subsystem an oppoertunity to run. This
+// is necessary because WS2812 disables interrupts, so we inhibit it from refreshing while we're waiting for the VESC
+// response in order to allow the USART interupts to be handled and not lose any data.
+#define USART_TIMEOUT_MS 10
+
 void Usart_Task(void)
 {
 	static uint8_t usart_step = 0;
@@ -983,6 +972,9 @@ void Usart_Task(void)
 			}
 
 			usart_step = 1;
+
+			// We're expecting USART interrupts, so inhibit the WS2812 from refreshing since it disables interrupts
+			WS2812_Inhibit = 1;
 		break;
 		
 		case 1:
@@ -994,6 +986,9 @@ void Usart_Task(void)
 				Vesc_Data_Ready = (result == 0);
 				Usart_Time = 0;
 				usart_step = 2;
+
+				// The data has been received, so allow the WS2812 to refresh
+				WS2812_Inhibit = 0;
 			}
 			else
 			{
@@ -1003,7 +998,7 @@ void Usart_Task(void)
 		break;
 			
 		case 2:
-			if(Usart_Time >= 100)
+			if(Usart_Time >= USART_INTERVAL_MS)
 			{
 				usart_step = 0;
 			}				
@@ -1014,9 +1009,12 @@ void Usart_Task(void)
 			{
 				usart_step = 1;
 			}
-			else if(Usart_Time >= 100)
+			else if(Usart_Time >= USART_TIMEOUT_MS)
 			{
 				usart_step = 0;
+
+				// The data was not received in time, so allow the WS2812 to refresh
+				WS2812_Inhibit = 0;
 			}
 		break;
 			
