@@ -7,7 +7,7 @@
 
 #define uiBalanceVolDiff  	500		//均衡开启压差阈值
 #define uiBalanceVol 		2000	//均衡最小电芯电压
-#define	uiBalanceVol_max	4150	//均衡最大电芯电压
+#define	uiBalanceVol_max	4180	//均衡最大电芯电压
 
 extern u32 newBals;
 

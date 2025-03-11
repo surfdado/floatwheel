@@ -15,6 +15,9 @@ typedef struct
 	uint16_t Cock_Head;
 	uint32_t Power_Off;
 	uint16_t DVC_1124_Res;
+	uint16_t Undervoltage_Protection_Delay;		//欠压保护
+	uint16_t Overvoltage_Protection_Delay;		//过压保护
+	uint16_t Overtemperature_Protection_Delay;
 }Software_Counter_Type;
 
 extern Software_Counter_Type Software_Counter_1ms;

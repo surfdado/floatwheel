@@ -2,8 +2,8 @@
 
 DVC1124_Type	DVC_1124;
 
-#define  CurrentSenseResistance_mR      1            //电流采样电阻值（单位mR)
-
+#define CurrentSenseResistance_mR      1            //电流采样电阻值（单位mR)
+#define	K	 0.5f
 /**************************************************
  * @brie  :DVC1124_Voltage()
  * @note  :DVC1124计算电压
@@ -12,15 +12,55 @@ DVC1124_Type	DVC_1124;
  **************************************************/
 void DVC1124_Voltage(void)
 {
+	float current = 0;
+	uint8_t i = 0;
+	
 	//计算总电压
 	DVC_1124.Voltage = (float)(DVC11XX_Calc_VBAT()/1000.0f);
 	//VESC_CAN_DATA.pBMS_V_TOT->Total_Voltage.f = DVC_1124.Voltage;
 	
 	VESC_CAN_DATA.pBMS_V_TOT->Total_Voltage.f = 0;
 	//计算单节电池电压
-	for(uint8_t i = 0; i < 20; i++)
+	for(i = 0; i < 20; i++)
 	{
 		DVC_1124.Single_Voltage[i] = (uint16_t)DVC11XX_Calc_VCell(i);
+	}
+	
+	current = DVC_1124.Current_CC2;
+	
+//	if(current < 0)
+//	{
+//		current = -current;
+//	}
+	
+	for(i = 0; i < 20; i++)	//电芯电压软件补偿
+	{
+		if(i == 0)	//第1节电池
+		{
+			DVC_1124.Single_Voltage[i] = (DVC_1124.Single_Voltage[i] + ((int16_t)(current * 12.51f)));
+		}
+		else if(i == 17)	//第18节电池
+		{
+			DVC_1124.Single_Voltage[i] = (DVC_1124.Single_Voltage[i] + ((int16_t)(current * 13.23f)));
+		}
+		else
+		{
+			DVC_1124.Single_Voltage[i] = (DVC_1124.Single_Voltage[i] + ((int16_t)(current * 6.813f)));
+		}
+	}
+	
+	for(i = 0; i < 20; i++)
+	{
+		DVC_1124.Single_Voltage[i] = (uint16_t)(DVC_1124.Single_Voltage[i]*K)+(uint16_t)(DVC_1124.Single_Voltage_Last[i]*(1-K));
+	}
+	
+	for(i = 0; i < 20; i++)
+	{
+		DVC_1124.Single_Voltage_Last[i] = DVC_1124.Single_Voltage[i];
+	}
+	
+	for(i = 0; i < 20; i++)	
+	{
 		VESC_CAN_DATA.pBMS_V_CELL->BMS_Single_Voltage[i] = DVC_1124.Single_Voltage[i];
 		VESC_CAN_DATA.pBMS_V_TOT->Total_Voltage.f += (float)(DVC_1124.Single_Voltage[i]/1000.0);
 	}
