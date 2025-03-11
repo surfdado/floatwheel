@@ -16,6 +16,7 @@ typedef struct
 {
 	float 		Voltage;	//电池电压
 	uint16_t	Single_Voltage[20];
+	uint16_t	Single_Voltage_Last[20];
 	float 		IC_Temp;	//芯片温度
 	float		GP1_Temp;	//GP1温度电阻
 	float		GP3_Temp;	//GP3温度电阻

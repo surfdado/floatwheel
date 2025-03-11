@@ -127,6 +127,9 @@ void TIM6_IRQHandler(void)
 		Software_Counter_1ms.Cock_Head++;
 		Software_Counter_1ms.Power_Off++;
 		Software_Counter_1ms.DVC_1124_Res++;
+		Software_Counter_1ms.Undervoltage_Protection_Delay++;
+		Software_Counter_1ms.Overtemperature_Protection_Delay++;
+		Software_Counter_1ms.Overvoltage_Protection_Delay++;
 		KEY1_Scan();
     }
 }

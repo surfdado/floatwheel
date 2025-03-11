@@ -41,23 +41,23 @@ DVC1124_Config_Type DVC1124_Config = {
 	.OCC2D_0x61 = 24,	//100ms
 	
 	//放电短路保护阈值寄存器,阈值电压=SCDT×10mV
-	.SCDT_0x62 = 40,	//400A
+	.SCDT_0x62 = 12,	//120A
 	//保留
 	.RES_0x62 = 0,
 	
 	//放电短路保护延迟寄存器,延迟时间=SCDD×7.81μs
-	.SCDD_0x63 = 1,		//7.81μs
+	.SCDD_0x63 = 255,		//2ms
 	
 	//电池过压保护寄存器
 	//阈值电压=COVT×1mV+500mV		
 	.COVT_H_0x70 = 0xE7,
 	.COVT_L_0x71 = 4,	//4.2V
-	.COVD_0x71 = 13,	//8-1S 9-2S 10-3S 11-4S 12-5S 13-6S 14-7S 15-8S
+	.COVD_0x71 = 8,		//8-1S 9-2S 10-3S 11-4S 12-5S 13-6S 14-7S 15-8S
 	//电压欠压保护寄存器
 	//阈值电压=CUVT×1mV
 	.CUVT_H_0x72 = 0xCE,
 	.CUVT_L_0x73 = 4,	//3.3V
-	.CUVD_0x73 = 8,		//1S
+	.CUVD_0x73 = 9,		//2S
 };
 /**
 	* @说明	AFE初始化配置写入
@@ -216,7 +216,7 @@ void DVC1124_Write_Init(void)
 	//0x6E	VADC 控制寄存器 *
 	g_AfeRegs.R110.VAE	= 1;		//VADC 使能控制位	开启
 	g_AfeRegs.R110.VASM = 1;		//VADC 与 CADC CC2 同步测量
-	g_AfeRegs.R110.VAMP = 3;		//每 8 个 CC2 周期 VADC 测量 1 次
+	g_AfeRegs.R110.VAMP = 0;		//每 1 个 CC2 周期 VADC 测量 1 次
 	g_AfeRegs.R110.R110_RVD = 3;	//保留位 这两位必须为1
 	g_AfeRegs.R110.VAO  = 3;		//VADC 测量时间控制位	6.02ms
 	
