@@ -159,7 +159,7 @@ void BMS_Undervoltage_Protection(void)
 		
 		for(i=0;i<AFE_MAX_CELL_CNT;i++)
 		{
-			if(DVC_1124.Single_Voltage[i] > 3000)
+			if(DVC_1124.Single_Voltage[i] <= 3000)
 			{
 				val2++;
 			}
