@@ -28,11 +28,6 @@ void DVC1124_Voltage(void)
 	
 	current = DVC_1124.Current_CC2;
 	
-//	if(current < 0)
-//	{
-//		current = -current;
-//	}
-	
 	for(i = 0; i < 20; i++)	//电芯电压软件补偿
 	{
 		if(i == 0)	//第1节电池
