@@ -43,7 +43,7 @@ void BMS_Overvoltage_Protection(void)
 	
 	if(val1 == 0xFF)	//已经发生欠压
 	{
-		Software_Counter_1ms.Overvoltage_Protection_Delay = 65535;
+		Software_Counter_1ms.Overvoltage_Protection_Delay = 60000;
 	}	
 	//if(g_AfeRegs.R0.bitmap.COV)		//发生电池过压
 	if((val1 != 0) && (Software_Counter_1ms.Overvoltage_Protection_Delay > 1000))	//发生过压并保持1S
@@ -100,15 +100,18 @@ void BMS_Undervoltage_Protection(void)
 		}
 	}
 	
-	if(val3 != 0)	//有电芯电压低于2.3V 直接关机
+	if(val3 != 0)
 	{
-		DSG_OFF;
-		CHG_OFF;
-		CHG_OFF;
-		PDSG_OFF;
-		PCHG_OFF;
-		Flag.Power = 3;
-		return;
+		if(Software_Counter_1ms.Undervoltage_No_Charge_Delay >= 800) //延时800ms，避免刚上电系统不稳定误触发
+		{
+			Software_Counter_1ms.Undervoltage_No_Charge_Delay = 60000;
+			Flag.Charger_ON = 1;	//单芯电压低于2.3V，不执行充电逻辑即禁止充电
+			CHARG_OFF;				//关闭充电器
+		}
+	}	
+	else
+	{
+		Software_Counter_1ms.Undervoltage_No_Charge_Delay = 0;
 	}
 		
 	if(lock == 0)
@@ -133,7 +136,7 @@ void BMS_Undervoltage_Protection(void)
 	
 	if(val1 == 0xFF)	//已经发生欠压
 	{
-		Software_Counter_1ms.Undervoltage_Protection_Delay = 65535;
+		Software_Counter_1ms.Undervoltage_Protection_Delay = 60000;
 	}
 	
 	//if(g_AfeRegs.R0.bitmap.CUV)		//发生电池欠压

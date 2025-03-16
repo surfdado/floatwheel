@@ -297,15 +297,6 @@ void Charger_Task(void)
 	
 	if(Flag.Charger_Boot == 0)	
 	{
-//		if((Flag.Key_Boot == 0) && (Flag.Power != 4))	//充电器开机的	
-//		{
-//			Flag.Power = 3;	//关机
-//		}
-//		else
-//		{
-//			CHARG_OFF;	//充电器拔出，不关机
-//			Flag.Charger_ON = 0;
-//		}
 		CHARG_OFF;	//充电器拔出，不关机
 		Flag.Charger_ON = 0;
 	}
