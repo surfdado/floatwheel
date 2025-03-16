@@ -216,7 +216,7 @@ void DVC1124_Write_Init(void)
 	//0x6E	VADC 控制寄存器 *
 	g_AfeRegs.R110.VAE	= 1;		//VADC 使能控制位	开启
 	g_AfeRegs.R110.VASM = 1;		//VADC 与 CADC CC2 同步测量
-	g_AfeRegs.R110.VAMP = 0;		//每 1 个 CC2 周期 VADC 测量 1 次
+	g_AfeRegs.R110.VAMP = 3;		//每 8 个 CC2 周期 VADC 测量 1 次
 	g_AfeRegs.R110.R110_RVD = 3;	//保留位 这两位必须为1
 	g_AfeRegs.R110.VAO  = 3;		//VADC 测量时间控制位	6.02ms
 	
