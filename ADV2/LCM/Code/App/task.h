@@ -12,7 +12,7 @@
 #define   SHUTDOWN_TIME		  		30   		//关机时间 单位分钟
 #define   VESC_RPM            		250  		//转速
 #define   VESC_BOOT_TIME      		6000 		//VESC开机时间 单位ms
-#define   DUTY_CYCLE          		0.7  		//占空比大于此值 哔哔哔的响
+#define   DUTY_CYCLE          		0.85  		//占空比大于此值 哔哔哔的响
 #define   VOLTAGE_RECEIPT     		0.02 		//电压回执 单位V
 /*******************************************************************************/
 #define   VESC_RPM_WIDTH      		-200 		//转速在±100之间不做前后灯切换 保持前面白灯后面红灯

@@ -1598,11 +1598,11 @@ void Conditional_Judgment(void)
 				}
 				else
 				{
-					if(data.avgInputCurrent < 0.8 && data.rpm < 6000)
-					{
-						WS2812_Display_Flag = 1; //显示电量
-					}
-					else
+                    //	if(data.avgInputCurrent < 0.8 && data.rpm < 6000)
+                    //	{
+                    //		WS2812_Display_Flag = 1; //显示电量
+					//}
+					//else
 					{
 						WS2812_Display_Flag = 2; //不显示电量
 						WS2812_Flag = 4; //关10个灯
