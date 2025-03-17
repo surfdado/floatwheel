@@ -91,6 +91,7 @@ void BalanceProcess(void)
 	if(newBals != uiBalMaskFlags)
 	{
 		Balance_Contrl(newBals);
+		VESC_CAN_DATA.pBMS_BAL->BMS_BAT.i = newBals;
 	}
 	
 //	for(i=0;i<AFE_MAX_CELL_CNT;i++)
