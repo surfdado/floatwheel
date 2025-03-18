@@ -1,24 +1,24 @@
 LCM_Light_Control_20241006.hex
-增加充电关闭大灯功能
+Add charging and turning off headlights
 
 LCM_Light_Control_20241020.hex
-解决充电时，大灯间隔60S闪烁一次
+When charging, the headlights flash once at 60S intervals
 
 LCM_Light_Control_20241023.hex
-增加独立看门狗，需要测试验证
+Add independent watchdogs, which require testing and verification
 
 LCM_Light_Control_20241027.hex
-电量显示改为新电芯曲线
-解决前后大灯不切换的问题（LCM和VESC通信错误造成，降低通信频率解决）
+The power display is changed to a new battery cell curve
+Solve the problem of not switching front and rear headlights (caused by LCM and VESC communication errors, and reduce the communication frequency)
 
 LCM_Light_Control_20241028.hex
-解决前后大灯不切换的问题（W2812刷新和VESC通信相互影响，更改串口发生机制与W2812错开）
+Solve the problem of not switching front and rear headlights (W2812 refresh and VESC communication affect each other, changing the serial port generation mechanism is staggered with W2812)
 
 LCM_Light_Control20241110.hex
-解决充电器开机，没有开机动画的问题
+Solve the problem of the charger turning on and there is no turning on animation
 
 LCM_Light_Control_20241204
-解决四挡脚踩踏板，大灯亮起的bug
+Solve the bug where the four-speed foot pedal is on and the headlight is on
 
 LCM_Light_Control_20250116
-开机延时500ms，解决插充电器WS2812闪烁的问题，关机未放完电容里的电的状态下插充电器会有闪烁一个蓝灯的bug(极端情况)
+The boot delay is 500ms, which solves the problem of plugging the charger WS2812 flashing. If the charger is plugged in without power discharged from the capacitor, the bug will flash a blue light when plugging the charger (extreme situation)
