@@ -14,7 +14,8 @@ void DVC1124_Voltage(void)
 {
 	float current = 0;
 	uint8_t i = 0;
-	
+	static uint8_t first = 0;
+		
 	//计算总电压
 	DVC_1124.Voltage = (float)(DVC11XX_Calc_VBAT()/1000.0f);
 	//VESC_CAN_DATA.pBMS_V_TOT->Total_Voltage.f = DVC_1124.Voltage;
@@ -41,6 +42,15 @@ void DVC1124_Voltage(void)
 		else
 		{
 			DVC_1124.Single_Voltage[i] = (DVC_1124.Single_Voltage[i] + ((int16_t)(current * 6.813f)));
+		}
+	}
+	
+	if(first == 0)	//刚刚开机第一次检测，上一次电芯电压等于本次电芯电压
+	{
+		first = 1;
+		for(i = 0; i < 20; i++)
+		{
+			DVC_1124.Single_Voltage_Last[i] = DVC_1124.Single_Voltage[i];
 		}
 	}
 	
