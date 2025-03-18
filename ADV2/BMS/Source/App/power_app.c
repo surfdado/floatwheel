@@ -59,7 +59,7 @@ void Power_On_Detection(void)
 		}
 		else
 		{
-			Flag.Power = 3;	
+			Flag.Power = 3;	// Start in OFF state after boot (called from main)
 		}
 	}
 	else	//按键没按下，充电器没插入
@@ -85,7 +85,7 @@ void Power_On_Detection(void)
 		User_Delay_xms(500);
 		if((CHARGER == 0) && (KEY1 == 0))
 		{
-			Flag.Power = 3;	
+			Flag.Power = 3;	// Start in OFF state after boot (called from main)
 			//KEY1_State = 1;
 		}
 		else
@@ -97,7 +97,7 @@ void Power_On_Detection(void)
 	
 	if(Flag.Short_Circuit == 1)
 	{
-		Flag.Power = 3;	//短路直接关机
+		Flag.Power = 3;	//短路直接关机 - When Short Circuit flag set on boot
 	}
 }
 
@@ -325,7 +325,7 @@ void Automatic_Shutdown(void)
 	{
 		if(Software_Counter_1ms.Power_Off >= 1800000)
 		{
-			Flag.Power = 3;
+			Flag.Power = 3; // Auto Shutdown when no ESC movement for 30min
 		}	
 	}
 	else

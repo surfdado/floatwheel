@@ -148,14 +148,13 @@ void BMS_Undervoltage_Protection(void)
 		
 		if(CHARGER == 0)	//没插入充电器，欠压保护关机
 		{
-			DSG_OFF;
+			DSG_OFF; // Cut power after 15s below 2.7V (any cell)
 			CHG_OFF;
 			CHG_OFF;
 			PDSG_OFF;
 			PCHG_OFF;
 			Flag.Power = 3;
 		}
-			
 		
 		for(i=0;i<AFE_MAX_CELL_CNT;i++)
 		{
@@ -206,7 +205,7 @@ void BMS_Discharge_Overcurrent_Protection(void)
 		
 		if(Software_Counter_1ms.Discharge_Overcurrent_Delay >= 1000)	//放电过流持续1S，关机
 		{
-			DSG_OFF;
+			DSG_OFF;// Cut power after 1s+ of more than 110A
 			CHG_OFF;
 			CHG_OFF;
 			PDSG_OFF;
@@ -296,7 +295,7 @@ void BMS_Short_Circuit_Protection(void)
 {
 	if(g_AfeRegs.R0.bitmap.SCD)		//发生放电短路
 	{
-		DSG_OFF;
+		DSG_OFF;  // Cut Power: Short circuit detected by BMS chip
 		CHG_OFF;
 		CHG_OFF;
 		PDSG_OFF;
