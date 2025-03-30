@@ -7,30 +7,7 @@
 #include "flag_bit.h"
 #include "vesc_uasrt.h"
 
-//#define PINTV
-//#define XRV
-//#define GTV
-//#define ADV
-
 #define USE_BUZZER
-
-#ifdef uVISION
-#if defined(PINTV) || defined(XRV)
-#define   VTC6
-#else
-#define   P42A
-#endif
-#endif
-
-#if defined(GTV)
-#define   BATTERY_STRING      		18
-#elif defined(PINTV) || defined(XRV)
-#define   BATTERY_STRING      		15
-#elif defined(ADV)
-#define   BATTERY_STRING      		20
-#define	  FULL_VOLTAGE	  			82
-#define	  CHARGING_VOLTAGE	  		40
-#endif
 
 #define   SHUTDOWN_TIME		  		20
 #define   VESC_RPM            		1000
