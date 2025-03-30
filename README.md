@@ -20,7 +20,7 @@
 
 Build scripts are also included: `LCM/build.sh` (Linux / Mac OS) `LCM/build.bat` (Windows) 
 
-They build firmware for all 4 configurations, then copy the created `<device>_<version>.hex` files into the `LCM` directory. The intention is to use them when releasing new versions until a future solution is reached.
+They build firmware for all 4 configurations, then copy the created `<device>.hex` files into the `LCM` directory. The intention is to use them when releasing new versions until a future solution is reached.
 
 [^1]: This should be suggested automatically
 [^2]: Located on the bottom bar, will show either Arm Tools: x or Installing...(xx%)

@@ -2,39 +2,46 @@ solution:
   created-by: uv2csolution@1.5.0
   created-for: CMSIS-Toolbox@2.4.0
   compiler: AC6@6.22.0
-  variables:
-    - VERSION: 2_1_8
 
   target-types:
     - type: ADV-P42A
       define:
         - ADV
         - P42A
-        - FIRMWARE_ID: '"ADV_$VERSION$"'
+        - BATTERY_STRING: 20
+        - FULL_VOLTAGE: 82
+        - CHARGING_VOLTAGE: 40
+        - FIRMWARE_ID_PREFIX: '"ADV"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: ADV-DG40
       define:
         - ADV
         - DG40
-        - FIRMWARE_ID: '"ADV_$VERSION$"'
+        - BATTERY_STRING: 20
+        - FULL_VOLTAGE: 82
+        - CHARGING_VOLTAGE: 40
+        - FIRMWARE_ID_PREFIX: '"ADV"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: GTV
       define:
         - GTV
         - P42A
-        - FIRMWARE_ID: '"GTV_$VERSION$"'
+        - BATTERY_STRING: 18
+        - FIRMWARE_ID_PREFIX: '"GTV"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: PINTV
       define:
         - PINTV
         - VTC6
-        - FIRMWARE_ID: '"PINTV_$VERSION$"'
+        - BATTERY_STRING: 15
+        - FIRMWARE_ID_PREFIX: '"PintV"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: XRV
       define:
         - XRV
         - VTC6
-        - FIRMWARE_ID: '"XRV_$VERSION$"'
+        - BATTERY_STRING: 15
+        - FIRMWARE_ID_PREFIX: '"XRV"'
       device: HK_MicroChip::HK32F030MF4P6
   build-types:
     - type: Debug
