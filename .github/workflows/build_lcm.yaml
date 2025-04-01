@@ -1,0 +1,52 @@
+name: LCM Build and Publish
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+    tags:
+      - lcm@*
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build LCM firmware
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup vcpkg environment
+        uses: ARM-software/cmsis-actions/vcpkg@v1
+
+      - name: Activate Arm tool license
+        uses: ARM-software/cmsis-actions/armlm@v1
+
+      - name: Register packs
+        run: |
+          cpackget add LCM/HKMicroChip.HK32F030xMxx_DFP.1.0.17.pack
+
+      - name: Build
+        working-directory: ./LCM
+        run: |
+          ./build.sh || true
+          missing=0
+          [ ! -f lcm_adv_p42a.hex ] && echo "::warning::ADV-P42A firmware failed to build" && missing=1
+          [ ! -f lcm_adv_dg40.hex ] && echo "::warning::ADV-DG40 firmware failed to build" && missing=1
+          [ ! -f lcm_gtv.hex ] && echo "::warning::GTV firmware failed to build" && missing=1
+          [ ! -f lcm_pintv.hex ] && echo "::warning::PintV firmware failed to build" && missing=1
+          [ ! -f lcm_xrv.hex ] && echo "::warning::XRV firmware failed to build" && missing=1
+          [ "$missing" -eq 0 ] && true || false
+
+      - name: Upload artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: ./LCM/*.hex
