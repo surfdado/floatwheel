@@ -10,8 +10,8 @@
       <TargetName>lcm_pintv</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pArmCC>6230000::V6.23::ARMCLANG</pArmCC>
+      <pCCUsed>6230000::V6.23::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -578,8 +578,8 @@
       <TargetName>lcm_xrv</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pArmCC>6230000::V6.23::ARMCLANG</pArmCC>
+      <pCCUsed>6230000::V6.23::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1146,8 +1146,8 @@
       <TargetName>lcm_gtv</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pArmCC>6230000::V6.23::ARMCLANG</pArmCC>
+      <pCCUsed>6230000::V6.23::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1714,8 +1714,8 @@
       <TargetName>lcm_adv_p42a</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pArmCC>6230000::V6.23::ARMCLANG</pArmCC>
+      <pCCUsed>6230000::V6.23::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -2282,8 +2282,8 @@
       <TargetName>lcm_adv_dg40</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pArmCC>6230000::V6.23::ARMCLANG</pArmCC>
+      <pCCUsed>6230000::V6.23::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>

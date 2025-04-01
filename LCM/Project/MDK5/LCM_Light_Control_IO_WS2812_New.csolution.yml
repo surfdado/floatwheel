@@ -1,7 +1,7 @@
 solution:
   created-by: uv2csolution@1.5.0
-  created-for: CMSIS-Toolbox@2.4.0
-  compiler: AC6@6.22.0
+  created-for: CMSIS-Toolbox@2.8.0
+  compiler: AC6@6.23.0
 
   target-types:
     - type: ADV-P42A
@@ -58,7 +58,9 @@ solution:
       optimize: debug
       debug: on
     - type: Release
-      optimize: size
+      misc:
+        - C-CPP:
+          - -O1
       debug: off
   projects:
     - project: LCM_Light_Control_IO_WS2812_New.cproject.yml
