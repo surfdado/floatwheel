@@ -3,11 +3,19 @@ name: LCM Build and Publish
 on:
   workflow_dispatch:
   pull_request:
+    paths:
+      - "LCM/**"
+      - .github/workflows/build_lcm.yaml
+      - vcpkg-configuration.json
   push:
     branches:
       - main
     tags:
       - lcm@*
+    paths:
+      - "LCM/**"
+      - .github/workflows/build_lcm.yaml
+      - vcpkg-configuration.json
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,6 +40,15 @@ jobs:
         run: |
           cpackget add LCM/HKMicroChip.HK32F030xMxx_DFP.1.0.17.pack
 
+      - name: Extract version from tag
+        id: version-info
+        if: startsWith(github.ref, 'refs/tags/lcm@')
+        run: |
+          echo "version=${GITHUB_REF#refs/tags/lcm@}" >> "$GITHUB_OUTPUT"
+          echo "version-suffix=$(echo ${GITHUB_REF#refs/tags/lcm@} | tr -d '.')" >> "$GITHUB_OUTPUT"
+          [[ "${GITHUB_REF#refs/tags/lcm@}" =~ ^[0-9\.]+$ ]] && echo "is-prerelease=false" >> "$GITHUB_OUTPUT" || echo "is-prerelease=true" >> "$GITHUB_OUTPUT"
+          echo "CFLAGS=-DVERSION=\\\"$(echo ${GITHUB_REF#refs/tags/lcm@} | tr '.' '_')\\\"" >> "$GITHUB_ENV"
+
       - name: Build
         working-directory: ./LCM
         run: |
@@ -50,3 +67,20 @@ jobs:
         with:
           name: firmware
           path: ./LCM/*.hex
+
+      - name: Rename release files
+        if: startsWith(github.ref, 'refs/tags/lcm@')
+        working-directory: ./LCM
+        run: |
+          for file in *.hex; do
+            mv "$file" "${file%.hex}_${{ steps.version-info.outputs.version-suffix }}.hex"
+          done
+
+      - name: Create release
+        if: startsWith(github.ref, 'refs/tags/lcm@')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "LCM v${{ steps.version-info.outputs.version }}"
+          files: ./LCM/*.hex
+          generate_release_notes: true
+          prerelease: ${{ steps.version-info.outputs.is-prerelease }}

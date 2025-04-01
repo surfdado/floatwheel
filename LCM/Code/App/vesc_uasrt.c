@@ -6,7 +6,9 @@
 uint8_t VESC_RX_Buff[80];
 uint8_t VESC_RX_Flag = 0;
 
-#define VERSION "2_2_0"
+#ifndef VERSION
+#define VERSION "0_0_0"
+#endif
 #define FIRMWARE_ID FIRMWARE_ID_PREFIX "_" VERSION
 
 // Access ADC values here to determine riding state
