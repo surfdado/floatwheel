@@ -16,3 +16,4 @@ LCM/Project/MDK5/.clangd
 LCM/Project/MDK5/LCM_Light_Control_IO_WS2812_New.cbuild-idx.yml
 LCM/Project/MDK5/LCM_Light_Control_IO_WS2812_New.cbuild-set.yml
 LCM/Project/MDK5/LCM_Light_Control_IO_WS2812_New*.cbuild.yml
+LCM/Project/MDK5/LCM_Light_Control_IO_WS2812_New*.cbuild-run.yml
