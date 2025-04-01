@@ -14,9 +14,9 @@ cbuild Project\MDK5\LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set 
 copy Project\MDK5\out\LCM_Light_Control_IO_WS2812_New\GTV\Release\*.hex .
 
 @REM PINTV
-cbuild setup Project\MDK5\LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set --context LCM_Light_Control_IO_WS2812_New.Release+PINTV --packs
-cbuild Project\MDK5\LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set --context LCM_Light_Control_IO_WS2812_New.Release+PINTV
-cp Project\MDK5\out\LCM_Light_Control_IO_WS2812_New\PINTV\Release\*.hex .
+cbuild setup Project\MDK5\LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set --context LCM_Light_Control_IO_WS2812_New.Release+PintV --packs
+cbuild Project\MDK5\LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set --context LCM_Light_Control_IO_WS2812_New.Release+PintV
+cp Project\MDK5\out\LCM_Light_Control_IO_WS2812_New\PintV\Release\*.hex .
 
 @REM XRV
 cbuild setup Project\MDK5\LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set --context LCM_Light_Control_IO_WS2812_New.Release+XRV --packs

@@ -5,6 +5,8 @@ solution:
 
   target-types:
     - type: ADV-P42A
+      variables:
+        - OutputName: adv_p42a
       define:
         - ADV
         - P42A
@@ -14,6 +16,8 @@ solution:
         - FIRMWARE_ID_PREFIX: '"ADV"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: ADV-DG40
+      variables:
+        - OutputName: adv_dg40
       define:
         - ADV
         - DG40
@@ -23,13 +27,17 @@ solution:
         - FIRMWARE_ID_PREFIX: '"ADV"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: GTV
+      variables:
+        - OutputName: gtv
       define:
         - GTV
         - P42A
         - BATTERY_STRING: 18
         - FIRMWARE_ID_PREFIX: '"GTV"'
       device: HK_MicroChip::HK32F030MF4P6
-    - type: PINTV
+    - type: PintV
+      variables:
+        - OutputName: pintv
       define:
         - PINTV
         - VTC6
@@ -37,6 +45,8 @@ solution:
         - FIRMWARE_ID_PREFIX: '"PintV"'
       device: HK_MicroChip::HK32F030MF4P6
     - type: XRV
+      variables:
+        - OutputName: xrv
       define:
         - XRV
         - VTC6

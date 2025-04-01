@@ -1,6 +1,6 @@
 project:
   output:
-    base-name: $TargetType$
+    base-name: lcm_$OutputName$
     type: hex
   packs:
     - pack: HKMicroChip::HK32F030xMxx_DFP
