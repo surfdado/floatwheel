@@ -20,7 +20,6 @@ void Power_Init(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);	
-
 #ifndef ADV2
 	//Charge
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
@@ -29,8 +28,11 @@ void Power_Init(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
+#endif
 	
-	//PWR_OFF;
+#ifdef ADV2
+	PWR_OFF;
+#else
 	CHARGE_OFF;
 #endif
 }
