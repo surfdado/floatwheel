@@ -16,6 +16,9 @@ project:
       define:
         - HK32F030M
         - HK32F030MF4P6
+        - __MICROLIB
+      define-asm:
+        - __MICROLIB
       misc:
         - C:
             - -std=c99
@@ -25,6 +28,7 @@ project:
             - -fshort-enums
             - -fshort-wchar
             - -ffunction-sections
+            - -gdwarf-4
             - -Wno-packed
             - -Wno-missing-variable-declarations
             - -Wno-missing-prototypes
@@ -43,6 +47,7 @@ project:
           ASM:
             - -masm=auto
           Link:
+            - --library_type=microlib
             - --map
             - --load_addr_map_info
             - --xref
