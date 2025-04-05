@@ -54,6 +54,7 @@ jobs:
         run: |
           ./build.sh || true
           missing=0
+          [ ! -f lcm_adv2.hex ] && echo "::warning::ADV2 firmware failed to build" && missing=1
           [ ! -f lcm_adv_p42a.hex ] && echo "::warning::ADV-P42A firmware failed to build" && missing=1
           [ ! -f lcm_adv_dg40.hex ] && echo "::warning::ADV-DG40 firmware failed to build" && missing=1
           [ ! -f lcm_gtv.hex ] && echo "::warning::GTV firmware failed to build" && missing=1

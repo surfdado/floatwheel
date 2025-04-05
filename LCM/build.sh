@@ -1,3 +1,8 @@
+# ADV2
+cbuild setup Project/MDK5/LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set --context LCM_Light_Control_IO_WS2812_New.Release+ADV2 --packs
+cbuild Project/MDK5/LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set --context LCM_Light_Control_IO_WS2812_New.Release+ADV2
+cp Project/MDK5/out/LCM_Light_Control_IO_WS2812_New/ADV2/Release/*.hex ./
+
 # ADV-P42A
 cbuild setup Project/MDK5/LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set --context LCM_Light_Control_IO_WS2812_New.Release+ADV-P42A --packs
 cbuild Project/MDK5/LCM_Light_Control_IO_WS2812_New.csolution.yml --context-set --context LCM_Light_Control_IO_WS2812_New.Release+ADV-P42A

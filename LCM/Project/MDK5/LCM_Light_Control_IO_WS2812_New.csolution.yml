@@ -4,6 +4,18 @@ solution:
   compiler: AC6@6.23.0
 
   target-types:
+    - type: ADV2
+      variables:
+        - OutputName: adv2
+      define:
+        - ADV2
+        - S50S
+        - IWDG_DEBUG
+        - BATTERY_STRING: 20
+        - FULL_VOLTAGE: 83
+        - CHARGING_VOLTAGE: 3\.0
+        - FIRMWARE_ID_PREFIX: '"ADV2"'
+      device: HK_MicroChip::HK32F030MF4P6
     - type: ADV-P42A
       variables:
         - OutputName: adv_p42a
