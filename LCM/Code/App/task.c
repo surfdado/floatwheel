@@ -559,6 +559,10 @@ void Power_Task(void)
 
 void CheckPowerLevel(float battery_voltage)
 {
+	#ifdef S50S
+	uint16_t battVoltages_mv[11] = {4200, 4075, 4040, 3900, 3820, 3735, 3640, 3520, 3375, 3160, 3000}; //50S
+	#endif
+
 	#ifdef P42A
 	uint16_t battVoltages_mv[11] = {4200, 4065, 3938, 3854, 3776, 3695, 3618, 3543, 3460, 3342, 3000}; //P42A
 	#endif
