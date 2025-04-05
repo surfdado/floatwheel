@@ -1112,8 +1112,13 @@ void ADC_Task(void)
  **************************************************/
 void VESC_State_Task(void)
 {
-	if ((Charge_Flag > 0) || (Power_Flag != 2) || !Vesc_Data_Ready)
+	if ((Power_Flag != 2) || !Vesc_Data_Ready)
 		return;
+
+#ifdef ADV
+	if (Charge_Flag > 0)
+		return;
+#endif
 
 	Vesc_Data_Ready = false;
 
