@@ -56,7 +56,9 @@ int main(void)
 	Buzzer_Init();
 #endif
 	ADC1_Init();
+#ifdef ADV2
 	Time6_Init();
+#endif
 	WS2812_Init();
 
 #ifdef ADV2
@@ -68,12 +70,25 @@ int main(void)
 	KEY_Init();
 	USART1_Init(115200);
 	LED_PWM_Init();
-#ifdef ADV2
+#ifndef ADV2
+	Time6_Init();
+#endif
+#ifdef IWDG_DEBUG
 	IWDG_Init();
 #endif
+#ifndef ADV2
+	if(KEY1 ==  0)
+	{
+#endif
+		KEY1_State = 1;
+#ifndef ADV2
+	}
+#endif
 
-	KEY1_State = 1;
+#ifdef ADV2
+	Charge_Voltage = 3.3;
 	Power_Time = 0;
+#endif
 
 	while(1)
 	{
@@ -103,7 +118,7 @@ int main(void)
 		Usart_Task();
 		ADC_Task();
 		VESC_State_Task();
-#ifdef ADV2
+#ifdef IWDG_DEBUG
 		IWDG_ReloadCounter();
 #endif
 	}
