@@ -1228,13 +1228,16 @@ void Charge_Detect_Task(void)
     // NOTE from surfdado:
     // Somehow Charge_Voltage will be below 3.0V when charging starts
     // I guess ADC3 is just a signal from the BMS?
-    if(Charge_Voltage < CHARGING_VOLTAGE)
-    {
-        Charge_Flag = 2;
-    }
-    else
+    if(Charge_Voltage >= CHARGING_VOLTAGE)
     {
         Charge_Flag = 0;
+    }
+    else if(data.inpVoltage >= FULL_VOLTAGE)
+    {
+        Charge_Flag = 3;
+    }
+    else {
+        Charge_Flag = 2;
     }
 }
 #endif
