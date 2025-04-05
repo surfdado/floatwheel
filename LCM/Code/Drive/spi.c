@@ -44,5 +44,5 @@ void SPI_Config(void)
 void SPI1_Send_Byte(uint8_t data)
 {
 	SPI1->DR = data;
-	while(((SPI1->SR) & SPI_I2S_FLAG_TXE) == 0);  //等待发送完成
+	while(((SPI1->SR) & SPI_I2S_FLAG_TXE) == 0) __ASM volatile("");  //等待发送完成
 }

@@ -56,7 +56,7 @@ void USART1_Init(uint32_t Baud)
  **************************************************/
 void USART1_Send_Byte(uint8_t byte)
 {
-	while((USART1->ISR & USART_ISR_TXE) == 0);
+	while((USART1->ISR & USART_ISR_TXE) == 0) __ASM volatile("");
 	USART1->TDR = byte;	
 }
 

@@ -77,10 +77,10 @@ uint16_t Read_ADC_Value(uint8_t ch)
 		break;
 	}
 
-	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_ADRDY)); //ADC就绪标志
+	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_ADRDY)) __ASM volatile(""); //ADC就绪标志
 	ADC_StartOfConversion(ADC1);//为选定的 ADC 通道启动转换。
 	
-	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET); //转换结束标志
+	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == RESET) __ASM volatile(""); //转换结束标志
 	adc_value =ADC_GetConversionValue(ADC1);
 
 	return adc_value;
