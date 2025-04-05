@@ -437,7 +437,11 @@ void WS2812_Task(void)
 {
 	uint8_t i;
 	
-	if(Charge_Flag == 3) { // Battery fully charged
+	if(Power_Flag == 1) {
+		Idle_Time = 0;
+		WS2812_Boot();
+	}
+	else if(Charge_Flag == 3) { // Battery fully charged
 		WS2812_Set_AllColours(1,10,50,150,50);	// white with a strong green tint
 	}
 	else if(Charge_Flag == 2) { // Charge display pattern (pulsating led)
@@ -452,10 +456,6 @@ void WS2812_Task(void)
 		WS2812_Display_Flag = 0;
 		WS2812_Flag = 0;
 		Power_Display_Flag = 0;
-	}
-	else if(Power_Flag == 1) {
-		Idle_Time = 0;
-		WS2812_Boot();
 	}
 	else if (Power_Flag > 2) {
 		Idle_Time = 0;
