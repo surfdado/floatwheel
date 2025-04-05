@@ -87,6 +87,7 @@ project:
         - file: ../../Code/Drive/adc.c
         - file: ../../Code/Drive/io_ws2812.c
         - file: ../../Code/Drive/eeprom.c
+        - file: ../../Code/Drive/iwdg.c
     - group: Library
       files:
         - file: ../../Library/HK32F030Mxx_Library_V1.1.6/HK32F030M/HK32F030M_Lib/src/hk32f030m_adc.c
