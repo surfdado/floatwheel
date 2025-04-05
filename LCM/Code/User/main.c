@@ -62,7 +62,9 @@ int main(void)
 	WS2812_Init();
 
 #ifdef ADV2
+	Power_Time = 0;
 	while (Power_Time < 500) {
+		__WFI();
 	}
 #endif
 
