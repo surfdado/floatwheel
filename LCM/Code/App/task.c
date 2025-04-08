@@ -1232,12 +1232,14 @@ void Charge_Detect_Task(void)
     {
         Charge_Flag = 0;
     }
-    else if(data.inpVoltage >= FULL_VOLTAGE)
+    else if(data.inpVoltage >= FULL_VOLTAGE && Charge_Time > 2000)
     {
         Charge_Flag = 3;
     }
-    else {
+    else
+    {
         Charge_Flag = 2;
+        Charge_Time = 0;
     }
 }
 #endif
