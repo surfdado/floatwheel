@@ -1,0 +1,82 @@
+name: BMS Build and Publish
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "BMS/**"
+      - .github/workflows/build_bms.yaml
+      - vcpkg-configuration.json
+  push:
+    branches:
+      - main
+    tags:
+      - bms@*
+    paths:
+      - "BMS/**"
+      - .github/workflows/build_bms.yaml
+      - vcpkg-configuration.json
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build BMS firmware
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup vcpkg environment
+        uses: ARM-software/cmsis-actions/vcpkg@v1
+
+      - name: Activate Arm tool license
+        uses: ARM-software/cmsis-actions/armlm@v1
+
+      - name: Register packs
+        run: |
+          cpackget add BMS/NSING.N32L40x_DFP.1.0.1.pack
+
+      - name: Extract version from tag
+        id: version-info
+        if: startsWith(github.ref, 'refs/tags/bms@')
+        run: |
+          echo "version=${GITHUB_REF#refs/tags/bms@}" >> "$GITHUB_OUTPUT"
+          echo "version-suffix=$(echo ${GITHUB_REF#refs/tags/bms@} | tr -d '.')" >> "$GITHUB_OUTPUT"
+          [[ "${GITHUB_REF#refs/tags/bms@}" =~ ^[0-9\.]+$ ]] && echo "is-prerelease=false" >> "$GITHUB_OUTPUT" || echo "is-prerelease=true" >> "$GITHUB_OUTPUT"
+          echo "CFLAGS=-DVERSION=\\\"$(echo ${GITHUB_REF#refs/tags/bms@} | tr '.' '_')\\\"" >> "$GITHUB_ENV"
+
+      - name: Build
+        working-directory: ./BMS
+        run: |
+          ./build.sh || true
+          missing=0
+          [ ! -f bms_adv2.hex ] && echo "::warning::ADV2 firmware failed to build" && missing=1
+          [ "$missing" -eq 0 ] && true || false
+
+      - name: Upload artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: ./BMS/*.hex
+
+      - name: Rename release files
+        if: startsWith(github.ref, 'refs/tags/bms@')
+        working-directory: ./BMS
+        run: |
+          for file in *.hex; do
+            mv "$file" "${file%.hex}_${{ steps.version-info.outputs.version-suffix }}.hex"
+          done
+
+      - name: Create release
+        if: startsWith(github.ref, 'refs/tags/bms@')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "BMS v${{ steps.version-info.outputs.version }}"
+          files: ./BMS/*.hex
+          generate_release_notes: true
+          prerelease: ${{ steps.version-info.outputs.is-prerelease }}
