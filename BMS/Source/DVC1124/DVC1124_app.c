@@ -2,13 +2,13 @@
 
 DVC1124_Type	DVC_1124;
 
-#define CurrentSenseResistance_mR      1            //µçÁ÷²ÉÑùµç×èÖµ£¨µ¥Î»mR)
+#define CurrentSenseResistance_mR      1            //ç”µæµé‡‡æ ·ç”µé˜»å€¼ï¼ˆå•ä½mR)
 #define	K	 0.5f
 /**************************************************
  * @brie  :DVC1124_Voltage()
- * @note  :DVC1124¼ÆËãµçÑ¹
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :DVC1124è®¡ç®—ç”µå‹
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void DVC1124_Voltage(void)
 {
@@ -16,12 +16,12 @@ void DVC1124_Voltage(void)
 	uint8_t i = 0;
 	static uint8_t first = 0;
 		
-	//¼ÆËã×ÜµçÑ¹
+	//è®¡ç®—æ€»ç”µå‹
 	DVC_1124.Voltage = (float)(DVC11XX_Calc_VBAT()/1000.0f);
 	//VESC_CAN_DATA.pBMS_V_TOT->Total_Voltage.f = DVC_1124.Voltage;
 	
 	VESC_CAN_DATA.pBMS_V_TOT->Total_Voltage.f = 0;
-	//¼ÆËãµ¥½Úµç³ØµçÑ¹
+	//è®¡ç®—å•èŠ‚ç”µæ± ç”µå‹
 	for(i = 0; i < 20; i++)
 	{
 		DVC_1124.Single_Voltage[i] = (uint16_t)DVC11XX_Calc_VCell(i);
@@ -29,13 +29,13 @@ void DVC1124_Voltage(void)
 	
 	current = DVC_1124.Current_CC2;
 	
-	for(i = 0; i < 20; i++)	//µçĞ¾µçÑ¹Èí¼ş²¹³¥
+	for(i = 0; i < 20; i++)	//ç”µèŠ¯ç”µå‹è½¯ä»¶è¡¥å¿
 	{
-		if(i == 0)	//µÚ1½Úµç³Ø
+		if(i == 0)	//ç¬¬1èŠ‚ç”µæ± 
 		{
 			DVC_1124.Single_Voltage[i] = (DVC_1124.Single_Voltage[i] + ((int16_t)(current * 12.51f)));
 		}
-		else if(i == 17)	//µÚ18½Úµç³Ø
+		else if(i == 17)	//ç¬¬18èŠ‚ç”µæ± 
 		{
 			DVC_1124.Single_Voltage[i] = (DVC_1124.Single_Voltage[i] + ((int16_t)(current * 13.23f)));
 		}
@@ -45,7 +45,7 @@ void DVC1124_Voltage(void)
 		}
 	}
 	
-	if(first == 0)	//¸Õ¸Õ¿ª»úµÚÒ»´Î¼ì²â£¬ÉÏÒ»´ÎµçĞ¾µçÑ¹µÈÓÚ±¾´ÎµçĞ¾µçÑ¹
+	if(first == 0)	//åˆšåˆšå¼€æœºç¬¬ä¸€æ¬¡æ£€æµ‹ï¼Œä¸Šä¸€æ¬¡ç”µèŠ¯ç”µå‹ç­‰äºæœ¬æ¬¡ç”µèŠ¯ç”µå‹
 	{
 		first = 1;
 		for(i = 0; i < 20; i++)
@@ -70,25 +70,25 @@ void DVC1124_Voltage(void)
 		VESC_CAN_DATA.pBMS_V_TOT->Total_Voltage.f += (float)(DVC_1124.Single_Voltage[i]/1000.0);
 	}
 	
-	//Ğ¾Æ¬ÎÂ¶È
+	//èŠ¯ç‰‡æ¸©åº¦
 	DVC_1124.IC_Temp = DVC11XX_Calc_ChipTemp();
 	VESC_CAN_DATA.pBMS_HUM->Temp_IC = (int16_t)(DVC_1124.IC_Temp*100);
-	//GP1ÎÂ¶È
+	//GP1æ¸©åº¦
 	DVC_1124.GP1_Temp = DVC11XX_Calc_BatTemp(GP1);
 	VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[1] = (int16_t)(DVC_1124.GP1_Temp*100);
-	//GP3ÎÂ¶È
+	//GP3æ¸©åº¦
 	DVC_1124.GP3_Temp = DVC11XX_Calc_BatTemp(GP3);
 	VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[0] = (int16_t)(DVC_1124.GP3_Temp*100);
-	//GP4ÎÂ¶È
+	//GP4æ¸©åº¦
 	DVC_1124.GP4_Temp = DVC11XX_Calc_BatTemp(GP4);
 	VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[2] = (int16_t)(DVC_1124.GP4_Temp*100);
 }
 
 /**************************************************
  * @brie  :DVC1124_Task()
- * @note  :DVC1124ÈÎÎñ
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :DVC1124ä»»åŠ¡
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void DVC1124_Task(void)
 {	
@@ -103,41 +103,41 @@ void DVC1124_Task(void)
 	
 	if(DVC11XX_ReadRegs(AFE_ADDR_R(0), 2))
 	{
-		if(g_AfeRegs.R1.VADF)	//VADCÒÑÍê³É×ª»»
+		if(g_AfeRegs.R1.VADF)	//VADCå·²å®Œæˆè½¬æ¢
 		{			
-			if(DVC11XX_ReadRegs(AFE_ADDR_R(7), 0x45))	//¶ÁµçÑ¹
+			if(DVC11XX_ReadRegs(AFE_ADDR_R(7), 0x45))	//è¯»ç”µå‹
 			{
 				DVC1124_Voltage();
 				if(DVC11XX_ReadRegs(AFE_ADDR_R(103), 3))
 				{
-					//CalcuVolMaxMin();	//µçÑ¹×î´ó×îĞ¡Öµ¼ÆËã
-					BalanceProcess();	//×Ô¶¯¾ùºâ´¦Àí
+					//CalcuVolMaxMin();	//ç”µå‹æœ€å¤§æœ€å°å€¼è®¡ç®—
+					BalanceProcess();	//è‡ªåŠ¨å‡è¡¡å¤„ç†
 				}
 				
 			}
 		}
-		if(g_AfeRegs.R1.CC1F)	//CADC CC1ÒÑÍê³É×ª»»
+		if(g_AfeRegs.R1.CC1F)	//CADC CC1å·²å®Œæˆè½¬æ¢
 		{
-			if(DVC11XX_ReadRegs(AFE_ADDR_R(2), 2))	//¶ÁCC1
+			if(DVC11XX_ReadRegs(AFE_ADDR_R(2), 2))	//è¯»CC1
 			{
 				DVC_1124.Current_CC1 = DVC11XX_Calc_CurrentWithCC1(CurrentSenseResistance_mR);
 			}
 		}
-		if(g_AfeRegs.R1.CC2F)	//CADC CC2ÒÑÍê³É×ª»»
+		if(g_AfeRegs.R1.CC2F)	//CADC CC2å·²å®Œæˆè½¬æ¢
 		{
-			if(DVC11XX_ReadRegs(AFE_ADDR_R(4), 3))	//¶Á¶ÁCC2
+			if(DVC11XX_ReadRegs(AFE_ADDR_R(4), 3))	//è¯»è¯»CC2
 			{
 				DVC_1124.Current_CC2 = DVC11XX_Calc_CurrentWithCC2(CurrentSenseResistance_mR);
 				VESC_CAN_DATA.pBMS_I->Input_Current_BMS_IC.f = DVC_1124.Current_CC2;
 			}
 		}
 		
-		if(DVC_1124.Current_CC2 != current_cc2_last)	//±¾´ÎµçÁ÷²»µÈÓÚÉÏÒ»´ÎµçÁ÷
+		if(DVC_1124.Current_CC2 != current_cc2_last)	//æœ¬æ¬¡ç”µæµä¸ç­‰äºä¸Šä¸€æ¬¡ç”µæµ
 		{	
 			Software_Counter_1ms.DVC_1124_Res = 0;
 			current_cc2_last = DVC_1124.Current_CC2;
 		}
-		else if(Software_Counter_1ms.DVC_1124_Res > 60000)	//±¾´ÎµçÁ÷µÈÓÚÉÏ´ÎµçÁ÷²¢ÇÒÎ¬³ÖÁË60S
+		else if(Software_Counter_1ms.DVC_1124_Res > 60000)	//æœ¬æ¬¡ç”µæµç­‰äºä¸Šæ¬¡ç”µæµå¹¶ä¸”ç»´æŒäº†60S
 		{
 			Software_Counter_1ms.DVC_1124_Res = 0;
 			DVC1124_Init();

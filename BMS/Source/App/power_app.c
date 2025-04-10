@@ -5,33 +5,33 @@
 
 /**************************************************
  * @brie  :Power_On_Detection()
- * @note  :¿ª»ú¼ì²â
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :å¼€æœºæ£€æµ‹
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void Power_On_Detection(void)
 {
-//	if((KEY1 == 0) && (CHARGER == 0))	//°´¼üÃ»°´ÏÂ£¬³äµçÆ÷Ã»²åÈë£¬¹Ø»ú
+//	if((KEY1 == 0) && (CHARGER == 0))	//æŒ‰é”®æ²¡æŒ‰ä¸‹ï¼Œå……ç”µå™¨æ²¡æ’å…¥ï¼Œå…³æœº
 //	{
-//		//Flag.Power = 3;	//ÉÏµçºó°´¼üÃ»°´ÏÂ£¬¹Ø»ú
+//		//Flag.Power = 3;	//ä¸Šç”µåæŒ‰é”®æ²¡æŒ‰ä¸‹ï¼Œå…³æœº
 //		KEY1_State = 1;
 //	}
 //	else
 //	{
-//		if((KEY1 == 1) && (CHARGER == 0))	//°´¼ü¿ª»ú
+//		if((KEY1 == 1) && (CHARGER == 0))	//æŒ‰é”®å¼€æœº
 //		{
 //			KEY1_State = 1;
 //			Flag.Key_Boot = 1;
 //			Flag.Charger_Boot = 0;
 //			Flag.Power = 0;
 //		}
-//		else if((KEY1 == 0) && (CHARGER == 1))	//³äµçÆ÷¿ª»ú
+//		else if((KEY1 == 0) && (CHARGER == 1))	//å……ç”µå™¨å¼€æœº
 //		{
 //			Flag.Key_Boot = 0;
 //			Flag.Charger_Boot = 1;
 //			Flag.Power = 1;
 //		}
-//		else if((KEY1 == 1) && (CHARGER == 1))	//°´¼üºÍ³äµçÆ÷Í¬Ê±¿ª»ú
+//		else if((KEY1 == 1) && (CHARGER == 1))	//æŒ‰é”®å’Œå……ç”µå™¨åŒæ—¶å¼€æœº
 //		{
 //			KEY1_State = 1;
 //			Flag.Key_Boot = 1;
@@ -40,14 +40,14 @@ void Power_On_Detection(void)
 //		}
 //	}
 	 
-	if(KEY1 == 1)	//°´¼ü¿ª»ú
+	if(KEY1 == 1)	//æŒ‰é”®å¼€æœº
 	{
 		KEY1_State = 1;
 		Flag.Key_Boot = 1;
 		Flag.Charger_Boot = 0;
 		Flag.Power = 0;	
 	}
-	else if(CHARGER == 1)	//³äµçÆ÷¿ª»ú
+	else if(CHARGER == 1)	//å……ç”µå™¨å¼€æœº
 	{
 		User_Delay_xms(500);	//
 		if((CHARGER == 1))	
@@ -61,7 +61,7 @@ void Power_On_Detection(void)
 			Flag.Power = 3;	
 		}
 	}
-	else	//°´¼üÃ»°´ÏÂ£¬³äµçÆ÷Ã»²åÈë
+	else	//æŒ‰é”®æ²¡æŒ‰ä¸‹ï¼Œå……ç”µå™¨æ²¡æ’å…¥
 	{
 //		for(i=0; i<14; i++)
 //		{
@@ -96,15 +96,15 @@ void Power_On_Detection(void)
 	
 	if(Flag.Short_Circuit == 1)
 	{
-		Flag.Power = 3;	//¶ÌÂ·Ö±½Ó¹Ø»ú
+		Flag.Power = 3;	//çŸ­è·¯ç›´æ¥å…³æœº
 	}
 }
 
 /**************************************************
  * @brie  :Power_Boot_Step()
- * @note  :µçÔ´¿ª»ú
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :ç”µæºå¼€æœº
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 static void Power_Boot_Step(void)
 {
@@ -144,7 +144,7 @@ static void Power_Boot_Step(void)
 				PDSG_OFF;
 				PCHG_OFF;
 				power_step = 0;
-				Flag.Power = 2;	//¿ª»úÍê³É
+				Flag.Power = 2;	//å¼€æœºå®Œæˆ
 			}
 		break;
 		
@@ -156,28 +156,28 @@ static void Power_Boot_Step(void)
 
 /**************************************************
  * @brie  :Power_Task()
- * @note  :µçÔ´ÈÎÎñ
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :ç”µæºä»»åŠ¡
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void Power_Task(void)
 {
 		
 	switch(Flag.Power)
 	{
-		case 0:	//¸Õ¸ÕÉÏµç
+		case 0:	//åˆšåˆšä¸Šç”µ
 			
 		break;
 		
-		case 1://¿ª»ú
+		case 1://å¼€æœº
 			Power_Boot_Step();
 		break;
 		
-		case 2://¿ª»úÍê³É
+		case 2://å¼€æœºå®Œæˆ
 			
 		break;
 		
-		case 3://¹Ø»ú
+		case 3://å…³æœº
 			LED_OFF;
 			LDO_OFF;
 			DSG_OFF;
@@ -210,8 +210,8 @@ void Power_Task(void)
 			Enter_Low_Power();
 		break;
 		
-		case 4:	//¹Ø»úºó¼ÌĞøÆ½ºâ³ä
-			if((newBals == 0) || (Flag.Short_Circuit == 1))		//Æ½ºâ³ä½áÊø
+		case 4:	//å…³æœºåç»§ç»­å¹³è¡¡å……
+			if((newBals == 0) || (Flag.Short_Circuit == 1))		//å¹³è¡¡å……ç»“æŸ
 			{
 				LED_OFF;
 				
@@ -238,9 +238,9 @@ void Power_Task(void)
 
 /**************************************************
  * @brie  :Charger_ON_Step()
- * @note  :³äµçÆ÷´ò¿ª
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :å……ç”µå™¨æ‰“å¼€
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 static void Charger_ON_Step(void)
 {
@@ -257,7 +257,7 @@ static void Charger_ON_Step(void)
 			if(Software_Counter_1ms.CHARGER_ON >= 1000)
 			{
 				CHARG_ON;
-				Flag.Charger_ON = 1;	//³äµçÆ÷¿ª´òÍê³É
+				Flag.Charger_ON = 1;	//å……ç”µå™¨å¼€æ‰“å®Œæˆ
 
 				charger_step = 0;
 			}
@@ -271,13 +271,13 @@ static void Charger_ON_Step(void)
 
 /**************************************************
  * @brie  :Charger_Task()
- * @note  :³äµçÆ÷ÈÎÎñ
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :å……ç”µå™¨ä»»åŠ¡
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void Charger_Task(void)
 {
-	if(CHARGER == 1)	//³äµçÆ÷²åÈë
+	if(CHARGER == 1)	//å……ç”µå™¨æ’å…¥
 	{
 		if(Flag.Power == 4)
 		{
@@ -297,10 +297,10 @@ void Charger_Task(void)
 	
 	if(Flag.Charger_Boot == 0)	
 	{
-		CHARG_OFF;	//³äµçÆ÷°Î³ö£¬²»¹Ø»ú
+		CHARG_OFF;	//å……ç”µå™¨æ‹”å‡ºï¼Œä¸å…³æœº
 		Flag.Charger_ON = 0;
 	}
-	else if(Flag.Power == 2)	//¿ª»úÍê³É
+	else if(Flag.Power == 2)	//å¼€æœºå®Œæˆ
 	{
 		if(Flag.Charger_ON == 0)
 		{
@@ -312,13 +312,13 @@ void Charger_Task(void)
 
 /**************************************************
  * @brie  :Automatic_Shutdown()
- * @note  :×Ô¶¯¹Ø»ú
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :è‡ªåŠ¨å…³æœº
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void Automatic_Shutdown(void)
 {
-	//×ªËÙÔÚ¡À100£¬²¢ÇÒ³äµçÆ÷Ã»ÓĞ²åÈë£¬²¢ÇÒÆ½ºâ³ä½áÊø£¬30·ÖÖÓºó¹Ø»ú
+	//è½¬é€Ÿåœ¨Â±100ï¼Œå¹¶ä¸”å……ç”µå™¨æ²¡æœ‰æ’å…¥ï¼Œå¹¶ä¸”å¹³è¡¡å……ç»“æŸï¼Œ30åˆ†é’Ÿåå…³æœº
 	if(((VESC_CAN_RX_DATA.pSTATUS->Rpm < 100) && (VESC_CAN_RX_DATA.pSTATUS->Rpm > -100)) && (CHARGER == 0) && (newBals == 0))
 	{
 		if(Software_Counter_1ms.Power_Off >= 1800000)
@@ -331,7 +331,7 @@ void Automatic_Shutdown(void)
 		Software_Counter_1ms.Power_Off = 0;
 	}
 	
-	if(VESC_CAN_DATA.pBMS_I->Input_Current_BMS_IC.f > 0.3f)	//·ÅµçµçÁ÷´óÓÚ0.3A£¬¼ÆÊıÆ÷ÇåÁã
+	if(VESC_CAN_DATA.pBMS_I->Input_Current_BMS_IC.f > 0.3f)	//æ”¾ç”µç”µæµå¤§äº0.3Aï¼Œè®¡æ•°å™¨æ¸…é›¶
 	{
 		Software_Counter_1ms.Power_Off = 0;
 	}	

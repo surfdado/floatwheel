@@ -1,20 +1,20 @@
 #include "vesc_can_app.h"
 
 /*
-	CAN_TX_Config.StdId 	//±ê×¼Ö¡ID
-	CAN_TX_Config.ExtId		//À©Õ¹Ö¡ID
-	CAN_TX_Config.IDE		//À©Õ¹Ö¡»¹ÊÇ±ê×¼Ö¡
-	CAN_TX_Config.RTR		//Ô¶³ÌÖ¡»¹ÊÇÊý¾ÝÖ¡
-	CAN_TX_Config.DLC		//Êý¾Ý³¤¶È0-8
-	CAN_TX_Config.Data[8]	//·¢ËÍµÄÊý¾Ý CAN×ÜÏßÒ»Ö¡±¨ÎÄ×î¶à·¢8¸ö×Ö½Ú
+	CAN_TX_Config.StdId 	//æ ‡å‡†å¸§ID
+	CAN_TX_Config.ExtId		//æ‰©å±•å¸§ID
+	CAN_TX_Config.IDE		//æ‰©å±•å¸§è¿˜æ˜¯æ ‡å‡†å¸§
+	CAN_TX_Config.RTR		//è¿œç¨‹å¸§è¿˜æ˜¯æ•°æ®å¸§
+	CAN_TX_Config.DLC		//æ•°æ®é•¿åº¦0-8
+	CAN_TX_Config.Data[8]	//å‘é€çš„æ•°æ® CANæ€»çº¿ä¸€å¸§æŠ¥æ–‡æœ€å¤šå‘8ä¸ªå­—èŠ‚
 */
 CanTxMessage CAN_TX_Config;
 
 /**************************************************
  * @brie  :VESC_CAN_Task()
- * @note  :VESC_CANÈÎÎñ
- * @param :ÎÞ
- * @retval:ÎÞ
+ * @note  :VESC_CANä»»åŠ¡
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void VESC_CAN_Task(void)
 {
@@ -28,86 +28,86 @@ void VESC_CAN_Task(void)
 	//VESC_CAN_DATA.pBMS_I->Input_Current.f += 0.001f;
 	switch(vesc_can_send_step)
 	{
-		case 0:	//·¢ËÍ×ÜµçÑ¹
+		case 0:	//å‘é€æ€»ç”µåŽ‹
 			VESC_Set_BMS_V_TOT(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 			
-		case 1:	//·¢ËÍµç³ØµçÑ¹ 1-2-3
+		case 1:	//å‘é€ç”µæ± ç”µåŽ‹ 1-2-3
 			VESC_CAN_DATA.pBMS_V_CELL->Group = 0;
 			VESC_Set_BMS_V_CELL(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 2:	//·¢ËÍµç³ØµçÑ¹ 4-5-6
+		case 2:	//å‘é€ç”µæ± ç”µåŽ‹ 4-5-6
 			VESC_CAN_DATA.pBMS_V_CELL->Group = 3;
 			VESC_Set_BMS_V_CELL(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 3: //·¢ËÍµç³ØµçÑ¹ 7-8-9
+		case 3: //å‘é€ç”µæ± ç”µåŽ‹ 7-8-9
 			VESC_CAN_DATA.pBMS_V_CELL->Group = 6;
 			VESC_Set_BMS_V_CELL(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 4://·¢ËÍµç³ØµçÑ¹ 10-11-12
+		case 4://å‘é€ç”µæ± ç”µåŽ‹ 10-11-12
 			VESC_CAN_DATA.pBMS_V_CELL->Group = 9;
 			VESC_Set_BMS_V_CELL(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 5://·¢ËÍµç³ØµçÑ¹ 13-14-15
+		case 5://å‘é€ç”µæ± ç”µåŽ‹ 13-14-15
 			VESC_CAN_DATA.pBMS_V_CELL->Group = 12;
 			VESC_Set_BMS_V_CELL(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 6://·¢ËÍµç³ØµçÑ¹ 16-17-18
+		case 6://å‘é€ç”µæ± ç”µåŽ‹ 16-17-18
 			VESC_CAN_DATA.pBMS_V_CELL->Group = 15;
 			VESC_Set_BMS_V_CELL(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 7://·¢ËÍµç³ØµçÑ¹ 19-20
+		case 7://å‘é€ç”µæ± ç”µåŽ‹ 19-20
 			VESC_CAN_DATA.pBMS_V_CELL->Group = 18;
 			VESC_Set_BMS_V_CELL(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 8://·¢ËÍµç³ØµçÑ¹×´Ì¬
+		case 8://å‘é€ç”µæ± ç”µåŽ‹çŠ¶æ€
 			VESC_Set_BMS_BAL(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 9://·¢ËÍµç³ØµçÁ÷
+		case 9://å‘é€ç”µæ± ç”µæµ
 			VESC_Set_BMS_I(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 10://·¢ËÍICÎÂ¶È
+		case 10://å‘é€ICæ¸©åº¦
 			VESC_Set_BMS_HUM(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 11://·¢ËÍNTCÎÂ¶È
+		case 11://å‘é€NTCæ¸©åº¦
 			VESC_CAN_DATA.pBMS_TEMPS->Group = 0;
 			VESC_Set_BMS_TEMPS(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 12://·¢ËÍµçÁ÷
+		case 12://å‘é€ç”µæµ
 			VESC_Set_BMS_I(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 13://·¢ËÍ´íÎó´úÂë
+		case 13://å‘é€é”™è¯¯ä»£ç 
 			VESC_CAN_DATA.pBMS_TEMPS->Group = 3;
 			VESC_Set_BMS_TEMPS(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step++;
 		break;
 		
-		case 14://·¢ËÍ´íÎó´úÂë
+		case 14://å‘é€é”™è¯¯ä»£ç 
 			VESC_CAN_DATA.pBMS_TEMPS->Group = 6;
 			VESC_Set_BMS_TEMPS(&CAN_TX_Config,&VESC_CAN_DATA);
 			vesc_can_send_step = 0;

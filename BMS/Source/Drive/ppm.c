@@ -7,8 +7,8 @@
 /**************************************************
  * @brie  :ppm_rcc_config()
  * @note  :ppm_rcc_config
- * @param :Œﬁ
- * @retval:Œﬁ
+ * @param :Êó†
+ * @retval:Êó†
  **************************************************/
 static void ppm_rcc_config(void)
 {
@@ -20,8 +20,8 @@ static void ppm_rcc_config(void)
 /**************************************************
  * @brie  :ppm_gpio_config()
  * @note  :ppm_gpio_config
- * @param :Œﬁ
- * @retval:Œﬁ
+ * @param :Êó†
+ * @retval:Êó†
  **************************************************/
 static void ppm_gpio_config(void)
 {
@@ -41,8 +41,8 @@ static void ppm_gpio_config(void)
 /**************************************************
  * @brie  :ppm_time1_config()
  * @note  :ppm_time1_config
- * @param :Œﬁ
- * @retval:Œﬁ
+ * @param :Êó†
+ * @retval:Êó†
  **************************************************/
 static void ppm_time1_config(void)
 {
@@ -63,8 +63,8 @@ static void ppm_time1_config(void)
 /**************************************************
  * @brie  :ppm_time1_config()
  * @note  :ppm_time1_config
- * @param :Œﬁ
- * @retval:Œﬁ
+ * @param :Êó†
+ * @retval:Êó†
  **************************************************/
 static void ppm_time1_oc_config(void)
 {
@@ -88,9 +88,9 @@ static void ppm_time1_oc_config(void)
 
 /**************************************************
  * @brie  :PPM_Init()
- * @note  :PPM≥ı ºªØ
- * @param :Œﬁ
- * @retval:Œﬁ
+ * @note  :PPMÂàùÂßãÂåñ
+ * @param :Êó†
+ * @retval:Êó†
  **************************************************/
 void PPM_Init(void)
 {
@@ -103,10 +103,10 @@ void PPM_Init(void)
 
 /**************************************************
  * @brie  :Set_PPM()
- * @note  :	1.5-1ms∂‘”¶0-10∂»«ÃÕ∑ 
- *			1.5-2ms∂‘”¶0-£®-10∂»£©«ÃÕ∑
+ * @note  :	1.5-1msÂØπÂ∫î0-10Â∫¶ÁøòÂ§¥ 
+ *			1.5-2msÂØπÂ∫î0-Ôºà-10Â∫¶ÔºâÁøòÂ§¥
  * @param :ppm_val
- * @retval:Œﬁ
+ * @retval:Êó†
  **************************************************/
 void Set_PPM(uint16_t ppm_val)
 {

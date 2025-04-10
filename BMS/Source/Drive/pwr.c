@@ -2,9 +2,9 @@
 
 /**************************************************
  * @brie  :PWR_Init()
- * @note  :PWR³õÊ¼»¯
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :PWRåˆå§‹åŒ–
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void PWR_Init(void)
 {
@@ -13,14 +13,14 @@ void PWR_Init(void)
 
 /**************************************************
  * @brie  :Enter_Low_Power()
- * @note  :½øÈëµÍ¹¦ºÄ
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :è¿›å…¥ä½åŠŸè€—
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void Enter_Low_Power(void)
 {
-	PWR_WakeUpPinEnable(WAKEUP_PIN1,ENABLE);	//°´¼ü
-	PWR_WakeUpPinEnable(WAKEUP_PIN0,ENABLE);	//³äµçÆ÷
+	PWR_WakeUpPinEnable(WAKEUP_PIN1,ENABLE);	//æŒ‰é”®
+	PWR_WakeUpPinEnable(WAKEUP_PIN0,ENABLE);	//å……ç”µå™¨
 //	DBG_ConfigPeriph(DBG_STDBY,ENABLE);
 //	if (PWR_GetFlagStatus(1,PWR_STBY_FLAG) != RESET)
 //	{

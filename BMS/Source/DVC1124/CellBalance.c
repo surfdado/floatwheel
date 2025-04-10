@@ -3,14 +3,14 @@
 ;  *   	@Create Date         2023.03.16
 ;  *    @Official website		 http://www.devechip.com/
 ;  *----------------------Abstract Description---------------------------------
-;  *			    						 		¾ùºâÇı¶¯
+;  *			    						 		å‡è¡¡é©±åŠ¨
 **************************************************************************************/
 #include "CellBalance.h"
 /**
-	* @ËµÃ÷	¾ùºâ¿ØÖÆ
-	* @²ÎÊı	u32 vlaue ¾ùºâÎ»
-	* @·µ»ØÖµ	
-	* @×¢ 
+	* @è¯´æ˜	å‡è¡¡æ§åˆ¶
+	* @å‚æ•°	u32 vlaue å‡è¡¡ä½
+	* @è¿”å›å€¼	
+	* @æ³¨ 
 */
 void Balance_Contrl(u32 vlaue){
 	if(vlaue<0xffffff)
@@ -19,7 +19,7 @@ void Balance_Contrl(u32 vlaue){
 		g_AfeRegs.R103_R105.CB[1]=vlaue>>8;
 		g_AfeRegs.R103_R105.CB[2]=vlaue&0xff;
 		
-		DVC11XX_WriteRegs(AFE_ADDR_R(103),3);//´ò¿ª¶ÔÓ¦¾ùºâÎ»
+		DVC11XX_WriteRegs(AFE_ADDR_R(103),3);//æ‰“å¼€å¯¹åº”å‡è¡¡ä½
 	}
 }
 

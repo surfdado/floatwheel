@@ -3,7 +3,7 @@
 ;  *   	@Create Date         2023.01.20
 ;  *    @Official website		 http://www.devechip.com/
 ;  *----------------------Abstract Description---------------------------------
-;  *			          AFEÇı¶¯º¯Êı                              		
+;  *			          AFEé©±åŠ¨å‡½æ•°                              		
 ******************************************************************************/
 #include "i2c.h"
 #include "DVC11XX.h"
@@ -15,7 +15,7 @@ u8 IIC_SLAVE_ADDRESS;
 
 //---------------------------------------------------------------------------
 const u8 CRC8_LOOKUP_TABLE[256] =
-{//²é±í·¨(Éú³É¶àÏîÊ½x8+x2+x+1)
+{//æŸ¥è¡¨æ³•(ç”Ÿæˆå¤šé¡¹å¼x8+x2+x+1)
     0x00, 0x07, 0x0e, 0x09, 0x1c, 0x1b, 0x12, 0x15, 0x38, 0x3f, 0x36, 0x31, 0x24, 0x23, 0x2a, 0x2d,
     0x70, 0x77, 0x7e, 0x79, 0x6c, 0x6b, 0x62, 0x65, 0x48, 0x4f, 0x46, 0x41, 0x54, 0x53, 0x5a, 0x5d,
     0xe0, 0xe7, 0xee, 0xe9, 0xfc, 0xfb, 0xf2, 0xf5, 0xd8, 0xdf, 0xd6, 0xd1, 0xc4, 0xc3, 0xca, 0xcd,
@@ -34,13 +34,13 @@ const u8 CRC8_LOOKUP_TABLE[256] =
     0xde, 0xd9, 0xd0, 0xd7, 0xc2, 0xc5, 0xcc, 0xcb, 0xe6, 0xe1, 0xe8, 0xef, 0xfa, 0xfd, 0xf4, 0xf3
 };
 /**
-	* @ËµÃ÷	crc8¼ÆËã
-	* @²ÎÊı	Êı¾İµØÖ·¡¢³¤¶È
-	* @·µ»ØÖµ	u8 crcÖµ
-	* @×¢	
+	* @è¯´æ˜	crc8è®¡ç®—
+	* @å‚æ•°	æ•°æ®åœ°å€ã€é•¿åº¦
+	* @è¿”å›å€¼	u8 crcå€¼
+	* @æ³¨	
 */
 u8 calc_crc8(void *dataPtr,u16 dataLen)
-{//²é±í·¨
+{//æŸ¥è¡¨æ³•
 	u8 carry = 0;
 	while(dataLen--)
 	{
@@ -51,19 +51,19 @@ u8 calc_crc8(void *dataPtr,u16 dataLen)
 }
 
 /**
-	* @ËµÃ÷	¶ÁÈ¡¼Ä´æÆ÷²¢¼ÆËãCRC
-	* @²ÎÊı	AFE¼Ä´æÆ÷ÆğÊ¼µØÖ·¡¢Æ«ÒÆµØÖ·¡¢³¤¶È
-	* @·µ»ØÖµ	³É¹¦/Ê§°Ü
-	* @×¢	
+	* @è¯´æ˜	è¯»å–å¯„å­˜å™¨å¹¶è®¡ç®—CRC
+	* @å‚æ•°	AFEå¯„å­˜å™¨èµ·å§‹åœ°å€ã€åç§»åœ°å€ã€é•¿åº¦
+	* @è¿”å›å€¼	æˆåŠŸ/å¤±è´¥
+	* @æ³¨	
 */
 bool IIC_ReadDataWithCRC(u8 regAddr,void *dataPtr,u16 dataLen)
 {
 	u8 dummyWr[4],*src;
-	dummyWr[0]=IIC_SLAVE_ADDRESS<<1; //Ğ´ÈëÉè±¸µØÖ·
-	dummyWr[1]=regAddr;  //¼Ä´æÆ÷µØÖ·
+	dummyWr[0]=IIC_SLAVE_ADDRESS<<1; //å†™å…¥è®¾å¤‡åœ°å€
+	dummyWr[1]=regAddr;  //å¯„å­˜å™¨åœ°å€
 	
 	if(dataLen<=(sizeof(I2CTransferBuffer)<<1) && IIC_TransferDataRaw(dummyWr,2,I2CTransferBuffer,dataLen<<1))
-	{  //ÏÈĞ´ºó¶Á
+	{  //å…ˆå†™åè¯»
 		dummyWr[2]=(IIC_SLAVE_ADDRESS<<1)|0x1;
 		dummyWr[3]=I2CTransferBuffer[0];
 		if(I2CTransferBuffer[1]==calc_crc8(dummyWr,4))
@@ -75,7 +75,7 @@ bool IIC_ReadDataWithCRC(u8 regAddr,void *dataPtr,u16 dataLen)
 				{
 					if(src[1]!=calc_crc8(src,1))
 					{
-						return ERROR;//¶ÁÈ¡Ê§°Ü£¨CRC´íÎó£©
+						return ERROR;//è¯»å–å¤±è´¥ï¼ˆCRCé”™è¯¯ï¼‰
 					}
 				}
 				for(remains=dataLen,src=I2CTransferBuffer;remains>0;remains--,src+=2)
@@ -83,28 +83,28 @@ bool IIC_ReadDataWithCRC(u8 regAddr,void *dataPtr,u16 dataLen)
 					*(u8 *)dataPtr=*src;
 					dataPtr=(u8 *)dataPtr+1;
 				}
-				return SUCCESS; //¶ÁÈ¡³É¹¦
+				return SUCCESS; //è¯»å–æˆåŠŸ
 			}
 			else if(dataLen==1)
 			{
 				*(u8 *)dataPtr=I2CTransferBuffer[0];
-				return SUCCESS; //¶ÁÈ¡³É¹¦
+				return SUCCESS; //è¯»å–æˆåŠŸ
 			}
 		}
 	}
 	return ERROR;
 }
 /**
-	* @ËµÃ÷	Ğ´Èë¼Ä´æÆ÷
-	* @²ÎÊı	AFE¼Ä´æÆ÷ÆğÊ¼µØÖ·¡¢Æ«ÒÆµØÖ·¡¢³¤¶È
-	* @·µ»ØÖµ	³É¹¦/Ê§°Ü
-	* @×¢	
+	* @è¯´æ˜	å†™å…¥å¯„å­˜å™¨
+	* @å‚æ•°	AFEå¯„å­˜å™¨èµ·å§‹åœ°å€ã€åç§»åœ°å€ã€é•¿åº¦
+	* @è¿”å›å€¼	æˆåŠŸ/å¤±è´¥
+	* @æ³¨	
 */
 bool IIC_WriteDataWithCRC(u8 regAddr,void *dataPtr,u16 dataLen)
 {
   u8 *des=I2CTransferBuffer,*src=(u8 *)dataPtr;
-  *des++=(IIC_SLAVE_ADDRESS<<1)|0x00; //(´ÓÉè±¸Éè±¸µØÖ·<<)|Ğ´²Ù×÷
-  *des++=regAddr;  //¼Ä´æÆ÷µØÖ·
+  *des++=(IIC_SLAVE_ADDRESS<<1)|0x00; //(ä»è®¾å¤‡è®¾å¤‡åœ°å€<<)|å†™æ“ä½œ
+  *des++=regAddr;  //å¯„å­˜å™¨åœ°å€
   *des++=*src++;
   *des++=calc_crc8(I2CTransferBuffer,3);
   while(--dataLen>0){
@@ -135,10 +135,10 @@ bool IIC_CheckWrite(u8 regAddr,void *dataPtr,u16 dataLen)
 }
 
 /**
-	* @ËµÃ÷	AFEÊı¾İ¶ÁÈ¡
-	* @²ÎÊı	AFE¼Ä´æÆ÷ÆğÊ¼µØÖ·¡¢³¤¶È
-	* @·µ»ØÖµ	³É¹¦/Ê§°Ü
-	* @×¢	
+	* @è¯´æ˜	AFEæ•°æ®è¯»å–
+	* @å‚æ•°	AFEå¯„å­˜å™¨èµ·å§‹åœ°å€ã€é•¿åº¦
+	* @è¿”å›å€¼	æˆåŠŸ/å¤±è´¥
+	* @æ³¨	
 */
 bool DVC11XX_ReadRegs(u8 regAddr,u8 regLen)
 {
@@ -158,10 +158,10 @@ bool DVC11XX_ReadRegs(u8 regAddr,u8 regLen)
 }
 
 /**
-	* @ËµÃ÷	AFEÊı¾İĞ´Èë
-	* @²ÎÊı	AFE¼Ä´æÆ÷ÆğÊ¼µØÖ·¡¢³¤¶È
-	* @·µ»ØÖµ	³É¹¦/Ê§°Ü
-	* @×¢	
+	* @è¯´æ˜	AFEæ•°æ®å†™å…¥
+	* @å‚æ•°	AFEå¯„å­˜å™¨èµ·å§‹åœ°å€ã€é•¿åº¦
+	* @è¿”å›å€¼	æˆåŠŸ/å¤±è´¥
+	* @æ³¨	
 */
 bool DVC11XX_WriteRegs(u8 regAddr,u8 regLen)
 {
@@ -180,7 +180,7 @@ bool DVC11XX_WriteRegs(u8 regAddr,u8 regLen)
 	return ERROR;
 }
 //------------------------------------------------------------------------------
-//Í¨¹ıIIC·¢ËÍÖ¸Áî£¬Ç¿ÖÆAFEĞ¾Æ¬½øÈëĞİÃß×´Ì¬
+//é€šè¿‡IICå‘é€æŒ‡ä»¤ï¼Œå¼ºåˆ¶AFEèŠ¯ç‰‡è¿›å…¥ä¼‘çœ çŠ¶æ€
 void DVC11XX_ForceSleep(void)
 {
 	g_AfeRegs.R1.CST=0x0f;

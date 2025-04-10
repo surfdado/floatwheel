@@ -38,68 +38,68 @@ typedef union
 
 typedef struct
 {
-	FLOAT_INT_TYP 	Total_Voltage;			//×ÜµçÑ¹
-	FLOAT_INT_TYP 	Charge_Input_Voltage;	//³äµçÆ÷µçÑ¹
+	FLOAT_INT_TYP 	Total_Voltage;			//æ€»ç”µå‹
+	FLOAT_INT_TYP 	Charge_Input_Voltage;	//å……ç”µå™¨ç”µå‹
 }CAN_BMS_V_TOT;
 
 typedef struct
 {
-	FLOAT_INT_TYP 	Input_Current;			//ÊäÈëµçÁ÷
-	FLOAT_INT_TYP 	Input_Current_BMS_IC;	//BMS_ICµçÁ÷
+	FLOAT_INT_TYP 	Input_Current;			//è¾“å…¥ç”µæµ
+	FLOAT_INT_TYP 	Input_Current_BMS_IC;	//BMS_ICç”µæµ
 }CAN_BMS_I;
 
 typedef struct
 {
-	FLOAT_INT_TYP 	Ah_Counter;				//µç³ØºÁ°²Ê±
-	FLOAT_INT_TYP 	Wh_Counter;				//µç³ØWÊ± 
+	FLOAT_INT_TYP 	Ah_Counter;				//ç”µæ± æ¯«å®‰æ—¶
+	FLOAT_INT_TYP 	Wh_Counter;				//ç”µæ± Wæ—¶ 
 }CAN_BMS_AH_WH;
 
 typedef struct
 {
-	uint8_t         Group;					//µÚ¼¸×é	Ò»Ö¡±¨ÎÄ×î¶àÉèÖÃ3×éµç³ØµçÑ¹
-	uint8_t			BMS_String;				//BMS´®Êı
-	uint16_t		BMS_Single_Voltage[20];	//µ¥½Úµç³ØµçÑ¹	À©´ó1000±¶·¢ËÍ
+	uint8_t         Group;					//ç¬¬å‡ ç»„	ä¸€å¸§æŠ¥æ–‡æœ€å¤šè®¾ç½®3ç»„ç”µæ± ç”µå‹
+	uint8_t			BMS_String;				//BMSä¸²æ•°
+	uint16_t		BMS_Single_Voltage[20];	//å•èŠ‚ç”µæ± ç”µå‹	æ‰©å¤§1000å€å‘é€
 }CAN_BMS_V_CELL;
 
 typedef struct
 {
-	uint8_t			BMS_String;				//BMS´®Êı
-	INT32_BIT_TYP	BMS_BAT;				//µ¥½Úµç³Ø×´Ì¬
+	uint8_t			BMS_String;				//BMSä¸²æ•°
+	INT32_BIT_TYP	BMS_BAT;				//å•èŠ‚ç”µæ± çŠ¶æ€
 }CAN_BMS_BAL;
 
 typedef struct
 {
-	uint8_t         Group;					//µÚ¼¸×é	Ò»Ö¡±¨ÎÄ×î¶àÉèÖÃ3×éµç³ØµçÑ¹
-	uint16_t		BMS_Single_Temp[10];	//µç³ØÎÂ¶È	À©´ó100±¶·¢ËÍ
+	uint8_t         Group;					//ç¬¬å‡ ç»„	ä¸€å¸§æŠ¥æ–‡æœ€å¤šè®¾ç½®3ç»„ç”µæ± ç”µå‹
+	uint16_t		BMS_Single_Temp[10];	//ç”µæ± æ¸©åº¦	æ‰©å¤§100å€å‘é€
 }CAN_BMS_TEMPS;
 
 typedef struct
 {
-	uint16_t 		Humidity;				//Êª¶È	0-10000(0%-100%);
-	int16_t			Temp_Hum_Sensor;		//ÎÂ¶È	-10000-10000(-100¡ã-100¡ã)
-	int16_t			Temp_IC;				//ICÎÂ¶È
+	uint16_t 		Humidity;				//æ¹¿åº¦	0-10000(0%-100%);
+	int16_t			Temp_Hum_Sensor;		//æ¸©åº¦	-10000-10000(-100Â°-100Â°)
+	int16_t			Temp_IC;				//ICæ¸©åº¦
 }CAN_BMS_HUM;
 
 typedef struct
 {
-	uint16_t		V_Cell_Min;				//µ¥½Úµç³Ø×îµÍµçÑ¹ À©´ó1000±¶·¢ËÍ
-	uint16_t		V_Cell_Max;				//µ¥½Úµç³Ø×î¸ßµçÑ¹ À©´ó1000±¶·¢ËÍ
-	uint8_t 		Soc;					//0-255(0%-100%) ³äµç×´Ì¬
-	uint8_t			Soh;					//0-255(0%-100%) ½¡¿µ×´Ì¬
-	uint8_t			T_Cell_Max;				//µ¥½Úµç³Ø×î´óÎÂ¶È
+	uint16_t		V_Cell_Min;				//å•èŠ‚ç”µæ± æœ€ä½ç”µå‹ æ‰©å¤§1000å€å‘é€
+	uint16_t		V_Cell_Max;				//å•èŠ‚ç”µæ± æœ€é«˜ç”µå‹ æ‰©å¤§1000å€å‘é€
+	uint8_t 		Soc;					//0-255(0%-100%) å……ç”µçŠ¶æ€
+	uint8_t			Soh;					//0-255(0%-100%) å¥åº·çŠ¶æ€
+	uint8_t			T_Cell_Max;				//å•èŠ‚ç”µæ± æœ€å¤§æ¸©åº¦
 	uint8_t			Stat;					//
 }CAN_BMS_SOC_SOH_TEMP_STAT;
 
 typedef struct
 {
-	FLOAT_INT_TYP	Ah_Charge_Total;		//³äµç°²Ê±
-	FLOAT_INT_TYP   Wh_Charge_Total;		//³äµçÍßÊ±
+	FLOAT_INT_TYP	Ah_Charge_Total;		//å……ç”µå®‰æ—¶
+	FLOAT_INT_TYP   Wh_Charge_Total;		//å……ç”µç“¦æ—¶
 }CAN_BMS_AH_WH_CHG_TOTAL;
 
 typedef struct
 {
-	FLOAT_INT_TYP	Ah_Discharge_Total;		//°²Ê±
-	FLOAT_INT_TYP   Wh_Discharge_Total;		//ÍßÊ±
+	FLOAT_INT_TYP	Ah_Discharge_Total;		//å®‰æ—¶
+	FLOAT_INT_TYP   Wh_Discharge_Total;		//ç“¦æ—¶
 }CAN_BMS_AH_WH_DIS_TOTAL;
 
 typedef struct
@@ -119,30 +119,30 @@ typedef struct
 
 typedef struct
 {
-	FLOAT_INT_TYP 	Total_Voltage;			//×ÜµçÑ¹
-	FLOAT_INT_TYP 	Charge_Input_Voltage;	//³äµçÆ÷µçÑ¹	
-	FLOAT_INT_TYP 	Input_Current;			//ÊäÈëµçÁ÷
-	FLOAT_INT_TYP 	Input_Current_BMS_IC;	//BMS_ICµçÁ÷
-	FLOAT_INT_TYP 	Ah_Counter;				//µç³ØºÁ°²Ê±
-	FLOAT_INT_TYP 	Wh_Counter;				//µç³ØWÊ± 
-	uint16_t 		Humidity;				//Êª¶È	0-10000(0%-100%);
-	int16_t			Temp_Hum_Sensor;		//ÎÂ¶È	-10000-10000(-100¡ã-100¡ã)
-	int16_t			Temp_IC;				//ICÎÂ¶È
-	uint16_t		V_Cell_Min;				//µ¥½Úµç³Ø×îµÍµçÑ¹ À©´ó1000±¶·¢ËÍ
-	uint16_t		V_Cell_Max;				//µ¥½Úµç³Ø×î¸ßµçÑ¹ À©´ó1000±¶·¢ËÍ
+	FLOAT_INT_TYP 	Total_Voltage;			//æ€»ç”µå‹
+	FLOAT_INT_TYP 	Charge_Input_Voltage;	//å……ç”µå™¨ç”µå‹	
+	FLOAT_INT_TYP 	Input_Current;			//è¾“å…¥ç”µæµ
+	FLOAT_INT_TYP 	Input_Current_BMS_IC;	//BMS_ICç”µæµ
+	FLOAT_INT_TYP 	Ah_Counter;				//ç”µæ± æ¯«å®‰æ—¶
+	FLOAT_INT_TYP 	Wh_Counter;				//ç”µæ± Wæ—¶ 
+	uint16_t 		Humidity;				//æ¹¿åº¦	0-10000(0%-100%);
+	int16_t			Temp_Hum_Sensor;		//æ¸©åº¦	-10000-10000(-100Â°-100Â°)
+	int16_t			Temp_IC;				//ICæ¸©åº¦
+	uint16_t		V_Cell_Min;				//å•èŠ‚ç”µæ± æœ€ä½ç”µå‹ æ‰©å¤§1000å€å‘é€
+	uint16_t		V_Cell_Max;				//å•èŠ‚ç”µæ± æœ€é«˜ç”µå‹ æ‰©å¤§1000å€å‘é€
 	uint8_t 		Soc;					//0-255(0%-100%)
 	uint8_t			Soh;					//0-255(0%-100%)
-	uint8_t			T_Cell_Max;				//µ¥½Úµç³Ø×î´óÎÂ¶È
+	uint8_t			T_Cell_Max;				//å•èŠ‚ç”µæ± æœ€å¤§æ¸©åº¦
 	uint8_t			Stat;					//
-	FLOAT_INT_TYP	Ah_Charge_Total;		//°²Ê±
-	FLOAT_INT_TYP   Wh_Charge_Total;		//ÍßÊ±
-	FLOAT_INT_TYP	Ah_Discharge_Total;		//°²Ê±
-	FLOAT_INT_TYP   Wh_Discharge_Total;		//ÍßÊ±
-	uint8_t         Group;					//µÚ¼¸×é	Ò»Ö¡±¨ÎÄ×î¶àÉèÖÃ3×éµç³ØµçÑ¹
-	uint8_t			BMS_String;				//BMS´®Êı
-	uint16_t		BMS_Single_Voltage[20];	//µ¥½Úµç³ØµçÑ¹	À©´ó1000±¶·¢ËÍ
-	uint16_t		BMS_Single_Temp[10];	//µç³ØÎÂ¶È	À©´ó100±¶·¢ËÍ
-	uint32_t		BMS_Single_Stat;		//µ¥½Úµç³Ø×´Ì¬	
+	FLOAT_INT_TYP	Ah_Charge_Total;		//å®‰æ—¶
+	FLOAT_INT_TYP   Wh_Charge_Total;		//ç“¦æ—¶
+	FLOAT_INT_TYP	Ah_Discharge_Total;		//å®‰æ—¶
+	FLOAT_INT_TYP   Wh_Discharge_Total;		//ç“¦æ—¶
+	uint8_t         Group;					//ç¬¬å‡ ç»„	ä¸€å¸§æŠ¥æ–‡æœ€å¤šè®¾ç½®3ç»„ç”µæ± ç”µå‹
+	uint8_t			BMS_String;				//BMSä¸²æ•°
+	uint16_t		BMS_Single_Voltage[20];	//å•èŠ‚ç”µæ± ç”µå‹	æ‰©å¤§1000å€å‘é€
+	uint16_t		BMS_Single_Temp[10];	//ç”µæ± æ¸©åº¦	æ‰©å¤§100å€å‘é€
+	uint32_t		BMS_Single_Stat;		//å•èŠ‚ç”µæ± çŠ¶æ€	
 	
 	CAN_PACKET_ID 	VESC_CAN_CMD;
 	
@@ -163,35 +163,35 @@ void VESC_Set_BMS_AH_WH_DIS_TOTAL(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *ves
 
 typedef struct
 {
-	int32_t Rpm;			//×ªËÙ
-	float	Duty_Cycle;		//Õ¼¿Õ±È
-	float	Total_Current;	//×ÜµçÁ÷
+	int32_t Rpm;			//è½¬é€Ÿ
+	float	Duty_Cycle;		//å ç©ºæ¯”
+	float	Total_Current;	//æ€»ç”µæµ
 }CAN_STATUS;
 
 typedef struct
 {
-	float	Amp_Hours_Charged;	//³äµçµÄ°²Ê±
-	float	Amp_Hours;			//ÏûºÄµÄ°²Ê±
+	float	Amp_Hours_Charged;	//å……ç”µçš„å®‰æ—¶
+	float	Amp_Hours;			//æ¶ˆè€—çš„å®‰æ—¶
 }CAN_STATUS_2;
 
 typedef struct
 {
-	float	Watt_Hours_Charged;	//³äµçµÄÍßÊ±
-	float	Watt_Hours;			//ÏûºÄµÄÍßÊ±
+	float	Watt_Hours_Charged;	//å……ç”µçš„ç“¦æ—¶
+	float	Watt_Hours;			//æ¶ˆè€—çš„ç“¦æ—¶
 }CAN_STATUS_3;
 
 typedef struct
 {
-	float 	PID_Pos;				//²»Çå³şÊı¾İÀàĞÍ
-	float 	Total_Input_Current;	//ÊäÈë×ÜµçÁ÷
-	float 	Motor_Temp;				//µç»úÎÂ¶È
-	float 	MOSFET_Temp;			//MOS¹ÜÎÂ¶È
+	float 	PID_Pos;				//ä¸æ¸…æ¥šæ•°æ®ç±»å‹
+	float 	Total_Input_Current;	//è¾“å…¥æ€»ç”µæµ
+	float 	Motor_Temp;				//ç”µæœºæ¸©åº¦
+	float 	MOSFET_Temp;			//MOSç®¡æ¸©åº¦
 }CAN_STATUS_4;
 
 typedef struct
 {
-	float 	Input_Voltage;		//ÊäÈëµçÑ¹
-	int32_t Tachometer_Value;	//×ªËÙ±í?²»È·¶¨
+	float 	Input_Voltage;		//è¾“å…¥ç”µå‹
+	int32_t Tachometer_Value;	//è½¬é€Ÿè¡¨?ä¸ç¡®å®š
 }CAN_STATUS_5;
 
 typedef struct

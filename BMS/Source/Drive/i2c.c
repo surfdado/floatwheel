@@ -14,10 +14,10 @@ void I2C_Configure(void)
 	I2C_DeInit(I2C1);
     I2C_InitStructure.BusMode     = I2C_BUSMODE_I2C;
     I2C_InitStructure.FmDutyCycle = I2C_FMDUTYCYCLE_2;
-    I2C_InitStructure.OwnAddr1    = 0xD0;	//Ö÷»úµÄI2CµØÖ·,ÓÃ²»µ½ÔòËæ±ãĞ´£¬ÎŞÓ°Ïì
+    I2C_InitStructure.OwnAddr1    = 0xD0;	//ä¸»æœºçš„I2Cåœ°å€,ç”¨ä¸åˆ°åˆ™éšä¾¿å†™ï¼Œæ— å½±å“
     I2C_InitStructure.AckEnable   = I2C_ACKEN;
     I2C_InitStructure.AddrMode    = I2C_ADDR_MODE_7BIT;
-    I2C_InitStructure.ClkSpeed    = 100000;	//100K£¬¸ù¾İ×Ô¼ºËùÓÃĞ¾Æ¬ÊÖ²á²é¿´Ö§³ÖµÄËÙ¶È¡£
+    I2C_InitStructure.ClkSpeed    = 100000;	//100Kï¼Œæ ¹æ®è‡ªå·±æ‰€ç”¨èŠ¯ç‰‡æ‰‹å†ŒæŸ¥çœ‹æ”¯æŒçš„é€Ÿåº¦ã€‚
     I2C_Init(I2C1, &I2C_InitStructure);
 	
 	I2C_Enable(I2C1, ENABLE);
@@ -45,10 +45,10 @@ void IIC_Init(void)
 }
 
 /**
-	* @ËµÃ÷	IIC»½ĞÑ
-	* @²ÎÊı	
-	* @·µ»ØÖµ	
-	* @×¢	
+	* @è¯´æ˜	IICå”¤é†’
+	* @å‚æ•°	
+	* @è¿”å›å€¼	
+	* @æ³¨	
 */
 void IIC_Wakeup(void)
 {
@@ -65,21 +65,21 @@ void IIC_Wakeup(void)
     GPIO_InitStructure.GPIO_Mode  	= GPIO_Mode_Out_PP;
     GPIO_InitPeripheral(GPIOB, &GPIO_InitStructure);
 
-	GPIO_SetBits(GPIOB,GPIO_PIN_6);//»½ĞÑĞÅºÅ£ºSCL>SDA 2V
+	GPIO_SetBits(GPIOB,GPIO_PIN_6);//å”¤é†’ä¿¡å·ï¼šSCL>SDA 2V
 	GPIO_ResetBits(GPIOB,GPIO_PIN_7);//
 	
 	User_Delay_xms(5);
 
-	IIC_Init();//ÖØÆôIICÍ¨ĞÅ
+	IIC_Init();//é‡å¯IICé€šä¿¡
 }
 
 #define I2C_LONG_TIMEOUT       ((u32)0x10000)
 
 /**
-	* @ËµÃ÷	¶ÁĞ´¼Ä´æÆ÷Êı¾İ´æÈë»º´æ
-	* @²ÎÊı	µØÖ·¡¢»º´æÊı×é¡¢³¤¶È
-	* @·µ»ØÖµ	³É¹¦/Ê§°Ü
-	* @×¢	
+	* @è¯´æ˜	è¯»å†™å¯„å­˜å™¨æ•°æ®å­˜å…¥ç¼“å­˜
+	* @å‚æ•°	åœ°å€ã€ç¼“å­˜æ•°ç»„ã€é•¿åº¦
+	* @è¿”å›å€¼	æˆåŠŸ/å¤±è´¥
+	* @æ³¨	
 */
 bool IIC_TransferDataRaw(u8 *writeData,u16 writeLen,u8 *readData,u16 readLen)
 {
@@ -92,33 +92,33 @@ bool IIC_TransferDataRaw(u8 *writeData,u16 writeLen,u8 *readData,u16 readLen)
 		return ERROR;
 	}		
 
-	//³¬Ê±µÈ´ı	
-	//¼ì²âIIC¿ØÖÆÆ÷ÊÇ·ñÃ¦(Èç¹û²»´æÔÚ×ÜÏß¶à»úÍ¨ĞÅ¿ÉÒÔÊ¡ÂÔ£©
+	//è¶…æ—¶ç­‰å¾…	
+	//æ£€æµ‹IICæ§åˆ¶å™¨æ˜¯å¦å¿™(å¦‚æœä¸å­˜åœ¨æ€»çº¿å¤šæœºé€šä¿¡å¯ä»¥çœç•¥ï¼‰
 	for(I2C_Wait=I2C_LONG_TIMEOUT<<1;I2C_GetFlag(I2C1,I2C_FLAG_BUSY);I2C_Wait--)
 	{
 		if(I2C_Wait==0)
 		{
 			I2C_DeInit(I2C1);
-			I2C_Configure();//ÖØĞÂ³õÊ¼»¯IIC£¬ÒÔ½â³ıIICËÀËø×´Ì¬
+			I2C_Configure();//é‡æ–°åˆå§‹åŒ–IICï¼Œä»¥è§£é™¤IICæ­»é”çŠ¶æ€
 			return ERROR;
 		}	
 	}
 	
-	I2C_GenerateStart(I2C1, ENABLE);//·¢ËÍSTARTĞÅºÅ
-	//³¬Ê±µÈ´ı
-	/*EV5,Ö÷Ä£Ê½*/
+	I2C_GenerateStart(I2C1, ENABLE);//å‘é€STARTä¿¡å·
+	//è¶…æ—¶ç­‰å¾…
+	/*EV5,ä¸»æ¨¡å¼*/
 	for(I2C_Wait=I2C_LONG_TIMEOUT;!I2C_CheckEvent(I2C1,I2C_EVT_MASTER_MODE_FLAG);I2C_Wait--)
 	{
 		if(I2C_Wait==0)
 		{
 			label_timeout:
-			I2C_GenerateStop(I2C1,ENABLE);//ÍË³öÊ±È·±£¹Ø±ÕI2C1×ÜÏß
+			I2C_GenerateStop(I2C1,ENABLE);//é€€å‡ºæ—¶ç¡®ä¿å…³é—­I2C1æ€»çº¿
 			return ERROR;
 		}
 	}
 
 	I2C_SendAddr7bit(I2C1, slaveRdAddr, I2C_DIRECTION_SEND);
-	//³¬Ê±µÈ´ı
+	//è¶…æ—¶ç­‰å¾…
 	for(I2C_Wait=I2C_LONG_TIMEOUT;!I2C_CheckEvent(I2C1,I2C_EVT_MASTER_TXMODE_FLAG);I2C_Wait--)
 	{//Test on EV6 and clear it
 		if(I2C_Wait==0)
@@ -130,8 +130,8 @@ bool IIC_TransferDataRaw(u8 *writeData,u16 writeLen,u8 *readData,u16 readLen)
 	//I2C_Cmd( I2C1,ENABLE );//Clear EV6 by setting again the PE bit
 	while(--writeLen)
 	{
-		I2C_SendData(I2C1, *++writeData);//¼Ä´æÆ÷µØÖ·
-		//³¬Ê±µÈ´ı
+		I2C_SendData(I2C1, *++writeData);//å¯„å­˜å™¨åœ°å€
+		//è¶…æ—¶ç­‰å¾…
 		for(I2C_Wait=I2C_LONG_TIMEOUT;!I2C_CheckEvent(I2C1,I2C_EVT_MASTER_DATA_SENDED);I2C_Wait--)
 		{
 			if(I2C_Wait==0)
@@ -143,17 +143,17 @@ bool IIC_TransferDataRaw(u8 *writeData,u16 writeLen,u8 *readData,u16 readLen)
 	
 	if(readLen>0)
 	{
-		I2C_GenerateStart(I2C1, ENABLE);//¶ş´Î·¢ËÍÆğÊ¼·û
-		//¼ì²éEV5²¢Çå³ı
+		I2C_GenerateStart(I2C1, ENABLE);//äºŒæ¬¡å‘é€èµ·å§‹ç¬¦
+		//æ£€æŸ¥EV5å¹¶æ¸…é™¤
 		for(I2C_Wait=I2C_LONG_TIMEOUT;!I2C_CheckEvent(I2C1,I2C_EVT_MASTER_MODE_FLAG);I2C_Wait--)
 		{
 			if(I2C_Wait==0) goto label_timeout;
 		}
 	
-		I2C_SendAddr7bit(I2C1,slaveRdAddr,I2C_DIRECTION_RECV );//·¢ËÍÉè±¸µØÖ·(8Î»ÒÔ¼°¶Á)
-		//I2C_Wait = I2C_LONG_TIMEOUT;//µÈ´ıÊ±¼ä¸´Î»
+		I2C_SendAddr7bit(I2C1,slaveRdAddr,I2C_DIRECTION_RECV );//å‘é€è®¾å¤‡åœ°å€(8ä½ä»¥åŠè¯»)
+		//I2C_Wait = I2C_LONG_TIMEOUT;//ç­‰å¾…æ—¶é—´å¤ä½
 		for(I2C_Wait=I2C_LONG_TIMEOUT;!I2C_CheckEvent(I2C1,I2C_EVT_MASTER_RXMODE_FLAG);I2C_Wait--)
-		{//¼ì²éEV6(¶Á)²¢Çå³ı
+		{//æ£€æŸ¥EV6(è¯»)å¹¶æ¸…é™¤
 			if(I2C_Wait==0)
 			{
 				goto label_timeout;
@@ -162,7 +162,7 @@ bool IIC_TransferDataRaw(u8 *writeData,u16 writeLen,u8 *readData,u16 readLen)
 	
 		if(readLen>1)
 		{
-			I2C_ConfigAck(I2C1,ENABLE);//Ê¹ÄÜ¶ÁÓ¦´ğ
+			I2C_ConfigAck(I2C1,ENABLE);//ä½¿èƒ½è¯»åº”ç­”
 			
 			while(--readLen!=0)
 			{
@@ -176,8 +176,8 @@ bool IIC_TransferDataRaw(u8 *writeData,u16 writeLen,u8 *readData,u16 readLen)
 				*readData++=I2C_RecvData(I2C1);
 			}
 		}
-		I2C_ConfigAck(I2C1,DISABLE);//¶Á×îºóÒ»¸ö×Ö½Ú£¨Òª¹Ø±ÕÓ¦´ğ£©	
-		I2C_GenerateStop(I2C1,ENABLE);//¹Ø±ÕI2C1×ÜÏß
+		I2C_ConfigAck(I2C1,DISABLE);//è¯»æœ€åä¸€ä¸ªå­—èŠ‚ï¼ˆè¦å…³é—­åº”ç­”ï¼‰	
+		I2C_GenerateStop(I2C1,ENABLE);//å…³é—­I2C1æ€»çº¿
 		for(I2C_Wait=I2C_LONG_TIMEOUT;I2C_GetFlag(I2C1,I2C_FLAG_RXDATNE)==RESET;I2C_Wait--)
 		{
 			if(I2C_Wait==0)
@@ -189,7 +189,7 @@ bool IIC_TransferDataRaw(u8 *writeData,u16 writeLen,u8 *readData,u16 readLen)
 	}	
 	else
 	{
-		I2C_ConfigAck(I2C1,DISABLE);//¹Ø±ÕI2C1×ÜÏß
+		I2C_ConfigAck(I2C1,DISABLE);//å…³é—­I2C1æ€»çº¿
 	}	
 	
 	return SUCCESS;	

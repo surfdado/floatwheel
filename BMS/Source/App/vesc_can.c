@@ -2,97 +2,97 @@
 	
 CAN_BMS_V_TOT 	BMS_V_TOT = 
 {
-	.Total_Voltage = 0,				//×ÜµçÑ¹
-	.Charge_Input_Voltage = 0,		//³äµçÆ÷µçÑ¹
+	.Total_Voltage = 0,				//æ€»ç”µå‹
+	.Charge_Input_Voltage = 0,		//å……ç”µå™¨ç”µå‹
 };
 
 CAN_BMS_I		BMS_I = 
 {
-	.Input_Current = 0,				//ÊäÈëµçÁ÷
-	.Input_Current_BMS_IC = 0,		//BMS_ICµçÁ÷
+	.Input_Current = 0,				//è¾“å…¥ç”µæµ
+	.Input_Current_BMS_IC = 0,		//BMS_ICç”µæµ
 };
 
 
 CAN_BMS_AH_WH	BMS_AH_WH = 
 {
-	.Ah_Counter = 0,				//µç³ØºÁ°²Ê±
-	.Wh_Counter = 0,				//µç³ØWÊ± 
+	.Ah_Counter = 0,				//ç”µæ± æ¯«å®‰æ—¶
+	.Wh_Counter = 0,				//ç”µæ± Wæ—¶ 
 };
 
 CAN_BMS_V_CELL	BMS_V_CELL = 		
 {
-	.Group = 0,						//µÚ¼¸×é
-	.BMS_String = 20,				//BMS´®Êı
-	.BMS_Single_Voltage[0] = 0,		//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[1] = 0,		//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[2] = 0,		//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[3] = 0,		//µ¥½Úµç³ØµçÑ¹	
-	.BMS_Single_Voltage[4] = 0,		//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[5] = 0,		//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[6] = 0,		//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[7] = 0,		//µ¥½Úµç³ØµçÑ¹	
-	.BMS_Single_Voltage[8] = 0,		//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[9] = 0,		//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[10] = 0,	//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[11] = 0,	//µ¥½Úµç³ØµçÑ¹	
-	.BMS_Single_Voltage[12] = 0,	//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[13] = 0,	//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[14] = 0,	//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[15] = 0,	//µ¥½Úµç³ØµçÑ¹	
-	.BMS_Single_Voltage[16] = 0,	//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[17] = 0,	//µ¥½Úµç³ØµçÑ¹	
-	.BMS_Single_Voltage[18] = 0,	//µ¥½Úµç³ØµçÑ¹
-	.BMS_Single_Voltage[19] = 0,	//µ¥½Úµç³ØµçÑ¹
+	.Group = 0,						//ç¬¬å‡ ç»„
+	.BMS_String = 20,				//BMSä¸²æ•°
+	.BMS_Single_Voltage[0] = 0,		//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[1] = 0,		//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[2] = 0,		//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[3] = 0,		//å•èŠ‚ç”µæ± ç”µå‹	
+	.BMS_Single_Voltage[4] = 0,		//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[5] = 0,		//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[6] = 0,		//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[7] = 0,		//å•èŠ‚ç”µæ± ç”µå‹	
+	.BMS_Single_Voltage[8] = 0,		//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[9] = 0,		//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[10] = 0,	//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[11] = 0,	//å•èŠ‚ç”µæ± ç”µå‹	
+	.BMS_Single_Voltage[12] = 0,	//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[13] = 0,	//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[14] = 0,	//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[15] = 0,	//å•èŠ‚ç”µæ± ç”µå‹	
+	.BMS_Single_Voltage[16] = 0,	//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[17] = 0,	//å•èŠ‚ç”µæ± ç”µå‹	
+	.BMS_Single_Voltage[18] = 0,	//å•èŠ‚ç”µæ± ç”µå‹
+	.BMS_Single_Voltage[19] = 0,	//å•èŠ‚ç”µæ± ç”µå‹
 };
 
 CAN_BMS_BAL		BMS_BAL = 
 {
-	.BMS_String = 20,				//BMS´®Êı
-	.BMS_BAT.i = 0,					//µ¥½Úµç³Ø×´Ì¬
+	.BMS_String = 20,				//BMSä¸²æ•°
+	.BMS_BAT.i = 0,					//å•èŠ‚ç”µæ± çŠ¶æ€
 };
 
 CAN_BMS_TEMPS	BMS_TEMPS =
 {
-	.Group = 0,						//µÚ¼¸×é
-	.BMS_Single_Temp[0] = 0,		//µ¥½Úµç³ØÎÂ¶È
-	.BMS_Single_Temp[1] = 0,		//µ¥½Úµç³ØÎÂ¶È
-	.BMS_Single_Temp[2] = 0,		//µ¥½Úµç³ØÎÂ¶È
-	.BMS_Single_Temp[3] = 0,		//µ¥½Úµç³ØÎÂ¶È
-	.BMS_Single_Temp[4] = 0,		//µ¥½Úµç³ØÎÂ¶È
-	.BMS_Single_Temp[5] = 0,		//µ¥½Úµç³ØÎÂ¶È
-	.BMS_Single_Temp[6] = 0,		//µ¥½Úµç³ØÎÂ¶È
-	.BMS_Single_Temp[7] = 0,		//µ¥½Úµç³ØÎÂ¶È
-	.BMS_Single_Temp[8] = 0,		//µ¥½Úµç³ØÎÂ¶È
-	.BMS_Single_Temp[9] = 0,		//µ¥½Úµç³ØÎÂ¶È
+	.Group = 0,						//ç¬¬å‡ ç»„
+	.BMS_Single_Temp[0] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
+	.BMS_Single_Temp[1] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
+	.BMS_Single_Temp[2] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
+	.BMS_Single_Temp[3] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
+	.BMS_Single_Temp[4] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
+	.BMS_Single_Temp[5] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
+	.BMS_Single_Temp[6] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
+	.BMS_Single_Temp[7] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
+	.BMS_Single_Temp[8] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
+	.BMS_Single_Temp[9] = 0,		//å•èŠ‚ç”µæ± æ¸©åº¦
 };
 
 CAN_BMS_HUM		BMS_HUM = 
 {
-	.Humidity = 0,					//Êª¶È	0-10000(0%-100%);
-	.Temp_Hum_Sensor = 0,			//ÎÂ¶È	-10000-10000(-100¡ã-100¡ã)
-	.Temp_IC = 0,					//ICÎÂ¶È
+	.Humidity = 0,					//æ¹¿åº¦	0-10000(0%-100%);
+	.Temp_Hum_Sensor = 0,			//æ¸©åº¦	-10000-10000(-100Â°-100Â°)
+	.Temp_IC = 0,					//ICæ¸©åº¦
 };
 
 CAN_BMS_SOC_SOH_TEMP_STAT	BMS_SOC_SOH_TEMP_STAT = 
 {
-	.V_Cell_Min = 0,				//µ¥½Úµç³Ø×îµÍµçÑ¹ À©´ó1000±¶·¢ËÍ
-	.V_Cell_Max = 0,				//µ¥½Úµç³Ø×î¸ßµçÑ¹ À©´ó1000±¶·¢ËÍ
+	.V_Cell_Min = 0,				//å•èŠ‚ç”µæ± æœ€ä½ç”µå‹ æ‰©å¤§1000å€å‘é€
+	.V_Cell_Max = 0,				//å•èŠ‚ç”µæ± æœ€é«˜ç”µå‹ æ‰©å¤§1000å€å‘é€
 	.Soc = 0,						//0-255(0%-100%)
 	.Soh = 0,						//0-255(0%-100%)
-	.T_Cell_Max = 0,				//µ¥½Úµç³Ø×î´óÎÂ¶È
+	.T_Cell_Max = 0,				//å•èŠ‚ç”µæ± æœ€å¤§æ¸©åº¦
 	.Stat = 0,						//
 };
 
 CAN_BMS_AH_WH_CHG_TOTAL		BMS_AH_WH_CHG_TOTAL =
 {
-	.Ah_Charge_Total = 0,			//°²Ê±
-	.Wh_Charge_Total = 0,			//ÍßÊ±
+	.Ah_Charge_Total = 0,			//å®‰æ—¶
+	.Wh_Charge_Total = 0,			//ç“¦æ—¶
 };
 
 CAN_BMS_AH_WH_DIS_TOTAL		BMS_AH_WH_DIS_TOTAL =
 {
-	.Ah_Discharge_Total = 0,		//°²Ê±
-	.Wh_Discharge_Total = 0,		//ÍßÊ±
+	.Ah_Discharge_Total = 0,		//å®‰æ—¶
+	.Wh_Discharge_Total = 0,		//ç“¦æ—¶
 };	
 
 VESC_CAN_TYPE VESC_CAN_DATA = 
@@ -111,10 +111,10 @@ VESC_CAN_TYPE VESC_CAN_DATA =
 
 /**************************************************
  * @brie  :VESC_Set_BMS_V_TOT()
- * @note  :ÉèÖÃ×ÜµçÑ¹ 	³äµçÆ÷µçÑ¹
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ * @note  :è®¾ç½®æ€»ç”µå‹ 	å……ç”µå™¨ç”µå‹
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_V_TOT(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -143,10 +143,10 @@ void VESC_Set_BMS_V_TOT(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data
 	
 /**************************************************
  * @brie  :VESC_Set_BMS_I()
- * @note  :ÉèÖÃÊäÈëµçÁ÷ 	BMS_ICµçÁ÷
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ * @note  :è®¾ç½®è¾“å…¥ç”µæµ 	BMS_ICç”µæµ
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_I(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -175,10 +175,10 @@ void VESC_Set_BMS_I(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 
 /**************************************************
  * @brie  :VESC_Set_BMS_AH_WH()
- * @note  :ÉèÖÃµç³ØºÁ°²Ê± 	µç³ØWÊ± 
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ * @note  :è®¾ç½®ç”µæ± æ¯«å®‰æ—¶ 	ç”µæ± Wæ—¶ 
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_AH_WH(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -207,10 +207,10 @@ void VESC_Set_BMS_AH_WH(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data
 
 /**************************************************
  * @brie  :VESC_Set_BMS_V_CELL()
- * @note  :ÉèÖÃµ¥½Úµç³ØµçÑ¹ 
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ * @note  :è®¾ç½®å•èŠ‚ç”µæ± ç”µå‹ 
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_V_CELL(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -247,10 +247,10 @@ void VESC_Set_BMS_V_CELL(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_dat
 
 /**************************************************
  * @brie  :VESC_Set_BMS_BAL()
- * @note  :ÉèÖÃµ¥½Úµç³Ø×´Ì¬ 
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ * @note  :è®¾ç½®å•èŠ‚ç”µæ± çŠ¶æ€ 
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_BAL(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -279,10 +279,10 @@ void VESC_Set_BMS_BAL(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 
 /**************************************************
  * @brie  :VESC_Set_BMS_TEMPS()
- * @note  :ÉèÖÃÎÂ¶È 
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ * @note  :è®¾ç½®æ¸©åº¦ 
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_TEMPS(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -321,10 +321,10 @@ void VESC_Set_BMS_TEMPS(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data
 
 /**************************************************
  * @brie  :VESC_Set_BMS_HUM()
- * @note  :ÉèÖÃÊª¶È ÎÂ¶È ICÎÂ¶È  
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ * @note  :è®¾ç½®æ¹¿åº¦ æ¸©åº¦ ICæ¸©åº¦  
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_HUM(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -353,15 +353,15 @@ void VESC_Set_BMS_HUM(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 
 /**************************************************
  * @brie  :VESC_Set_BMS_SOC_SOH_TEMP_STAT()
- * @note  :ÉèÖÃµ¥½Úµç³Ø×îµÍµçÑ¹
- *			   µ¥½Úµç³Ø×î¸ßµçÑ¹
+ * @note  :è®¾ç½®å•èŠ‚ç”µæ± æœ€ä½ç”µå‹
+ *			   å•èŠ‚ç”µæ± æœ€é«˜ç”µå‹
  *			    Soc
  *				Soh
- *			   µ¥½Úµç³Ø×î´óÎÂ¶È
- *			   ×´Ì¬
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ *			   å•èŠ‚ç”µæ± æœ€å¤§æ¸©åº¦
+ *			   çŠ¶æ€
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_SOC_SOH_TEMP_STAT(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -390,10 +390,10 @@ void VESC_Set_BMS_SOC_SOH_TEMP_STAT(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *v
 
 /**************************************************
  * @brie  :VESC_Set_BMS_AH_WH_CHG_TOTAL()
- * @note  :ÉèÖÃ³äµç°²Ê± 	³äµçÍßÊ±
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ * @note  :è®¾ç½®å……ç”µå®‰æ—¶ 	å……ç”µç“¦æ—¶
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_AH_WH_CHG_TOTAL(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -422,10 +422,10 @@ void VESC_Set_BMS_AH_WH_CHG_TOTAL(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *ves
 
 /**************************************************
  * @brie  :VESC_Set_BMS_AH_WH_DIS_TOTAL()
- * @note  :ÉèÖÃ°²Ê± ÍßÊ±
- * @param :can_tx_struct	CAN·¢ËÍ½á¹¹Ìå
+ * @note  :è®¾ç½®å®‰æ—¶ ç“¦æ—¶
+ * @param :can_tx_struct	CANå‘é€ç»“æ„ä½“
  *		   vesc_can_data	VESC_CAN_TYPE
- * @retval:ÎŞ
+ * @retval:æ— 
  **************************************************/
 void VESC_Set_BMS_AH_WH_DIS_TOTAL(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *vesc_can_data)
 {
@@ -454,35 +454,35 @@ void VESC_Set_BMS_AH_WH_DIS_TOTAL(CanTxMessage *can_tx_struct,VESC_CAN_TYPE *ves
 
 CAN_STATUS STATUS = 
 {
-	.Rpm = 0,			//×ªËÙ
-	.Duty_Cycle = 0,	//Õ¼¿Õ±È
-	.Total_Current = 0,	//×ÜµçÁ÷
+	.Rpm = 0,			//è½¬é€Ÿ
+	.Duty_Cycle = 0,	//å ç©ºæ¯”
+	.Total_Current = 0,	//æ€»ç”µæµ
 };
 
 CAN_STATUS_2 STATUS_2 = 
 {
-	.Amp_Hours_Charged = 0,	//³äµçµÄ°²Ê±
-	.Amp_Hours = 0,			//ÏûºÄµÄ°²Ê±
+	.Amp_Hours_Charged = 0,	//å……ç”µçš„å®‰æ—¶
+	.Amp_Hours = 0,			//æ¶ˆè€—çš„å®‰æ—¶
 };
 
 CAN_STATUS_3 STATUS_3 = 
 {
-	.Watt_Hours_Charged = 0,	//³äµçµÄÍßÊ±
-	.Watt_Hours = 0,			//ÏûºÄµÄÍßÊ±
+	.Watt_Hours_Charged = 0,	//å……ç”µçš„ç“¦æ—¶
+	.Watt_Hours = 0,			//æ¶ˆè€—çš„ç“¦æ—¶
 };
 
 CAN_STATUS_4 STATUS_4 = 
 {
-	.PID_Pos = 0,				//²»Çå³şÊı¾İÀàĞÍ
-	.Total_Input_Current = 0,	//ÊäÈë×ÜµçÁ÷
-	.Motor_Temp = 0,			//µç»úÎÂ¶È
-	.MOSFET_Temp = 0,			//MOS¹ÜÎÂ¶È
+	.PID_Pos = 0,				//ä¸æ¸…æ¥šæ•°æ®ç±»å‹
+	.Total_Input_Current = 0,	//è¾“å…¥æ€»ç”µæµ
+	.Motor_Temp = 0,			//ç”µæœºæ¸©åº¦
+	.MOSFET_Temp = 0,			//MOSç®¡æ¸©åº¦
 };
 
 CAN_STATUS_5 STATUS_5 = 
 {
-	.Input_Voltage = 0,		//ÊäÈëµçÑ¹
-	.Tachometer_Value = 0,	//×ªËÙ±í?²»È·¶¨
+	.Input_Voltage = 0,		//è¾“å…¥ç”µå‹
+	.Tachometer_Value = 0,	//è½¬é€Ÿè¡¨?ä¸ç¡®å®š
 };
 
 VESC_CAN_RX_TYPE VESC_CAN_RX_DATA = 

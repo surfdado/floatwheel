@@ -1,15 +1,15 @@
 /**
   ******************************************************************************
-  * @file       £∫ main.c
+  * @file       Ôºö main.c
   * @author     :  FCZ
-  * @version    £∫ V1.0.0
-  * @date       £∫ 2024ƒÍ08‘¬03»’
-  * @brief      £∫ BMS VESC 
+  * @version    Ôºö V1.0.0
+  * @date       Ôºö 2024Âπ¥08Êúà03Êó•
+  * @brief      Ôºö BMS VESC 
   * @mcu        :  N32L403K8Q7
   ******************************************************************************/
 /*----------------------------------------------------------------------------
-  ∏¸–¬»’÷æ:
-  2024-08-03 V1.0.0:≥ı º∞Ê±æ
+  Êõ¥Êñ∞Êó•Âøó:
+  2024-08-03 V1.0.0:ÂàùÂßãÁâàÊú¨
   ----------------------------------------------------------------------------*/
 #include "n32l40x.h"
 #include "can.h"
@@ -35,13 +35,13 @@
 
 RCC_ClocksType System_Clock;
 	
-#define IWDG_DEBUG	1	//1±‡“Îø¥√≈π∑ 0≤ª±‡“Îø¥√≈π∑
+#define IWDG_DEBUG	1	//1ÁºñËØëÁúãÈó®Áãó 0‰∏çÁºñËØëÁúãÈó®Áãó
 
 /**************************************************
  * @brie  :main()
- * @note  :÷˜∫Ø ˝
- * @param :Œﬁ
- * @retval:Œﬁ
+ * @note  :‰∏ªÂáΩÊï∞
+ * @param :Êó†
+ * @retval:Êó†
  **************************************************/
 int main(void)
 {
@@ -54,7 +54,7 @@ int main(void)
 	LDO_Init();
 	KEY_Init();
 	Charger_Init();
-	Power_On_Detection();	//ø™ª˙ºÏ≤‚
+	Power_On_Detection();	//ÂºÄÊú∫Ê£ÄÊµã
 	LED_Init();
 	CANM_Init();
 	CAN_Config();
@@ -66,7 +66,7 @@ int main(void)
 	
 	Flag.Software_Reset = 0;
 	
-	if(((RCC->CTRLSTS>>29)&1) == 1)	//ø¥√≈π∑∏¥Œª
+	if(((RCC->CTRLSTS>>29)&1) == 1)	//ÁúãÈó®ÁãóÂ§ç‰Ωç
 	{
 		LED_ON;
 #if IWDG_DEBUG		
@@ -83,7 +83,7 @@ int main(void)
 		Flag.Software_Reset = 0;
 		Flag.Power = 2;
 	}
-	else if(((RCC->CTRLSTS>>28)&1) == 1)	//»Ìº˛∏¥Œª
+	else if(((RCC->CTRLSTS>>28)&1) == 1)	//ËΩØ‰ª∂Â§ç‰Ωç
 	{
 #if IWDG_DEBUG			
 		Flag.Power = 3;

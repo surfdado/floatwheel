@@ -3,7 +3,7 @@
 ;  *   	@Create Date         2023.01.20
 ;  *    @Official website		 http://www.devechip.com/
 ;  *----------------------Abstract Description---------------------------------
-;  *			          AFEµçÑ¹¼ÆËã´¦Àí                              		
+;  *			          AFEç”µå‹è®¡ç®—å¤„ç†                              		
 ******************************************************************************/
 #include "Voltage.h"
 /////////////////////////////////////////////////////////////////////////////
@@ -12,10 +12,10 @@ static float s_SecondCALI_p1=0.35f/1000000,s_SecondCALI_p2=-0.12f/ 1000000,s_Sec
 u32 Sigma_SecondCALI=0;
 
 /**
-	* @ËµÃ÷	µçÑ¹¶ş´ÎĞ£×¼
-	* @²ÎÊı	µçÑ¹²ÉÑùÖµ¡¢µç³Ø´®ºÅ
-	* @·µ»ØÖµ	float µçÑ¹Öµ
-	* @×¢	µ¥Î»mV
+	* @è¯´æ˜	ç”µå‹äºŒæ¬¡æ ¡å‡†
+	* @å‚æ•°	ç”µå‹é‡‡æ ·å€¼ã€ç”µæ± ä¸²å·
+	* @è¿”å›å€¼	float ç”µå‹å€¼
+	* @æ³¨	å•ä½mV
 */
 static float CellVolSecondaryCalibrate(float value,int cellno){
 	
@@ -30,10 +30,10 @@ static float CellVolSecondaryCalibrate(float value,int cellno){
   return s_SecondCALI_preVcell_2nd;
 }
 /**
-	* @ËµÃ÷	¼ÆËãµç³Ø×éµÄ¸÷¸öµçĞ¾µçÑ¹
-	* @²ÎÊı	¼Ä´æÆ÷R29~R76¡¢R109
-	* @·µ»ØÖµ	u16 µçÑ¹Öµ
-	* @×¢	µ¥Î»mV
+	* @è¯´æ˜	è®¡ç®—ç”µæ± ç»„çš„å„ä¸ªç”µèŠ¯ç”µå‹
+	* @å‚æ•°	å¯„å­˜å™¨R29~R76ã€R109
+	* @è¿”å›å€¼	u16 ç”µå‹å€¼
+	* @æ³¨	å•ä½mV
 */
 float DVC11XX_Calc_VCell(u8 cellIndex){
 	float fValue;
@@ -48,69 +48,69 @@ float DVC11XX_Calc_VCell(u8 cellIndex){
 
 	uwValue=(g_AfeRegs.R29_76.VCELLS[cellMask].VCELL_H<<8)|g_AfeRegs.R29_76.VCELLS[cellMask].VCELL_L;
 
-	if(g_AfeRegs.R109.CVS){ //µç³ØµçÑ¹ÒÔÓĞ·ûºÅÊıÏÔÊ¾£¬LSB=200¦ÌV
+	if(g_AfeRegs.R109.CVS){ //ç”µæ± ç”µå‹ä»¥æœ‰ç¬¦å·æ•°æ˜¾ç¤ºï¼ŒLSB=200Î¼V
 		fValue=_lsbVCELL_signed  * (s16)uwValue;
 	}
-  else{//µç³ØµçÑ¹ÒÔÎŞ·ûºÅÊıÏÔÊ¾£¬LSB=100¦ÌV;
+  else{//ç”µæ± ç”µå‹ä»¥æ— ç¬¦å·æ•°æ˜¾ç¤ºï¼ŒLSB=100Î¼V;
     fValue=_lsbVCELL * (u16)uwValue;
   }		
  
-		fValue=CellVolSecondaryCalibrate(fValue,cellIndex); //µç³Ø¶ş´ÎĞ£×¼
+		fValue=CellVolSecondaryCalibrate(fValue,cellIndex); //ç”µæ± äºŒæ¬¡æ ¡å‡†
 
-	return 	fValue*1000+0.5f;//ËÄÉáÎåÈëÈ¡Õû£¨µ¥Î»mV£©
+	return 	fValue*1000+0.5f;//å››èˆäº”å…¥å–æ•´ï¼ˆå•ä½mVï¼‰
 }	
 
 /**
-	* @ËµÃ÷	¼ÆËãµç³Ø×é×ÜµçÑ¹
-	* @²ÎÊı	¼Ä´æÆ÷R7¡¢R8
-	* @·µ»ØÖµ	u16 µçÑ¹Öµ
-	* @×¢	µ¥Î»mV
+	* @è¯´æ˜	è®¡ç®—ç”µæ± ç»„æ€»ç”µå‹
+	* @å‚æ•°	å¯„å­˜å™¨R7ã€R8
+	* @è¿”å›å€¼	u16 ç”µå‹å€¼
+	* @æ³¨	å•ä½mV
 */
 u32 DVC11XX_Calc_VBAT(void){
 	u16 uwValue = (g_AfeRegs.R7_8.VBAT_H<<8)|g_AfeRegs.R7_8.VBAT_L;
 	float fValue= _lsbVCELL * 10000 * uwValue*12.8f;
-  return 	(u32)(fValue+0.5f);//ËÄÉáÎåÈëÈ¡Õû
+  return 	(u32)(fValue+0.5f);//å››èˆäº”å…¥å–æ•´
 }
 
 /**
-	* @ËµÃ÷	¼ÆËãPACK¹Ü½ÅµçÑ¹Öµ
-	* @²ÎÊı	¼Ä´æÆ÷R9¡¢R10
-	* @·µ»ØÖµ	u16 µçÑ¹Öµ
-	* @×¢ µ¥Î»mV
+	* @è¯´æ˜	è®¡ç®—PACKç®¡è„šç”µå‹å€¼
+	* @å‚æ•°	å¯„å­˜å™¨R9ã€R10
+	* @è¿”å›å€¼	u16 ç”µå‹å€¼
+	* @æ³¨ å•ä½mV
 */
 u32 DVC11XX_Calc_VPACK(void){
 	u16 uwValue = (g_AfeRegs.R9_10.VPK_H<<8)|g_AfeRegs.R9_10.VPK_L;
 	float fValue = _lsbVCELL * 10000 * uwValue*12.8f;
-  return 	(u32)(fValue+0.5f);//ËÄÉáÎåÈëÈ¡Õû
+  return 	(u32)(fValue+0.5f);//å››èˆäº”å…¥å–æ•´
 }
 
 /**
-	* @ËµÃ÷	¼ÆËãLOAD¹Ü½ÅµçÑ¹Öµ
-	* @²ÎÊı	¼Ä´æÆ÷R11¡¢R12
-	* @·µ»ØÖµ	u16 µçÑ¹Öµ
-	* @×¢ µ¥Î»mV
+	* @è¯´æ˜	è®¡ç®—LOADç®¡è„šç”µå‹å€¼
+	* @å‚æ•°	å¯„å­˜å™¨R11ã€R12
+	* @è¿”å›å€¼	u16 ç”µå‹å€¼
+	* @æ³¨ å•ä½mV
 */
 u32 DVC11XX_Calc_VLOAD(void){
 	u16 uwValue = (g_AfeRegs.R11_12.VLD_H<<8)|g_AfeRegs.R11_12.VLD_L;
 	float fValue = _lsbVCELL * 10000 * uwValue*12.8f;
-  return 	(u32)(fValue+0.5f);//ËÄÉáÎåÈëÈ¡Õû
+  return 	(u32)(fValue+0.5f);//å››èˆäº”å…¥å–æ•´
 }
 /**
-	* @ËµÃ÷	¼ÆËãV1P8¹Ü½ÅµçÑ¹Öµ
-	* @²ÎÊı	¼Ä´æÆ÷R15¡¢R16
-	* @·µ»ØÖµ	u16 µçÑ¹Öµ
-	* @×¢ µ¥Î»mV
+	* @è¯´æ˜	è®¡ç®—V1P8ç®¡è„šç”µå‹å€¼
+	* @å‚æ•°	å¯„å­˜å™¨R15ã€R16
+	* @è¿”å›å€¼	u16 ç”µå‹å€¼
+	* @æ³¨ å•ä½mV
 */
 u16 DVC11XX_Calc_V1P8(void){
 	u16 uwValue=(g_AfeRegs.R15_16.V1P8_H<<8)|g_AfeRegs.R15_16.V1P8_L;
 	float fValue = _lsbVCELL * 1000 * uwValue;
-  return 	(u16)(fValue+0.5f);//ËÄÉáÎåÈëÈ¡Õû
+  return 	(u16)(fValue+0.5f);//å››èˆäº”å…¥å–æ•´
 }
 /**
-	* @ËµÃ÷	µçĞ¾ÆÁ±Î
-	* @²ÎÊı	ÆÁ±ÎµçĞ¾¸÷´®ºÅ
-	* @·µ»ØÖµ	
-	* @×¢ 
+	* @è¯´æ˜	ç”µèŠ¯å±è”½
+	* @å‚æ•°	å±è”½ç”µèŠ¯å„ä¸²å·
+	* @è¿”å›å€¼	
+	* @æ³¨ 
 */
 void CellTestClose(u32 cellnumber){
 

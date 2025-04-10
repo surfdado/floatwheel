@@ -14,15 +14,15 @@
 
 typedef struct
 {
-	float 		Voltage;	//电池电压
+	float 		Voltage;	//鐢垫睜鐢靛帇
 	uint16_t	Single_Voltage[20];
 	uint16_t	Single_Voltage_Last[20];
-	float 		IC_Temp;	//芯片温度
-	float		GP1_Temp;	//GP1温度电阻
-	float		GP3_Temp;	//GP3温度电阻
-	float		GP4_Temp;	//GP4温度电阻
-	float       Current_CC1;//CC1电流
-	float       Current_CC2;//CC2电流
+	float 		IC_Temp;	//鑺墖娓╁害
+	float		GP1_Temp;	//GP1娓╁害鐢甸樆
+	float		GP3_Temp;	//GP3娓╁害鐢甸樆
+	float		GP4_Temp;	//GP4娓╁害鐢甸樆
+	float       Current_CC1;//CC1鐢垫祦
+	float       Current_CC2;//CC2鐢垫祦
 }DVC1124_Type;
 
 extern DVC1124_Type	DVC_1124;

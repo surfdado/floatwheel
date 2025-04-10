@@ -5,9 +5,9 @@
 #include "Voltage.h"
 #include "Temperature.h"
 
-#define uiBalanceVolDiff  	500		//¾ùºâ¿ªÆôÑ¹²îãĞÖµ
-#define uiBalanceVol 		2000	//¾ùºâ×îĞ¡µçĞ¾µçÑ¹
-#define	uiBalanceVol_max	4180	//¾ùºâ×î´óµçĞ¾µçÑ¹
+#define uiBalanceVolDiff  	500		//å‡è¡¡å¼€å¯å‹å·®é˜ˆå€¼
+#define uiBalanceVol 		2000	//å‡è¡¡æœ€å°ç”µèŠ¯ç”µå‹
+#define	uiBalanceVol_max	4180	//å‡è¡¡æœ€å¤§ç”µèŠ¯ç”µå‹
 
 extern u32 newBals;
 

@@ -3,20 +3,20 @@
 
 #include "n32l40x.h"
 
-#define DSG_ON  	GPIOB->PBSC =  GPIO_PIN_0;		//·ÅµçMOS´ò¿ª
-#define DSG_OFF		GPIOB->PBC  =  GPIO_PIN_0;		//·ÅµçMOS¹Ø±Õ
+#define DSG_ON  	GPIOB->PBSC =  GPIO_PIN_0;		//æ”¾ç”µMOSæ‰“å¼€
+#define DSG_OFF		GPIOB->PBC  =  GPIO_PIN_0;		//æ”¾ç”µMOSå…³é—­
 
-#define CHG_ON		GPIOB->PBSC =  GPIO_PIN_1;		//³äµçMOS´ò¿ª
-#define CHG_OFF		GPIOB->PBC  =  GPIO_PIN_1;		//³äµçMOS¹Ø±Õ
+#define CHG_ON		GPIOB->PBSC =  GPIO_PIN_1;		//å……ç”µMOSæ‰“å¼€
+#define CHG_OFF		GPIOB->PBC  =  GPIO_PIN_1;		//å……ç”µMOSå…³é—­
 
-#define PDSG_ON		GPIOB->PBSC =  GPIO_PIN_3;		//Ô¤·ÅMOS´ò¿ª
-#define PDSG_OFF	GPIOB->PBC  =  GPIO_PIN_3;		//Ô¤·ÅMOS¹Ø±Õ
+#define PDSG_ON		GPIOB->PBSC =  GPIO_PIN_3;		//é¢„æ”¾MOSæ‰“å¼€
+#define PDSG_OFF	GPIOB->PBC  =  GPIO_PIN_3;		//é¢„æ”¾MOSå…³é—­
 
-#define PCHG_ON		GPIOA->PBSC =  GPIO_PIN_15;		//Ô¤³äMOS´ò¿ª
-#define PCHG_OFF	GPIOA->PBC  =  GPIO_PIN_15;		//Ô¤³äMOS¹Ø±Õ
+#define PCHG_ON		GPIOA->PBSC =  GPIO_PIN_15;		//é¢„å……MOSæ‰“å¼€
+#define PCHG_OFF	GPIOA->PBC  =  GPIO_PIN_15;		//é¢„å……MOSå…³é—­
 
-#define CHARG_ON	GPIOA->PBSC =  GPIO_PIN_7;		//³äµçÆ÷´ò¿ª
-#define CHARG_OFF	GPIOA->PBC  =  GPIO_PIN_7;		//³äµçÆ÷¹Ø±Õ
+#define CHARG_ON	GPIOA->PBSC =  GPIO_PIN_7;		//å……ç”µå™¨æ‰“å¼€
+#define CHARG_OFF	GPIOA->PBC  =  GPIO_PIN_7;		//å……ç”µå™¨å…³é—­
 
 void MOS_Init(void);
 

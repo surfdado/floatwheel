@@ -3,7 +3,7 @@
 ;  *   	@Create Date         2023.09.20
 ;  *    @Official website		 http://www.devechip.com/
 ;  *----------------------Abstract Description---------------------------------
-;  *			         					 AFEÎÂ¶È¼ÆËã´¦Àí                              		
+;  *			         					 AFEæ¸©åº¦è®¡ç®—å¤„ç†                              		
 ******************************************************************************/
 #include "Temperature.h"
 /////////////////////////////////////////////////////////////////////////////
@@ -11,7 +11,7 @@
 
 u16 Rpu=0;
 
-const int NCP18XH103_Temp[34]={//¡æ
+const int NCP18XH103_Temp[34]={//â„ƒ
 -40,-35,-30,-25,-20,-15,-10,-5,
 0,5,10,15,20,25,30,35,
 40,45,50,55,60,65,70,75,
@@ -25,22 +25,22 @@ const float NCP18XH103_Res[34]={//kohm
 0.596,0.531};
 
 /**
-	* @ËµÃ÷	¶ÁÈ¡NFRT¼ÆËãÉÏÀ­µç×è
-	* @²ÎÊı	
-	* @·µ»ØÖµ	
-	* @×¢	
+	* @è¯´æ˜	è¯»å–NFRTè®¡ç®—ä¸Šæ‹‰ç”µé˜»
+	* @å‚æ•°	
+	* @è¿”å›å€¼	
+	* @æ³¨	
 */
 void Read_NFRT (void)
 {
 	DVC11XX_ReadRegs(AFE_ADDR_R(126),1);
-	Rpu=g_AfeRegs.R126.F1RT*25+6800;//Å·Ä·
+	Rpu=g_AfeRegs.R126.F1RT*25+6800;//æ¬§å§†
 }
 
 /**
-	* @ËµÃ÷	Ğ¾Æ¬ÎÂ¶È¼ÆËã
-	* @²ÎÊı	
-	* @·µ»ØÖµ	float Tp_Value ÎÂ¶ÈÖµ
-	* @×¢	
+	* @è¯´æ˜	èŠ¯ç‰‡æ¸©åº¦è®¡ç®—
+	* @å‚æ•°	
+	* @è¿”å›å€¼	float Tp_Value æ¸©åº¦å€¼
+	* @æ³¨	
 */
 float DVC11XX_Calc_ChipTemp(void)
 {
@@ -51,10 +51,10 @@ float DVC11XX_Calc_ChipTemp(void)
 }
 
 /**
-	* @ËµÃ÷	ÎÂÃôµç×è²ÉÑùÎÂ¶È¼ÆËã
-	* @²ÎÊı	u8 GP ¸´ÓÃ¹Ü½Å
-	* @·µ»ØÖµ	float Tp_Value ÎÂ¶ÈÖµ
-	* @×¢	
+	* @è¯´æ˜	æ¸©æ•ç”µé˜»é‡‡æ ·æ¸©åº¦è®¡ç®—
+	* @å‚æ•°	u8 GP å¤ç”¨ç®¡è„š
+	* @è¿”å›å€¼	float Tp_Value æ¸©åº¦å€¼
+	* @æ³¨	
 */
 float DVC11XX_Calc_BatTemp(u8 GP)
 {
@@ -63,20 +63,20 @@ float DVC11XX_Calc_BatTemp(u8 GP)
 	u16 V1P8=(g_AfeRegs.R15_16.V1P8_H<<8)|g_AfeRegs.R15_16.V1P8_L;
 	u16 GPn_T=(g_AfeRegs.R17_28.VGP[GP].VGP_H<<8)|g_AfeRegs.R17_28.VGP[GP].VGP_L;
 
-	V1P8t=V1P8*0.1f;//V1P8 * _lsbVCELL *1000 µ¥Î»mv
+	V1P8t=V1P8*0.1f;//V1P8 * _lsbVCELL *1000 å•ä½mv
 
-	VGPt=GPn_T*0.1f;//VGP1 * _lsbVCELL *1000 µ¥Î»mv
+	VGPt=GPn_T*0.1f;//VGP1 * _lsbVCELL *1000 å•ä½mv
 
-	GP_res=(VGPt/V1P8t*Rpu)/(1-VGPt/V1P8t)/1000.0f;//GP1ÎÂÃôµç×è¼ÆËãÖµ 
+	GP_res=(VGPt/V1P8t*Rpu)/(1-VGPt/V1P8t)/1000.0f;//GP1æ¸©æ•ç”µé˜»è®¡ç®—å€¼ 
 
-	for(i=0;i<t;)//²é±í
+	for(i=0;i<t;)//æŸ¥è¡¨
 	{
 		if(GP_res<=NCP18XH103_Res[i])
 		i++;
 		else 
 		t=i;
 	}
-	Tp_Value=NCP18XH103_Temp[t]-//Æ½»¬´¦Àí
+	Tp_Value=NCP18XH103_Temp[t]-//å¹³æ»‘å¤„ç†
 	(NCP18XH103_Res[t]-GP_res)/(NCP18XH103_Res[t]-NCP18XH103_Res[t-1])*5;
 
 	return Tp_Value;

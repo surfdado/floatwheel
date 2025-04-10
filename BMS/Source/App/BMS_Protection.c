@@ -11,9 +11,9 @@
 
 /**************************************************
  * @brie  :BMS_Overvoltage_Protection()
- * @note  :¹ıÑ¹±£»¤
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :è¿‡å‹ä¿æŠ¤
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void BMS_Overvoltage_Protection(void)
 {
@@ -33,39 +33,39 @@ void BMS_Overvoltage_Protection(void)
 	}
 	else
 	{
-		val1 = 0xFF; //ÒÑ¾­·¢Éú¹ıÑ¹
+		val1 = 0xFF; //å·²ç»å‘ç”Ÿè¿‡å‹
 	}
 	
-	if(val1 == 0)	//Ã»ÓĞ·¢ÉúÇ·Ñ¹
+	if(val1 == 0)	//æ²¡æœ‰å‘ç”Ÿæ¬ å‹
 	{
 		Software_Counter_1ms.Overvoltage_Protection_Delay = 0;
 	}
 	
-	if(val1 == 0xFF)	//ÒÑ¾­·¢ÉúÇ·Ñ¹
+	if(val1 == 0xFF)	//å·²ç»å‘ç”Ÿæ¬ å‹
 	{
 		Software_Counter_1ms.Overvoltage_Protection_Delay = 60000;
 	}	
-	//if(g_AfeRegs.R0.bitmap.COV)		//·¢Éúµç³Ø¹ıÑ¹
-	if((val1 != 0) && (Software_Counter_1ms.Overvoltage_Protection_Delay > 1000))	//·¢Éú¹ıÑ¹²¢±£³Ö1S
+	//if(g_AfeRegs.R0.bitmap.COV)		//å‘ç”Ÿç”µæ± è¿‡å‹
+	if((val1 != 0) && (Software_Counter_1ms.Overvoltage_Protection_Delay > 1000))	//å‘ç”Ÿè¿‡å‹å¹¶ä¿æŒ1S
 	{
 		lock = 1;
-		CHARG_OFF;					//¹Ø±Õ³äµçÆ÷
-		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[3] = 9900;	//´íÎó´úÂë
+		CHARG_OFF;					//å…³é—­å……ç”µå™¨
+		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[3] = 9900;	//é”™è¯¯ä»£ç 
 		Flag.Overvoltage = 1;
 		
-		if(newBals == 0)	//¹ıÑ¹±£»¤½â³ı
+		if(newBals == 0)	//è¿‡å‹ä¿æŠ¤è§£é™¤
 		{
 			lock = 0;
 			Flag.Overvoltage = 0;
-			if((CHARGER == 1) && (Flag.Charging_Overcurrent == 0)) //¹ıÑ¹±£»¤½â³ı²¢ÇÒÃ»ÓĞ·¢Éú³äµç¹ıÁ÷
+			if((CHARGER == 1) && (Flag.Charging_Overcurrent == 0)) //è¿‡å‹ä¿æŠ¤è§£é™¤å¹¶ä¸”æ²¡æœ‰å‘ç”Ÿå……ç”µè¿‡æµ
 			{
-				if((Flag.Overtemperature == 0) && (Flag.Lowtemperature == 0))	//Ã»ÓĞ·¢Éú¹ıÎÂºÍµÍÎÂ
+				if((Flag.Overtemperature == 0) && (Flag.Lowtemperature == 0))	//æ²¡æœ‰å‘ç”Ÿè¿‡æ¸©å’Œä½æ¸©
 				{
 					Flag.Charger_ON = 0;
 				}
 				
 			}
-			VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[3] = 0;	//´íÎó´úÂë
+			VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[3] = 0;	//é”™è¯¯ä»£ç 
 			
 			r0 = g_AfeRegs.R0.cleanflag;
 			clean_flag &= ~(1<<6);
@@ -82,9 +82,9 @@ void BMS_Overvoltage_Protection(void)
 
 /**************************************************
  * @brie  :BMS_Undervoltage_Protection()
- * @note  :Ç·Ñ¹±£»¤
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :æ¬ å‹ä¿æŠ¤
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void BMS_Undervoltage_Protection(void)
 {
@@ -102,11 +102,11 @@ void BMS_Undervoltage_Protection(void)
 	
 	if(val3 != 0)
 	{
-		if(Software_Counter_1ms.Undervoltage_No_Charge_Delay >= 800) //ÑÓÊ±800ms£¬±ÜÃâ¸ÕÉÏµçÏµÍ³²»ÎÈ¶¨Îó´¥·¢
+		if(Software_Counter_1ms.Undervoltage_No_Charge_Delay >= 800) //å»¶æ—¶800msï¼Œé¿å…åˆšä¸Šç”µç³»ç»Ÿä¸ç¨³å®šè¯¯è§¦å‘
 		{
 			Software_Counter_1ms.Undervoltage_No_Charge_Delay = 60000;
-			Flag.Charger_ON = 1;	//µ¥Ğ¾µçÑ¹µÍÓÚ2.3V£¬²»Ö´ĞĞ³äµçÂß¼­¼´½ûÖ¹³äµç
-			CHARG_OFF;				//¹Ø±Õ³äµçÆ÷
+			Flag.Charger_ON = 1;	//å•èŠ¯ç”µå‹ä½äº2.3Vï¼Œä¸æ‰§è¡Œå……ç”µé€»è¾‘å³ç¦æ­¢å……ç”µ
+			CHARG_OFF;				//å…³é—­å……ç”µå™¨
 		}
 	}	
 	else
@@ -126,27 +126,27 @@ void BMS_Undervoltage_Protection(void)
 	}
 	else
 	{
-		val1 = 0xFF; //ÒÑ¾­·¢ÉúÇ·Ñ¹
+		val1 = 0xFF; //å·²ç»å‘ç”Ÿæ¬ å‹
 	}
 	
-	if(val1 == 0)	//Ã»ÓĞ·¢ÉúÇ·Ñ¹
+	if(val1 == 0)	//æ²¡æœ‰å‘ç”Ÿæ¬ å‹
 	{
 		Software_Counter_1ms.Undervoltage_Protection_Delay = 0;
 	}
 	
-	if(val1 == 0xFF)	//ÒÑ¾­·¢ÉúÇ·Ñ¹
+	if(val1 == 0xFF)	//å·²ç»å‘ç”Ÿæ¬ å‹
 	{
 		Software_Counter_1ms.Undervoltage_Protection_Delay = 60000;
 	}
 	
-	//if(g_AfeRegs.R0.bitmap.CUV)		//·¢Éúµç³ØÇ·Ñ¹
-	if((val1 != 0) && (Software_Counter_1ms.Undervoltage_Protection_Delay > 15000)) //·¢ÉúÇ·Ñ¹²¢±£³ÖÁË15S
+	//if(g_AfeRegs.R0.bitmap.CUV)		//å‘ç”Ÿç”µæ± æ¬ å‹
+	if((val1 != 0) && (Software_Counter_1ms.Undervoltage_Protection_Delay > 15000)) //å‘ç”Ÿæ¬ å‹å¹¶ä¿æŒäº†15S
 	{
 		lock = 1;
 		Flag.Undervoltage = 1;
-		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[4] = 9900;	//´íÎó´úÂë
+		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[4] = 9900;	//é”™è¯¯ä»£ç 
 		
-		if(CHARGER == 0)	//Ã»²åÈë³äµçÆ÷£¬Ç·Ñ¹±£»¤¹Ø»ú
+		if(CHARGER == 0)	//æ²¡æ’å…¥å……ç”µå™¨ï¼Œæ¬ å‹ä¿æŠ¤å…³æœº
 		{
 			DSG_OFF;
 			CHG_OFF;
@@ -165,13 +165,13 @@ void BMS_Undervoltage_Protection(void)
 			}
 		}
 		
-		if(val2 == 0)	//ËùÓĞµç³ØµçÑ¹¾ù´óÓÚ3.0V
+		if(val2 == 0)	//æ‰€æœ‰ç”µæ± ç”µå‹å‡å¤§äº3.0V
 		{
 			Flag.Undervoltage = 0;
 			lock = 0;
 			Software_Counter_1ms.Undervoltage_Protection_Delay = 0;
 			
-			VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[4] = 0;	//´íÎó´úÂë
+			VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[4] = 0;	//é”™è¯¯ä»£ç 
 			
 			r0 = g_AfeRegs.R0.cleanflag;
 			clean_flag &= ~(1<<5);
@@ -188,23 +188,23 @@ void BMS_Undervoltage_Protection(void)
 
 /**************************************************
  * @brie  :BMS_Discharge_Overcurrent_Protection()
- * @note  :·Åµç¹ıÁ÷±£»¤
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :æ”¾ç”µè¿‡æµä¿æŠ¤
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void BMS_Discharge_Overcurrent_Protection(void)
 {
 	uint8_t clean_flag = 0xFF,r0;
 	uint8_t i = 0;
 	
-	//if(g_AfeRegs.R0.bitmap.OCD2)	//·¢Éú2¼¶·Åµç¹ıÁ÷
+	//if(g_AfeRegs.R0.bitmap.OCD2)	//å‘ç”Ÿ2çº§æ”¾ç”µè¿‡æµ
 	
-	if(DVC_1124.Current_CC2 > 110)	//110A¹ıÁ÷
+	if(DVC_1124.Current_CC2 > 110)	//110Aè¿‡æµ
 	{
 		Flag.Electric_Discharge_Overcurrent = 1;
-		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[5] = 9900;	//´íÎó´úÂë
+		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[5] = 9900;	//é”™è¯¯ä»£ç 
 		
-		if(Software_Counter_1ms.Discharge_Overcurrent_Delay >= 1000)	//·Åµç¹ıÁ÷³ÖĞø1S£¬¹Ø»ú
+		if(Software_Counter_1ms.Discharge_Overcurrent_Delay >= 1000)	//æ”¾ç”µè¿‡æµæŒç»­1Sï¼Œå…³æœº
 		{
 			DSG_OFF;
 			CHG_OFF;
@@ -229,15 +229,15 @@ void BMS_Discharge_Overcurrent_Protection(void)
 	{
 		Flag.Electric_Discharge_Overcurrent = 0;
 		Software_Counter_1ms.Discharge_Overcurrent_Delay = 0;
-		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[5] = 0;	//´íÎó´úÂë
+		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[5] = 0;	//é”™è¯¯ä»£ç 
 	}
 }
 
 /**************************************************
  * @brie  :BMS_Charge_Overcurrent_Protection()
- * @note  :³äµç¹ıÁ÷±£»¤
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :å……ç”µè¿‡æµä¿æŠ¤
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void BMS_Charge_Overcurrent_Protection(void)
 {
@@ -245,13 +245,13 @@ void BMS_Charge_Overcurrent_Protection(void)
 	uint8_t i = 0;
 	static uint8_t lock = 0;
 	
-	//if(g_AfeRegs.R0.bitmap.OCC2)	//·¢Éú2¼¶³äµç¹ıÁ÷
+	//if(g_AfeRegs.R0.bitmap.OCC2)	//å‘ç”Ÿ2çº§å……ç”µè¿‡æµ
 	
-	if(DVC_1124.Current_CC2 < -20)	//20A¹ıÁ÷
+	if(DVC_1124.Current_CC2 < -20)	//20Aè¿‡æµ
 	{
 		Flag.Charging_Overcurrent = 1;
-		CHARG_OFF;					//¹Ø±Õ³äµçÆ÷
-		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[6] = 9900;	//´íÎó´úÂë
+		CHARG_OFF;					//å…³é—­å……ç”µå™¨
+		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[6] = 9900;	//é”™è¯¯ä»£ç 
 		lock = 1;
 		Software_Counter_1ms.Charge_Overcurrent_Delay = 0;
 	}
@@ -262,11 +262,11 @@ void BMS_Charge_Overcurrent_Protection(void)
 			if(Software_Counter_1ms.Charge_Overcurrent_Delay > 10000)
 			{
 				lock = 0;
-				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[6] = 0;	//´íÎó´úÂë
+				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[6] = 0;	//é”™è¯¯ä»£ç 
 				
-				if((CHARGER == 1) && (Flag.Overvoltage == 0))	//³äµçÆ÷²åÈë²¢ÇÒÃ»ÓĞ·¢Éú¹ıÑ¹
+				if((CHARGER == 1) && (Flag.Overvoltage == 0))	//å……ç”µå™¨æ’å…¥å¹¶ä¸”æ²¡æœ‰å‘ç”Ÿè¿‡å‹
 				{
-					if((Flag.Overtemperature == 0) && (Flag.Lowtemperature == 0))	//Ã»ÓĞ·¢Éú¹ıÎÂºÍµÍÎÂ
+					if((Flag.Overtemperature == 0) && (Flag.Lowtemperature == 0))	//æ²¡æœ‰å‘ç”Ÿè¿‡æ¸©å’Œä½æ¸©
 					{
 						Flag.Charger_ON = 0;
 					}
@@ -288,13 +288,13 @@ void BMS_Charge_Overcurrent_Protection(void)
 
 /**************************************************
  * @brie  :BMS_Short_Circuit_Protection()
- * @note  :¶ÌÂ·±£»¤
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :çŸ­è·¯ä¿æŠ¤
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void BMS_Short_Circuit_Protection(void)
 {
-	if(g_AfeRegs.R0.bitmap.SCD)		//·¢Éú·Åµç¶ÌÂ·
+	if(g_AfeRegs.R0.bitmap.SCD)		//å‘ç”Ÿæ”¾ç”µçŸ­è·¯
 	{
 		DSG_OFF;
 		CHG_OFF;
@@ -308,15 +308,15 @@ void BMS_Short_Circuit_Protection(void)
 
 /**************************************************
  * @brie  :BMS_Overtemperature_Protection()
- * @note  :¹ıÎÂ±£»¤
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :è¿‡æ¸©ä¿æŠ¤
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void BMS_Overtemperature_Protection(void)
 {
 	static uint8_t lock = 0;
 	
-	if(lock == 0)	//Ã»·¢Éú¹ıÎÂ
+	if(lock == 0)	//æ²¡å‘ç”Ÿè¿‡æ¸©
 	{
 		if( (DVC_1124.IC_Temp > 65.0f) ||
 			(DVC_1124.GP3_Temp > 65.0f) ||
@@ -324,11 +324,11 @@ void BMS_Overtemperature_Protection(void)
 			(DVC_1124.GP4_Temp > 55.0f)
 			) 
 		{
-			if(Software_Counter_1ms.Overtemperature_Protection_Delay >= 1000)	//¹ıÎÂÑÓÊ±1S
+			if(Software_Counter_1ms.Overtemperature_Protection_Delay >= 1000)	//è¿‡æ¸©å»¶æ—¶1S
 			{
 				Flag.Overtemperature = 1;
-				CHARG_OFF;					//¹Ø±Õ³äµçÆ÷
-				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[7] = 9900;	//´íÎó´úÂë
+				CHARG_OFF;					//å…³é—­å……ç”µå™¨
+				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[7] = 9900;	//é”™è¯¯ä»£ç 
 				lock = 1;
 			}
 		}
@@ -337,7 +337,7 @@ void BMS_Overtemperature_Protection(void)
 			Software_Counter_1ms.Overtemperature_Protection_Delay = 0;
 		}
 	}
-	else	//ÒÑ¾­·¢Éú¹ıÎÂ
+	else	//å·²ç»å‘ç”Ÿè¿‡æ¸©
 	{
 		if( (DVC_1124.IC_Temp < 60.0f) &&
 			(DVC_1124.GP3_Temp < 60.0f) &&
@@ -348,11 +348,11 @@ void BMS_Overtemperature_Protection(void)
 			Software_Counter_1ms.Overtemperature_Protection_Delay = 0;
 			Flag.Overtemperature = 0;
 			lock = 0;
-			VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[7] = 0;	//´íÎó´úÂë T9
+			VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[7] = 0;	//é”™è¯¯ä»£ç  T9
 			
-			if((CHARGER == 1) && (Flag.Overvoltage == 0) && (Flag.Charging_Overcurrent == 0))	//³äµçÆ÷²åÈë²¢ÇÒÃ»ÓĞ·¢Éú¹ıÑ¹ Ã»ÓĞ·¢Éú³äµç¹ıÁ÷
+			if((CHARGER == 1) && (Flag.Overvoltage == 0) && (Flag.Charging_Overcurrent == 0))	//å……ç”µå™¨æ’å…¥å¹¶ä¸”æ²¡æœ‰å‘ç”Ÿè¿‡å‹ æ²¡æœ‰å‘ç”Ÿå……ç”µè¿‡æµ
 			{
-				if(Flag.Lowtemperature == 0)	//Ã»ÓĞ·¢ÉúµÍÎÂ
+				if(Flag.Lowtemperature == 0)	//æ²¡æœ‰å‘ç”Ÿä½æ¸©
 				{
 					Flag.Charger_ON = 0;
 				}
@@ -363,15 +363,15 @@ void BMS_Overtemperature_Protection(void)
 
 /**************************************************
  * @brie  :BMS_Low_Temperature_Protection()
- * @note  :µÍÎÂ±£»¤
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :ä½æ¸©ä¿æŠ¤
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void BMS_Low_Temperature_Protection(void)
 {
 	static uint8_t lock = 0;
 	
-	if(lock == 0)	//Ã»·¢ÉúµÍÎÂ
+	if(lock == 0)	//æ²¡å‘ç”Ÿä½æ¸©
 	{
 		if(CHARGER == 1)
 		{
@@ -380,8 +380,8 @@ void BMS_Low_Temperature_Protection(void)
 				)
 			{
 				Flag.Lowtemperature = 1;
-				CHARG_OFF;					//¹Ø±Õ³äµçÆ÷
-				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[8] = 9900;	//´íÎó´úÂë
+				CHARG_OFF;					//å…³é—­å……ç”µå™¨
+				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[8] = 9900;	//é”™è¯¯ä»£ç 
 				lock = 1;
 			}
 		}
@@ -392,13 +392,13 @@ void BMS_Low_Temperature_Protection(void)
 				)
 			{
 				Flag.Lowtemperature = 1;
-				//Ã»²åÈë³äµçÆ÷Ã»ÓĞ¶¯×÷
-				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[8] = 9900;	//´íÎó´úÂë
+				//æ²¡æ’å…¥å……ç”µå™¨æ²¡æœ‰åŠ¨ä½œ
+				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[8] = 9900;	//é”™è¯¯ä»£ç 
 				lock = 1;
 			}
 		}
 	}
-	else //ÒÑ¾­·¢ÉúµÍÎÂ
+	else //å·²ç»å‘ç”Ÿä½æ¸©
 	{
 		if(CHARGER == 1)
 		{
@@ -406,14 +406,14 @@ void BMS_Low_Temperature_Protection(void)
 				(DVC_1124.GP4_Temp > 5.0f)		
 				)
 			{
-				if((CHARGER == 1) && (Flag.Overvoltage == 0) && (Flag.Charging_Overcurrent == 0))	//³äµçÆ÷²åÈë²¢ÇÒÃ»ÓĞ·¢Éú¹ıÑ¹ Ã»ÓĞ·¢Éú³äµç¹ıÁ÷
+				if((CHARGER == 1) && (Flag.Overvoltage == 0) && (Flag.Charging_Overcurrent == 0))	//å……ç”µå™¨æ’å…¥å¹¶ä¸”æ²¡æœ‰å‘ç”Ÿè¿‡å‹ æ²¡æœ‰å‘ç”Ÿå……ç”µè¿‡æµ
 				{
-					if((Flag.Overtemperature == 0))	//Ã»ÓĞ·¢Éú¸ßÎÂ
+					if((Flag.Overtemperature == 0))	//æ²¡æœ‰å‘ç”Ÿé«˜æ¸©
 					{
 						Flag.Charger_ON = 0;
 					}
 				}
-				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[8] = 0;	//´íÎó´úÂë
+				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[8] = 0;	//é”™è¯¯ä»£ç 
 				Flag.Lowtemperature = 0;
 				lock = 0;
 			}
@@ -424,8 +424,8 @@ void BMS_Low_Temperature_Protection(void)
 				(DVC_1124.GP4_Temp > -15.0f)		
 				)
 			{
-				//Ã»ÓĞ¶¯×÷
-				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[8] = 0;	//´íÎó´úÂë
+				//æ²¡æœ‰åŠ¨ä½œ
+				VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[8] = 0;	//é”™è¯¯ä»£ç 
 				Flag.Lowtemperature = 0;
 				lock = 0;
 			}
@@ -437,16 +437,16 @@ void BMS_Low_Temperature_Protection(void)
 //#define B1 1500
 /**************************************************
  * @brie  :VESC_Cock_Head()
- * @note  :VESCÇÌÍ·
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :VESCç¿˜å¤´
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 //void VESC_Cock_Head(void)
 //{
 //	static uint8_t lock = 0;
 //	if(lock == 0)
 //	{
-//		if(Flag.Cock_Head == 1)	//ĞèÒªÇÌÍ·
+//		if(Flag.Cock_Head == 1)	//éœ€è¦ç¿˜å¤´
 //		{
 //			if(VESC_CAN_RX_DATA.pSTATUS->Rpm > 0)
 //			{
@@ -472,19 +472,19 @@ void BMS_Low_Temperature_Protection(void)
 	
 /**************************************************
  * @brie  :DVC1124_Abnormal()
- * @note  :DVC1124Òì³£´¦Àí
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :DVC1124å¼‚å¸¸å¤„ç†
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void BMS_Protection_Task(void)
 {
-	BMS_Overvoltage_Protection();			//¹ıÑ¹±£»¤		T5
-	BMS_Undervoltage_Protection();			//Ç·Ñ¹±£»¤		T6
-	BMS_Discharge_Overcurrent_Protection();	//·Åµç¹ıÁ÷±£»¤	T7
-	BMS_Charge_Overcurrent_Protection();	//³äµç¹ıÁ÷±£»¤	T8
-	BMS_Short_Circuit_Protection();			//¶ÌÂ·±£»¤		
-	BMS_Overtemperature_Protection();		//¹ıÎÂ±£»¤		T9
-	BMS_Low_Temperature_Protection();		//µÍÎÂ±£»¤		T10
+	BMS_Overvoltage_Protection();			//è¿‡å‹ä¿æŠ¤		T5
+	BMS_Undervoltage_Protection();			//æ¬ å‹ä¿æŠ¤		T6
+	BMS_Discharge_Overcurrent_Protection();	//æ”¾ç”µè¿‡æµä¿æŠ¤	T7
+	BMS_Charge_Overcurrent_Protection();	//å……ç”µè¿‡æµä¿æŠ¤	T8
+	BMS_Short_Circuit_Protection();			//çŸ­è·¯ä¿æŠ¤		
+	BMS_Overtemperature_Protection();		//è¿‡æ¸©ä¿æŠ¤		T9
+	BMS_Low_Temperature_Protection();		//ä½æ¸©ä¿æŠ¤		T10
 	//VESC_Cock_Head();
 }
 

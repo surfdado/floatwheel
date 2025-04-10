@@ -4,9 +4,9 @@ __IO uint32_t LsiFreq     = 40000;
 
 /**************************************************
  * @brie  :IWDG_Init()
- * @note  :IWDG≥ı ºªØ
- * @param :Œﬁ
- * @retval:Œﬁ
+ * @note  :IWDGÂàùÂßãÂåñ
+ * @param :Êó†
+ * @retval:Êó†
  **************************************************/
 void IWDG_Init(void)
 {

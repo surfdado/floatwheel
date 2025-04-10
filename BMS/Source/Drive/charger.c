@@ -6,9 +6,9 @@
 
 /**************************************************
  * @brie  :Charger_Init()
- * @note  :Charger³õÊ¼»¯
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :Chargeråˆå§‹åŒ–
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void Charger_Init(void)
 {

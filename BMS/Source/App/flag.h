@@ -15,10 +15,10 @@ typedef struct
 	uint16_t Cock_Head;
 	uint32_t Power_Off;
 	uint16_t DVC_1124_Res;
-	uint16_t Undervoltage_Protection_Delay;		//Ç·Ñ¹±£»¤
-	uint16_t Overvoltage_Protection_Delay;		//¹ıÑ¹±£»¤
+	uint16_t Undervoltage_Protection_Delay;		//æ¬ å‹ä¿æŠ¤
+	uint16_t Overvoltage_Protection_Delay;		//è¿‡å‹ä¿æŠ¤
 	uint16_t Overtemperature_Protection_Delay;
-	uint16_t Undervoltage_No_Charge_Delay;		//Ç·Ñ¹±£»¤½ûÖ¹³äµç
+	uint16_t Undervoltage_No_Charge_Delay;		//æ¬ å‹ä¿æŠ¤ç¦æ­¢å……ç”µ
 	
 }Software_Counter_Type;
 
@@ -27,60 +27,60 @@ extern Software_Counter_Type Software_Counter_1ms;
 typedef struct
 {
 	/*
-		Power = 0;	//¸Õ¿ª»ú
-		Power = 1;	//¿ª»ú
-		Power = 2;	//¿ª»úÍê³É
-		Power = 3;	//¹Ø»ú
-		Power = 4;	//¹Ø»úºó¼ÌĞøÆ½ºâ³ä
+		Power = 0;	//åˆšå¼€æœº
+		Power = 1;	//å¼€æœº
+		Power = 2;	//å¼€æœºå®Œæˆ
+		Power = 3;	//å…³æœº
+		Power = 4;	//å…³æœºåç»§ç»­å¹³è¡¡å……
 	*/
 	uint8_t Power:3;
 	/*
-		1°´¼ü¿ª»ú 	0°´¼ü¹Ø»ú
+		1æŒ‰é”®å¼€æœº 	0æŒ‰é”®å…³æœº
 	*/
 	uint8_t Key_Boot:1;
 	/*
-		1³äµçÆ÷¿ª»ú	0³äµçÆ÷¹Ø»ú
+		1å……ç”µå™¨å¼€æœº	0å……ç”µå™¨å…³æœº
 	*/
 	uint8_t Charger_Boot:1;
 	/*
-		0³äµçÆ÷×¼±¸¿ª»ú	1³äµçÆ÷´ò¿ªÍê³É
+		0å……ç”µå™¨å‡†å¤‡å¼€æœº	1å……ç”µå™¨æ‰“å¼€å®Œæˆ
 	*/
 	uint8_t Charger_ON:1;
 	/*
-		0Ã»ÓĞ·¢Éú¶ÌÂ·	1·¢Éú¶ÌÂ·
+		0æ²¡æœ‰å‘ç”ŸçŸ­è·¯	1å‘ç”ŸçŸ­è·¯
 	*/
 	uint8_t Short_Circuit:1;
 	/*
-		0²»ÇÌÍ·	1ÇÌÍ·
+		0ä¸ç¿˜å¤´	1ç¿˜å¤´
 	*/
 	uint8_t Cock_Head:1;
 	
 	/*
-		0Ã»ÓĞ¹ıÑ¹	1·¢Éú¹ıÑ¹
+		0æ²¡æœ‰è¿‡å‹	1å‘ç”Ÿè¿‡å‹
 	*/
 	uint8_t Overvoltage:1;
 	/*
-		0Ã»ÓĞÇ·Ñ¹	1·¢ÉúÇ·Ñ¹
+		0æ²¡æœ‰æ¬ å‹	1å‘ç”Ÿæ¬ å‹
 	*/
 	uint8_t Undervoltage:1;
 	/*
-		0Ã»ÓĞ³äµç¹ıÁ÷	1·¢Éú³äµç¹ıÁ÷
+		0æ²¡æœ‰å……ç”µè¿‡æµ	1å‘ç”Ÿå……ç”µè¿‡æµ
 	*/
 	uint8_t Charging_Overcurrent:1;
 	/*
-		0Ã»ÓĞ·Åµç¹ıÁ÷	1·¢Éú·Åµç¹ıÁ÷
+		0æ²¡æœ‰æ”¾ç”µè¿‡æµ	1å‘ç”Ÿæ”¾ç”µè¿‡æµ
 	*/
 	uint8_t Electric_Discharge_Overcurrent:1;
 	/*
-		0Ã»ÓĞ¹ıÎÂ	1·¢Éú¹ıÎÂ
+		0æ²¡æœ‰è¿‡æ¸©	1å‘ç”Ÿè¿‡æ¸©
 	*/
 	uint8_t Overtemperature:1;
 	/*
-		0Ã»ÓĞµÍÎÂÎÂ	1·¢ÉúµÍÎÂ
+		0æ²¡æœ‰ä½æ¸©æ¸©	1å‘ç”Ÿä½æ¸©
 	*/
 	uint8_t Lowtemperature:1;
 	/*
-		0Ã»ÓĞÈí¼ş¸´Î»	1·¢ÉúÈí¼ş¸´Î»
+		0æ²¡æœ‰è½¯ä»¶å¤ä½	1å‘ç”Ÿè½¯ä»¶å¤ä½
 	*/
 	uint8_t Software_Reset:1;
 	

@@ -3,24 +3,24 @@
 ;  *   	@Create Date         2023.01.20
 ;  *    @Official website		 http://www.devechip.com/
 ;  *----------------------Abstract Description---------------------------------
-;  *			          AFEµçÁ÷¼ÆËã´¦Àí                              		
+;  *			          AFEç”µæµè®¡ç®—å¤„ç†                              		
 ******************************************************************************/
 #include "Current.h"
 /////////////////////////////////////////////////////////////////////////////
 
 
-//Í¨¹ı¹ıÂËÆ÷CC1µÄ²ÉÑùÖµÀ´¼ÆËãµçÁ÷ 
-//Ïà¹Ø¼Ä´æÆ÷ R2~R3
+//é€šè¿‡è¿‡æ»¤å™¨CC1çš„é‡‡æ ·å€¼æ¥è®¡ç®—ç”µæµ 
+//ç›¸å…³å¯„å­˜å™¨ R2~R3
 float DVC11XX_Calc_CurrentWithCC1(float senseResistance_mR){
 	s16 swValue=(g_AfeRegs.R2_3.CC1_H<<8)|g_AfeRegs.R2_3.CC1_L;
-	return swValue*_lsbCC1*1000.0f/senseResistance_mR; //·µ»ØµçÁ÷Öµ£¨µ¥Î»A£©
+	return swValue*_lsbCC1*1000.0f/senseResistance_mR; //è¿”å›ç”µæµå€¼ï¼ˆå•ä½Aï¼‰
 }	
 
 
-//Í¨¹ı¹ıÂËÆ÷CC2µÄ²ÉÑùÖµÀ´¼ÆËãµçÁ÷ 
-//Ïà¹Ø¼Ä´æÆ÷ R4~R6
+//é€šè¿‡è¿‡æ»¤å™¨CC2çš„é‡‡æ ·å€¼æ¥è®¡ç®—ç”µæµ 
+//ç›¸å…³å¯„å­˜å™¨ R4~R6
 float DVC11XX_Calc_CurrentWithCC2(float senseResistance_mR){
 	s32 iValue=((g_AfeRegs.R4_6.CC2_H<<12)|(g_AfeRegs.R4_6.CC2_M<<4)|g_AfeRegs.R4_6.CC2_L);
-  if(iValue&0x80000) iValue|=0xFFF00000; //ÈôÎª¸ºÊıÔò²¹×ã32Î»²¹Âë	
-	return iValue*_lsbCC2*1000.0f/senseResistance_mR; //·µ»ØµçÁ÷Öµ£¨µ¥Î»A£©
+  if(iValue&0x80000) iValue|=0xFFF00000; //è‹¥ä¸ºè´Ÿæ•°åˆ™è¡¥è¶³32ä½è¡¥ç 	
+	return iValue*_lsbCC2*1000.0f/senseResistance_mR; //è¿”å›ç”µæµå€¼ï¼ˆå•ä½Aï¼‰
 }

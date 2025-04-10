@@ -2,20 +2,20 @@
 
 /**************************************************
  * @brie  :KEY_Init()
- * @note  :KEY³õÊ¼»¯
- * @param :ÎŞ
- * @retval:ÎŞ
+ * @note  :KEYåˆå§‹åŒ–
+ * @param :æ— 
+ * @retval:æ— 
  **************************************************/
 void KEY_Task(void)
 {
-	if(KEY1_State == 0)  //³äµçÆ÷¹©µç°´¼ü²»Æğ×÷ÓÃ
+	if(KEY1_State == 0)  //å……ç”µå™¨ä¾›ç”µæŒ‰é”®ä¸èµ·ä½œç”¨
 	{
 		return;
 	}
 	
 	switch(KEY1_State)
 	{
-		case 1:  	//µ¥»÷
+		case 1:  	//å•å‡»
 //			if(Flag.Power == 4)
 //			{
 //				NVIC_SystemReset();
@@ -28,23 +28,23 @@ void KEY_Task(void)
 			}
 		break;
 		
-		case 2:		//Ë«»÷	
+		case 2:		//åŒå‡»	
 		
 		break;
 		
-		case 3:		//³¤°´
+		case 3:		//é•¿æŒ‰
 			if(Flag.Power == 0)
 			{
 				Flag.Key_Boot = 1;
 				Flag.Power = 1;
 			}
-			else if(Flag.Charger_ON == 0) //¿ª»ú³äµçÆ÷³äµç£¬°´¼ü²»¹Ø»ú
+			else if(Flag.Charger_ON == 0) //å¼€æœºå……ç”µå™¨å……ç”µï¼ŒæŒ‰é”®ä¸å…³æœº
 			{
 				Flag.Power = 3;
 			}
 		break;
 		
-		case 4:		//Èı°´
+		case 4:		//ä¸‰æŒ‰
 			
 		break;
 		
