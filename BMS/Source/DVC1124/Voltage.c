@@ -119,7 +119,7 @@ void CellTestClose(u32 cellnumber){
 		g_AfeRegs.R106.CM_H=cellnumber>>12;
 		g_AfeRegs.R107.CM_M=((u16)cellnumber&0x0ff0)>>4;
 		g_AfeRegs.R108.CM_L=(u8)cellnumber&0x0f;
-		while(!DVC11XX_WriteRegs(AFE_ADDR_R(106),3));
+		while(!DVC11XX_WriteRegs(AFE_ADDR_R(106),3)) __ASM volatile("");
 
 	}
 

@@ -74,7 +74,7 @@ static bool DVC11XX_InitRegs(void)
 void CleanError(void)
 {
 	g_AfeRegs.R0.cleanflag=0;
-	while(!DVC11XX_WriteRegs(AFE_ADDR_R(0),1));
+	while(!DVC11XX_WriteRegs(AFE_ADDR_R(0),1)) __ASM volatile("");
 }
 
 void DVC1124_Write_Init(void)
@@ -293,7 +293,7 @@ void DVC1124_Init(void)
 	
 	p = (uint8_t*)&g_AfeRegs.R81;
 	
-	while(!DVC11XX_InitRegs());  	//8. AFE芯片寄存器初始化（写入用户自定义的配置数据）
+	while(!DVC11XX_InitRegs()) __ASM volatile("");  	//8. AFE芯片寄存器初始化（写入用户自定义的配置数据）
 	CleanError();					//写入默认值后清除警报
 	
 	Read_NFRT();//读取电阻修调值

@@ -205,7 +205,7 @@ void Power_Task(void)
 			
 			DVC1124_Sleep();
 //			while(1);
-			while(KEY1 == 1);
+			while(KEY1 == 1) __ASM volatile("");
 			User_Delay_xms(500);
 			Enter_Low_Power();
 		break;
