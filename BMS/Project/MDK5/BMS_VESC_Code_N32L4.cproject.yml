@@ -1,0 +1,130 @@
+project:
+  output:
+    base-name: bms_$OutputName$
+    type: hex
+  packs:
+    - pack: NSING::N32L40x_DFP@1.0.1
+  setups:
+    - setup: Options for BMSVESCCodeN32L4
+      processor:
+        fpu: sp
+      add-path:
+        - ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/CMSIS/core
+        - ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/CMSIS/device
+        - ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/inc
+        - ../../Source/App
+        - ../../Source/Drive
+        - ../../Source/DVC1124
+        - ../../Source/User
+      define:
+        - N32L40X
+        - USE_STDPERIPH_DRIVER
+        - __MICROLIB
+      define-asm:
+        - __MICROLIB
+      misc:
+        - C:
+            - -std=c99
+          C-CPP:
+            - -gdwarf-4
+            - -fno-rtti
+            - -funsigned-char
+            - -fshort-enums
+            - -fshort-wchar
+            - -ffunction-sections
+            - -Wno-packed
+            - -Wno-missing-variable-declarations
+            - -Wno-missing-prototypes
+            - -Wno-missing-noreturn
+            - -Wno-sign-conversion
+            - -Wno-nonportable-include-path
+            - -Wno-reserved-id-macro
+            - -Wno-unused-macros
+            - -Wno-documentation-unknown-command
+            - -Wno-documentation
+            - -Wno-license-management
+            - -Wno-parentheses-equality
+          CPP:
+            - -xc++
+            - -std=c++03
+            - -fno-exceptions
+          ASM:
+            - -masm=auto
+          Link:
+            - --library_type=microlib
+            - --map
+            - --load_addr_map_info
+            - --xref
+            - --callgraph
+            - --symbols
+            - --info sizes
+            - --info totals
+            - --info unused
+            - --info veneers
+            - --strict
+            - --summary_stderr
+            - --info summarysizes
+  linker:
+    - script: Objects/BMS_VESC_Code_N32L4.sct
+  groups:
+    - group: User
+      files:
+        - file: ../../Source/User/main.c
+        - file: ../../Source/User/n32l40x_it.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/CMSIS/device/system_n32l40x.c
+    - group: Startup
+      files:
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/CMSIS/device/startup/startup_n32l40x.s
+          misc:
+            - ASM:
+                - -masm=auto
+    - group: App
+      files:
+        - file: ../../Source/App/led_app.c
+        - file: ../../Source/App/flag.c
+        - file: ../../Source/App/vesc_can.c
+        - file: ../../Source/App/vesc_can_app.c
+        - file: ../../Source/App/key_app.c
+        - file: ../../Source/App/power_app.c
+        - file: ../../Source/App/BMS_Protection.c
+    - group: DVC1124
+      files:
+        - file: ../../Source/DVC1124/DVC11XX.c
+        - file: ../../Source/DVC1124/DVC1124_init.c
+        - file: ../../Source/DVC1124/DVC1124_app.c
+        - file: ../../Source/DVC1124/Voltage.c
+        - file: ../../Source/DVC1124/Sleep.c
+        - file: ../../Source/DVC1124/Temperature.c
+        - file: ../../Source/DVC1124/Current.c
+        - file: ../../Source/DVC1124/BalanceDemo.c
+        - file: ../../Source/DVC1124/CellBalance.c
+    - group: Drive
+      files:
+        - file: ../../Source/Drive/led.c
+        - file: ../../Source/Drive/User_Delay_Config.c
+        - file: ../../Source/Drive/time6.c
+        - file: ../../Source/Drive/ldo.c
+        - file: ../../Source/Drive/mos.c
+        - file: ../../Source/Drive/charger.c
+        - file: ../../Source/Drive/can.c
+        - file: ../../Source/Drive/key.c
+        - file: ../../Source/Drive/i2c.c
+        - file: ../../Source/Drive/ppm.c
+        - file: ../../Source/Drive/pwr.c
+        - file: ../../Source/Drive/gp2.c
+        - file: ../../Source/Drive/iwdg.c
+        - file: ../../Source/Drive/wwdg.c
+    - group: Library
+      files:
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/misc.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_can.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_gpio.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_i2c.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_iwdg.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_pwr.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_rcc.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_tim.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_flash.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_dbg.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_exti.c
+        - file: ../../Library/Nationstech.N32L40x_Library.1.2.2/firmware/n32l40x_std_periph_driver/src/n32l40x_wwdg.c

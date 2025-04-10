@@ -1,0 +1,6 @@
+cbuild-pack:
+  resolved-packs:
+    - resolved-pack: NSING::N32L40x_DFP@1.0.1
+      selected-by-pack:
+        - NSING::N32L40x_DFP@1.0.1
+    - resolved-pack: Nsing::N32L40x_DFP@1.0.1

@@ -1,0 +1,21 @@
+solution:
+  created-by: uv2csolution@1.6.0
+  created-for: CMSIS-Toolbox@2.8.0
+  compiler: AC6@6.23.0
+
+  target-types:
+    - type: ADV2
+      variables:
+        - OutputName: adv2
+      define:
+        - ADV2
+      device: N32L403K8
+  build-types:
+    - type: Debug
+      optimize: debug
+      debug: on
+    - type: Release
+      optimize: size
+      debug: off
+  projects:
+    - project: BMS_VESC_Code_N32L4.cproject.yml
