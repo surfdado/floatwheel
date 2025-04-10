@@ -3,17 +3,13 @@
 
 .vscode/settings.json
 
-LCM/Project/MDK5/Objects/
-LCM/Project/MDK5/LCM_Light_Control_IO_WS2812_New.uvguix.*
-LCM/Project/MDK5/Listings/
-
-.vscode/settings.json
-
-LCM/Project/MDK5/out/
-LCM/Project/MDK5/tmp/
-
-LCM/Project/MDK5/.clangd
-LCM/Project/MDK5/LCM_Light_Control_IO_WS2812_New.cbuild-idx.yml
-LCM/Project/MDK5/LCM_Light_Control_IO_WS2812_New.cbuild-set.yml
-LCM/Project/MDK5/LCM_Light_Control_IO_WS2812_New*.cbuild.yml
-LCM/Project/MDK5/LCM_Light_Control_IO_WS2812_New*.cbuild-run.yml
+/*/Project/MDK5/Objects/
+/*/Project/MDK5/Listings/
+/*/Project/MDK5/out/
+/*/Project/MDK5/tmp/
+/*/Project/MDK5/.clangd
+/*/Project/MDK5/*.uvguix.*
+/*/Project/MDK5/*.cbuild-idx.yml
+/*/Project/MDK5/*.cbuild-set.yml
+/*/Project/MDK5/*.cbuild.yml
+/*/Project/MDK5/*.cbuild-run.yml
