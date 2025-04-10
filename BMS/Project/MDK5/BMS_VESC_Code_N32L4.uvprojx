@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>BMS_VESC_Code_N32L4</TargetName>
+      <TargetName>bms_adv2</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pArmCC>6230000::V6.23::ARMCLANG</pArmCC>
@@ -50,7 +50,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>BMS_VESC_Code_N32L4</OutputName>
+          <OutputName>bms_adv2</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -339,7 +339,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>N32L40X, USE_STDPERIPH_DRIVER</Define>
+              <Define>N32L40X USE_STDPERIPH_DRIVER ADV2</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Library\Nationstech.N32L40x_Library.1.2.2\firmware\CMSIS\core;..\..\Library\Nationstech.N32L40x_Library.1.2.2\firmware\CMSIS\device;..\..\Library\Nationstech.N32L40x_Library.1.2.2\firmware\n32l40x_std_periph_driver\inc;..\..\Source\App;..\..\Source\Drive;..\..\Source\DVC1124;..\..\Source\User</IncludePath>
             </VariousControls>
