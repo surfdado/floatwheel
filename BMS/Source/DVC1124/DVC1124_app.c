@@ -29,7 +29,10 @@ void DVC1124_Voltage(void)
 	
 	current = DVC_1124.Current_CC2;
 	
-	for(i = 0; i < 20; i++)	//电芯电压软件补偿
+	DVC_1124.Single_Voltage_Min = 0xffff;
+	DVC_1124.Single_Voltage_Max = 0;
+
+	for(i = 0; i < AFE_MAX_CELL_CNT; i++)	//电芯电压软件补偿
 	{
 		if(i == 0)	//第1节电池
 		{
@@ -43,33 +46,29 @@ void DVC1124_Voltage(void)
 		{
 			DVC_1124.Single_Voltage[i] = (DVC_1124.Single_Voltage[i] + ((int16_t)(current * 6.813f)));
 		}
-	}
-	
-	if(first == 0)	//刚刚开机第一次检测，上一次电芯电压等于本次电芯电压
-	{
-		first = 1;
-		for(i = 0; i < 20; i++)
+
+		if(first == 0)	//刚刚开机第一次检测，上一次电芯电压等于本次电芯电压
 		{
 			DVC_1124.Single_Voltage_Last[i] = DVC_1124.Single_Voltage[i];
 		}
-	}
-	
-	for(i = 0; i < 20; i++)
-	{
+
 		DVC_1124.Single_Voltage[i] = (uint16_t)(DVC_1124.Single_Voltage[i]*K)+(uint16_t)(DVC_1124.Single_Voltage_Last[i]*(1-K));
-	}
-	
-	for(i = 0; i < 20; i++)
-	{
 		DVC_1124.Single_Voltage_Last[i] = DVC_1124.Single_Voltage[i];
-	}
-	
-	for(i = 0; i < 20; i++)	
-	{
+
+		if(DVC_1124.Single_Voltage[i] > DVC_1124.Single_Voltage_Max)
+		{
+			DVC_1124.Single_Voltage_Max = DVC_1124.Single_Voltage[i];
+		}
+		if(DVC_1124.Single_Voltage[i] < DVC_1124.Single_Voltage_Min)
+		{
+			DVC_1124.Single_Voltage_Min = DVC_1124.Single_Voltage[i];
+		}
+
 		VESC_CAN_DATA.pBMS_V_CELL->BMS_Single_Voltage[i] = DVC_1124.Single_Voltage[i];
 		VESC_CAN_DATA.pBMS_V_TOT->Total_Voltage.f += (float)(DVC_1124.Single_Voltage[i]/1000.0);
 	}
-	
+	first = 1;
+
 	//芯片温度
 	DVC_1124.IC_Temp = DVC11XX_Calc_ChipTemp();
 	VESC_CAN_DATA.pBMS_HUM->Temp_IC = (int16_t)(DVC_1124.IC_Temp*100);

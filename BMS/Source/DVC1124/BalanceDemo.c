@@ -83,7 +83,13 @@ void BalanceProcess(void)
 	
 	for(i=0;i<AFE_MAX_CELL_CNT;i++)
 	{
-		if(DVC_1124.Single_Voltage[i] > BALANCE_VOLTAGE_MIN)
+		if(
+		   // only balance above the minimum threshold
+		   DVC_1124.Single_Voltage[i] > BALANCE_VOLTAGE_MIN &&
+		   // ... only down to the lowest cell
+		   DVC_1124.Single_Voltage[i] > DVC_1124.Single_Voltage_Min &&
+		   // ... and only drain the highest cells
+		   DVC_1124.Single_Voltage_Max - DVC_1124.Single_Voltage[i] <= BALANCE_VOLTAGE_MAX_DELTA)
 		{
 			newBals |= (1<<i);	//计算出电芯最大电压需要开启均衡的各个位
 		}

@@ -23,12 +23,9 @@ void BMS_Overvoltage_Protection(void)
 	
 	if(lock == 0)
 	{
-		for(i=0;i<AFE_MAX_CELL_CNT;i++)
+		if(DVC_1124.Single_Voltage_Max > CELL_VOLTAGE_MAX)
 		{
-			if(DVC_1124.Single_Voltage[i] > CELL_VOLTAGE_MAX)
-			{
-				val1++;
-			}
+			val1 = 1;
 		}
 	}
 	else
@@ -53,7 +50,8 @@ void BMS_Overvoltage_Protection(void)
 		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[3] = 9900;	//错误代码
 		Flag.Overvoltage = 1;
 		
-		if(newBals == 0)	//过压保护解除
+		if(newBals == 0 &&	//过压保护解除
+		   DVC_1124.Single_Voltage_Max < CELL_VOLTAGE_MAX)
 		{
 			lock = 0;
 			Flag.Overvoltage = 0;

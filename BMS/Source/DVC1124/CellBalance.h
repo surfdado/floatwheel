@@ -6,6 +6,7 @@
 #include "Temperature.h"
 
 #define BALANCE_VOLTAGE_MIN 4180  //均衡最大电芯电压 mV
+#define BALANCE_VOLTAGE_MAX_DELTA 0001	// mV
 
 extern u32 newBals;
 
