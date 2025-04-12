@@ -25,7 +25,7 @@ void BMS_Overvoltage_Protection(void)
 	{
 		for(i=0;i<AFE_MAX_CELL_CNT;i++)
 		{
-			if(DVC_1124.Single_Voltage[i] > 4200)
+			if(DVC_1124.Single_Voltage[i] > CELL_VOLTAGE_MAX)
 			{
 				val1++;
 			}
@@ -94,7 +94,7 @@ void BMS_Undervoltage_Protection(void)
 	
 	for(i=0;i<AFE_MAX_CELL_CNT;i++)
 	{
-		if(DVC_1124.Single_Voltage[i] < 2300)
+		if(DVC_1124.Single_Voltage[i] < CELL_VOLTAGE_CRITICAL)
 		{
 			val3++;
 		}
@@ -118,7 +118,7 @@ void BMS_Undervoltage_Protection(void)
 	{
 		for(i=0;i<AFE_MAX_CELL_CNT;i++)
 		{
-			if(DVC_1124.Single_Voltage[i] < 2700)
+			if(DVC_1124.Single_Voltage[i] < CELL_VOLTAGE_WARNING)
 			{
 				val1++;
 			}
@@ -159,7 +159,7 @@ void BMS_Undervoltage_Protection(void)
 		
 		for(i=0;i<AFE_MAX_CELL_CNT;i++)
 		{
-			if(DVC_1124.Single_Voltage[i] <= 3000)
+			if(DVC_1124.Single_Voltage[i] <= CELL_VOLTAGE_MIN)
 			{
 				val2++;
 			}
@@ -199,7 +199,7 @@ void BMS_Discharge_Overcurrent_Protection(void)
 	
 	//if(g_AfeRegs.R0.bitmap.OCD2)	//发生2级放电过流
 	
-	if(DVC_1124.Current_CC2 > 110)	//110A过流
+	if(DVC_1124.Current_CC2 > DISCHARGE_CURRENT_MAX)	//110A过流
 	{
 		Flag.Electric_Discharge_Overcurrent = 1;
 		VESC_CAN_DATA.pBMS_TEMPS->BMS_Single_Temp[5] = 9900;	//错误代码
@@ -247,7 +247,7 @@ void BMS_Charge_Overcurrent_Protection(void)
 	
 	//if(g_AfeRegs.R0.bitmap.OCC2)	//发生2级充电过流
 	
-	if(DVC_1124.Current_CC2 < -20)	//20A过流
+	if(DVC_1124.Current_CC2 < CHARGE_CURRENT_MAX)	//20A过流
 	{
 		Flag.Charging_Overcurrent = 1;
 		CHARG_OFF;					//关闭充电器
@@ -255,7 +255,7 @@ void BMS_Charge_Overcurrent_Protection(void)
 		lock = 1;
 		Software_Counter_1ms.Charge_Overcurrent_Delay = 0;
 	}
-	else if(DVC_1124.Current_CC2 > -1) //1A
+	else if(DVC_1124.Current_CC2 > CHARGE_CURRENT_THRESHOLD) //1A
 	{
 		if(lock == 1)
 		{
@@ -318,10 +318,10 @@ void BMS_Overtemperature_Protection(void)
 	
 	if(lock == 0)	//没发生过温
 	{
-		if( (DVC_1124.IC_Temp > 65.0f) ||
-			(DVC_1124.GP3_Temp > 65.0f) ||
-			(DVC_1124.GP1_Temp > 55.0f) ||
-			(DVC_1124.GP4_Temp > 55.0f)
+		if( (DVC_1124.IC_Temp > IC_TEMPERATURE_MAX) ||
+			(DVC_1124.GP3_Temp > IC_TEMPERATURE_MAX) ||
+			(DVC_1124.GP1_Temp > BATTERY_TEMPERATURE_MAX) ||
+			(DVC_1124.GP4_Temp > BATTERY_TEMPERATURE_MAX)
 			) 
 		{
 			if(Software_Counter_1ms.Overtemperature_Protection_Delay >= 1000)	//过温延时1S
@@ -339,10 +339,10 @@ void BMS_Overtemperature_Protection(void)
 	}
 	else	//已经发生过温
 	{
-		if( (DVC_1124.IC_Temp < 60.0f) &&
-			(DVC_1124.GP3_Temp < 60.0f) &&
-			(DVC_1124.GP1_Temp < 50.0f) &&
-			(DVC_1124.GP4_Temp < 50.0f)
+		if( (DVC_1124.IC_Temp < IC_TEMPERATURE_HIGH_THRESHOLD) &&
+			(DVC_1124.GP3_Temp < IC_TEMPERATURE_HIGH_THRESHOLD) &&
+			(DVC_1124.GP1_Temp < BATTERY_TEMPERATURE_HIGH_THRESHOLD) &&
+			(DVC_1124.GP4_Temp < BATTERY_TEMPERATURE_HIGH_THRESHOLD )
 			) 
 		{
 			Software_Counter_1ms.Overtemperature_Protection_Delay = 0;
@@ -375,8 +375,8 @@ void BMS_Low_Temperature_Protection(void)
 	{
 		if(CHARGER == 1)
 		{
-			if( (DVC_1124.GP1_Temp < 0) ||
-				(DVC_1124.GP4_Temp < 0)		
+			if( (DVC_1124.GP1_Temp < BATTERY_TEMPERATURE_MIN_CHARGE) ||
+				(DVC_1124.GP4_Temp < BATTERY_TEMPERATURE_MIN_CHARGE)
 				)
 			{
 				Flag.Lowtemperature = 1;
@@ -387,8 +387,8 @@ void BMS_Low_Temperature_Protection(void)
 		}
 		else
 		{
-			if( (DVC_1124.GP1_Temp < -20.0f) ||
-				(DVC_1124.GP4_Temp < -20.0f)		
+			if( (DVC_1124.GP1_Temp < BATTERY_TEMPERATURE_MIN) ||
+				(DVC_1124.GP4_Temp < BATTERY_TEMPERATURE_MIN)
 				)
 			{
 				Flag.Lowtemperature = 1;
@@ -402,8 +402,8 @@ void BMS_Low_Temperature_Protection(void)
 	{
 		if(CHARGER == 1)
 		{
-			if( (DVC_1124.GP1_Temp > 5.0f) ||
-				(DVC_1124.GP4_Temp > 5.0f)		
+			if( (DVC_1124.GP1_Temp > BATTERY_TEMPERATURE_LOW_THRESHOLD_CHARGE) ||
+				(DVC_1124.GP4_Temp > BATTERY_TEMPERATURE_LOW_THRESHOLD_CHARGE)
 				)
 			{
 				if((CHARGER == 1) && (Flag.Overvoltage == 0) && (Flag.Charging_Overcurrent == 0))	//充电器插入并且没有发生过压 没有发生充电过流
@@ -420,8 +420,8 @@ void BMS_Low_Temperature_Protection(void)
 		}
 		else
 		{
-			if( (DVC_1124.GP1_Temp > -15.0f) ||
-				(DVC_1124.GP4_Temp > -15.0f)		
+			if( (DVC_1124.GP1_Temp > BATTERY_TEMPERATURE_LOW_THRESHOLD) ||
+				(DVC_1124.GP4_Temp > BATTERY_TEMPERATURE_LOW_THRESHOLD)
 				)
 			{
 				//没有动作
@@ -482,7 +482,7 @@ void BMS_Protection_Task(void)
 	BMS_Undervoltage_Protection();			//欠压保护		T6
 	BMS_Discharge_Overcurrent_Protection();	//放电过流保护	T7
 	BMS_Charge_Overcurrent_Protection();	//充电过流保护	T8
-	BMS_Short_Circuit_Protection();			//短路保护		
+	BMS_Short_Circuit_Protection();			//短路保护
 	BMS_Overtemperature_Protection();		//过温保护		T9
 	BMS_Low_Temperature_Protection();		//低温保护		T10
 	//VESC_Cock_Head();
