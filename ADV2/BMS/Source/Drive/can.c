@@ -5,6 +5,20 @@
 	CAN_RX -> PA11 
 */
 
+void CAN_Reset(void)
+{
+	GPIO_InitType GPIO_InitStructure;
+	
+	RCC_EnableAPB1PeriphClk(RCC_APB1_PERIPH_CAN, DISABLE);
+	
+	GPIO_InitStruct(&GPIO_InitStructure);
+	
+	GPIO_InitStructure.Pin       = GPIO_PIN_11|GPIO_PIN_12;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Analog;
+    GPIO_InitStructure.GPIO_Pull = GPIO_No_Pull;
+    GPIO_InitPeripheral(GPIOA, &GPIO_InitStructure);
+}
+
 void CANM_Init(void)
 {
     GPIO_InitType GPIO_InitStructure;

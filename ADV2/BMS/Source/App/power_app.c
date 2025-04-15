@@ -2,6 +2,7 @@
 #include "CellBalance.h"
 #include "vesc_can.h"
 #include "DVC1124_app.h"
+#include "can.h"
 
 /**************************************************
  * @brie  :Power_On_Detection()
@@ -185,6 +186,7 @@ void Power_Task(void)
 			PDSG_OFF;
 			PCHG_OFF;
 			CHARG_OFF;
+			CAN_Reset();
 			Flag.Key_Boot = 0;
 		
 			if((newBals != 0) && (Flag.Short_Circuit == 0))
