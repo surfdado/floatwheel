@@ -1,5 +1,7 @@
 #include "led.h"
 
+uint16_t LED_Counter = 0;
+
 /**************************************************
  * @brie   :LED_Init()
  * @note   :LED≥ı ºªØ

@@ -50,6 +50,21 @@ int headlight_brightnesses[] = { 0, 150, 255 };
 int status_brightnesses[] = { WS2812_1_BRIGHTNESS, WS2812_2_BRIGHTNESS, WS2812_3_BRIGHTNESS };
 
 /**************************************************
+ * @brie   :LED_Task()
+ * @note   :LEDÈÎÎñ 
+ * @param  :ÎÞ
+ * @retval :ÎÞ
+ **************************************************/
+void LED_Task(void)
+{
+	if(LED_Counter >= 500)
+	{
+		LED_Counter = 0;
+		LED1_FILP;
+	}
+}
+
+/**************************************************
  * @brie   :KEY1_Task()
  **************************************************/
 void KEY1_Task(void)
@@ -84,8 +99,10 @@ void KEY1_Task(void)
 		case 3:         // Long press
 			if(Power_Flag == 2) // Boot completed
 			{
+#ifndef ADV2
 				Power_Flag = 4;  // VESC power off
 				Power_Time = 0;
+#endif
 			}
 		break;
 
@@ -420,7 +437,11 @@ void WS2812_Task(void)
 {
 	uint8_t i;
 	
-	if(Charge_Flag == 3) { // Battery fully charged
+	if(Power_Flag == 1) {
+		Idle_Time = 0;
+		WS2812_Boot();
+	}
+	else if(Charge_Flag == 3) { // Battery fully charged
 		WS2812_Set_AllColours(1,10,50,150,50);	// white with a strong green tint
 	}
 	else if(Charge_Flag == 2) { // Charge display pattern (pulsating led)
@@ -435,10 +456,6 @@ void WS2812_Task(void)
 		WS2812_Display_Flag = 0;
 		WS2812_Flag = 0;
 		Power_Display_Flag = 0;
-	}
-	else if(Power_Flag == 1) {
-		Idle_Time = 0;
-		WS2812_Boot();
 	}
 	else if (Power_Flag > 2) {
 		Idle_Time = 0;
@@ -542,6 +559,10 @@ void Power_Task(void)
 
 void CheckPowerLevel(float battery_voltage)
 {
+	#ifdef S50S
+	uint16_t battVoltages_mv[11] = {4200, 4075, 4040, 3900, 3820, 3735, 3640, 3520, 3375, 3160, 3000}; //50S
+	#endif
+
 	#ifdef P42A
 	uint16_t battVoltages_mv[11] = {4200, 4065, 3938, 3854, 3776, 3695, 3618, 3543, 3460, 3342, 3000}; //P42A
 	#endif
@@ -572,7 +593,7 @@ void CheckPowerLevel(float battery_voltage)
 
 /**************************************************
  * @brie   :Charge_Task()
- * @note   :Check for charge start/end conditions
+ * @note   :Check for charge start/end conditions, only for ADV1
  **************************************************/
 #ifdef ADV
 void Charge_Task(void)
@@ -1057,7 +1078,10 @@ void ADC_Task(void)
 				
 				ADC1_Val = (float)(adc1_val_sum_ave*0.0012890625);
 				ADC2_Val = (float)(adc2_val_sum_ave*0.0012890625);
-				
+
+#ifdef ADV2
+				Charge_Voltage = (float)(adc_charge_sum_ave*0.0008056640625);
+#else
 				if(V_I == 0)
 				{
 					if(Charge_Time>100)
@@ -1072,8 +1096,8 @@ void ADC_Task(void)
 						Charge_Voltage = (float)(adc_charge_sum_ave*0.0257080078125);
 					}
 				}
+#endif
 			}
-			
 		break;
 			
 	  default:
@@ -1088,8 +1112,13 @@ void ADC_Task(void)
  **************************************************/
 void VESC_State_Task(void)
 {
-	if ((Charge_Flag > 0) || (Power_Flag != 2) || !Vesc_Data_Ready)
+	if ((Power_Flag != 2) || !Vesc_Data_Ready)
 		return;
+
+#ifdef ADV
+	if (Charge_Flag > 0)
+		return;
+#endif
 
 	Vesc_Data_Ready = false;
 
@@ -1166,6 +1195,7 @@ void VESC_State_Task(void)
 		Shutdown_Time_M = 0;
 	}
 	
+#ifndef ADV2
 	if(Shutdown_Time_S>60000)
 	{
 		Shutdown_Time_S = 0;
@@ -1184,5 +1214,35 @@ void VESC_State_Task(void)
 		Power_Flag = 4;
 		Power_Time = 0;
 	}
+#endif
 	lcmConfig.boardOff = false;
 }
+
+#ifdef ADV2
+/**************************************************
+ * @brie   :Charge_Detect_Task()
+ * @note   :Detect charging state signalled by BMS
+ **************************************************/
+void Charge_Detect_Task(void)
+{
+    // NOTE from surfdado:
+    // Somehow Charge_Voltage will be below 3.0V when charging starts
+    // I guess ADC3 is just a signal from the BMS?
+    if(Charge_Voltage >= CHARGING_VOLTAGE)
+    {
+        Charge_Flag = 0;
+    }
+    else if(data.inpVoltage >= FULL_VOLTAGE)
+    {
+        if(Charge_Time > 2000)
+        {
+            Charge_Flag = 3;
+        }
+    }
+    else
+    {
+        Charge_Flag = 2;
+        Charge_Time = 0;
+    }
+}
+#endif
