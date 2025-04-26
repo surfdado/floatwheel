@@ -100,10 +100,12 @@ void KEY1_Task(void)
 		case 3:         // Long press
 			if(Power_Flag == 2) // Boot completed
 			{
-#ifndef ADV2
+#ifdef ADV2
+				Power_Flag = 5;  // external power off
+#else
 				Power_Flag = 4;  // VESC power off
-				Power_Time = 0;
 #endif
+				Power_Time = 0;
 			}
 		break;
 
@@ -510,6 +512,13 @@ void Power_Task(void)
 			Power_Flag = 3;
 		}
 	}
+	else if (Power_Flag == 5) {
+		if(Power_Time > VESC_SHUTDOWN_TIME)
+		{
+			// BMS should shutdown the board by now, otherwise it was a false positive
+			Power_Flag = 2;
+		}
+	}
 	
 	if(power_flag_last == Power_Flag && Power_Flag != 1)
 	{
@@ -548,6 +557,7 @@ void Power_Task(void)
 		break;
 
 		case 4:// New Power state for shutdown sequence
+		case 5:// New Power state for ADV2 external shutdown sequence
 			WS2812_Display_Flag = 3;
 		break;
 
@@ -844,7 +854,7 @@ void Buzzer_Task(void)
 		buzzer_step = 0;
 		return;
 	}
-	else if (Power_Flag == 4)
+	else if (Power_Flag == 4 || Power_Flag == 5)
 	{
 		// Beep when powering off
 		if (buzzer_step == 0)
