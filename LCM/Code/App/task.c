@@ -74,6 +74,7 @@ void KEY1_Task(void)
 		return;
 	}
 	
+	Idle_Time = 0;
 	switch(KEY1_State)
 	{
 		case 1:         // Click
@@ -109,7 +110,6 @@ void KEY1_Task(void)
 		case 4:         // Three presses
 			if(Power_Flag == 2) // Boot completed
 			{
-				Idle_Time = 0;
 				if(Buzzer_Flag == 2)
 				{
 					Buzzer_Flag = 1;
