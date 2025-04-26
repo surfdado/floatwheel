@@ -333,12 +333,34 @@ uint8_t Protocol_Parse(uint8_t * message)
 		
 		case COMM_CUSTOM_APP_DATA:
 
-			if (len < 12) {
+			if (len < 3) {
 				break;
 			}
 			uint8_t magicnr = pdata[ind++];
 			uint8_t cmdid = pdata[ind++];
-			if ((magicnr != FLOAT_COMMAND_ID) || (cmdid != FLOAT_COMMAND_LCM_POLL)) {
+		
+			if (magicnr == LCM_COMMAND_ID)
+			{
+				switch(cmdid)
+				{
+					case LCM_COMMAND_EXTERNAL_SHUTDOWN_STATUS:
+					  if(len != 4) return 1;
+						if(Power_Flag == 2 &&
+							 pdata[ind] == 1)  // shutting down
+						{
+#ifdef ADV2
+							Power_Flag = 5;
+							Power_Time = 0;
+							Idle_Time = 0;
+#endif
+						}
+					break;
+				}
+
+				return 0;
+			}
+
+			if ((magicnr != FLOAT_COMMAND_ID) || (cmdid != FLOAT_COMMAND_LCM_POLL) || (len < 12)) {
 				break;
 			}
 			data.floatPackageSupported = true;
