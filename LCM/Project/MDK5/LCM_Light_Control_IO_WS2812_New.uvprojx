@@ -3204,7 +3204,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>HK32F030M HK32F030MF4P6 ADV2 S50S IWDG_DEBUG BATTERY_STRING=20 FULL_VOLTAGE=83 CHARGING_VOLTAGE=3.0 FIRMWARE_ID_PREFIX=\"ADV2\"</Define>
+              <Define>HK32F030M HK32F030MF4P6 ADV2 S50S IWDG_DEBUG BATTERY_STRING=20 FULL_VOLTAGE=83 CHARGING_VOLTAGE=3.0 VESC_SHUTDOWN_TIME=4000 FIRMWARE_ID_PREFIX=\"ADV2\"</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\Code\App;..\..\Code\Drive;..\..\Code\User;..\..\Library\HK32F030Mxx_Library_V1.1.6\HK32F030M\HK32F030M_Lib\inc;..\..\Library\HK32F030Mxx_Library_V1.1.6\HK32F030M\CMSIS\CM0\Core;..\..\Library\HK32F030Mxx_Library_V1.1.6\HK32F030M\CMSIS\HK32F030M\Include</IncludePath>
             </VariousControls>
