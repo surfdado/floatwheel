@@ -1339,7 +1339,9 @@ typedef struct __attribute__((packed)) {
 
 typedef enum {
 	FLOAT_COMMAND_ID = 101,				// float/refloat custom commands
+	LCM_COMMAND_ID = 202,					// bms custom commands
 } custom_app_data_command_ids;
+
 typedef enum {
 	FLOAT_COMMAND_GET_INFO = 0,		// get version / package info
 	FLOAT_COMMAND_GET_RTDATA = 1,	// get rt data
@@ -1403,6 +1405,10 @@ typedef enum {
 	FACTORY_RESET = 200,
 	DEBUG = 255,
 } control_commands;
+
+typedef enum {
+	LCM_COMMAND_EXTERNAL_SHUTDOWN_STATUS = 0,		// shutdown status notification
+} LCM_commands;
 
 typedef enum {
 	BOOT_DEFAULT = 0,
