@@ -1338,6 +1338,9 @@ typedef struct __attribute__((packed)) {
 } backup_data;
 
 typedef enum {
+	FLOAT_COMMAND_ID = 101,				// float/refloat custom commands
+} custom_app_data_command_ids;
+typedef enum {
 	FLOAT_COMMAND_GET_INFO = 0,		// get version / package info
 	FLOAT_COMMAND_GET_RTDATA = 1,	// get rt data
 	FLOAT_COMMAND_RT_TUNE = 2,		// runtime tuning (don't write to eeprom)
@@ -1356,8 +1359,12 @@ typedef enum {
 	FLOAT_COMMAND_FLYWHEEL = 22,
 	FLOAT_COMMAND_HAPTIC = 23,
 	FLOAT_COMMAND_LCM_POLL = 24,
-	FLOAT_COMMAND_LCM_CTRL = 25,
-	FLOAT_COMMAND_LCM_INFO = 26
+	FLOAT_COMMAND_LCM_LIGHT_INFO = 25,
+	FLOAT_COMMAND_LCM_LIGHT_CTRL = 26,
+	FLOAT_COMMAND_LCM_DEVICE_INFO = 27,
+	FLOAT_COMMAND_CHARGING_STATE = 28,
+	FLOAT_COMMAND_LCM_GET_BATTERY = 29,
+	FLOAT_COMMAND_LCM_DEBUG = 99
 } float_commands;
 
 typedef enum {
