@@ -390,12 +390,9 @@ static void WS2818_Knight_Rider(uint8_t brightness) {
 static void WS2812_Idle()
 {
 	if (Idle_Time > KR_DELAY_MS) {
-		if (Power_Display_Flag < 10) {
+		if (Power_Display_Flag < 10 && Idle_Time <= KR_DELAY_MS + 40) {
 			// Voltage below 10%? Flash bright red for 40ms!
 			WS2812_Set_AllColours(1, 10, 255, 20, 20);
-			if (Idle_Time > KR_DELAY_MS + 40) {
-				Idle_Time = 0;
-			}
 			return;
 		}
 
@@ -404,6 +401,8 @@ static void WS2812_Idle()
 			WS2818_Knight_Rider(WS2812_Measure);
 			return;
 		}
+		
+		Idle_Time = 0;
 	}
 	// Battery mode
 	WS2812_Power_Display(WS2812_Measure);
